@@ -64,6 +64,8 @@
         [self addSubview:self.normalButton];
         [self addSubview:self.titleLable];
         [self addSubview:self.contentLabel];
+        
+        self.hidden = true;
     }
     return self;
 }

@@ -8,6 +8,7 @@
 #import "ViewController.h"
 #import "NavButton.h"
 #import "ModeView.h"
+#import "VolumeView.h"
 
 @interface ViewController ()
 @property (nonatomic) UIStackView* mainStack;
@@ -37,12 +38,17 @@
     // 创建子页面
     self.viewsArray = [[NSMutableArray alloc]init];
     CGRect frame = CGRectMake(0, 120, self.mainFrame.size.width, self.mainFrame.size.height-120);
+    
     ModeView* modeView = [[ModeView alloc] initWithFrame:frame];
+    VolumeView* volumeView = [[VolumeView alloc] initWithFrame:frame];
+    
     [self.viewsArray addObject:modeView];
-    [self.viewsArray addObject:[self createViews:UIColor.blueColor frame:frame]];
+    [self.viewsArray addObject:volumeView];
     [self.viewsArray addObject:[self createViews:UIColor.brownColor frame:frame]];
     [self.viewsArray addObject:[self createViews:UIColor.clearColor frame:frame]];
     [self.viewsArray addObject:[self createViews:UIColor.cyanColor frame:frame]];
+    
+    modeView.hidden = false;
     
 //    [self.viewsArray addObject:[self createViews:UIColor.darkGrayColor frame:frame]];
     

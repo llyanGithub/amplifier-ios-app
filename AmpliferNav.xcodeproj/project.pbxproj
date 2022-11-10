@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5D8A0EAD291D215C004203E7 /* ModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EAC291D215C004203E7 /* ModeButton.m */; };
 		5D8A0EB1291D2297004203E7 /* ModeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EB0291D2297004203E7 /* ModeView.m */; };
+		5D8A0EB5291D3819004203E7 /* VolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EB4291D3819004203E7 /* VolumeView.m */; };
+		5D8A0EB9291D390E004203E7 /* VolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EB8291D390E004203E7 /* VolumeSlider.m */; };
 		5D8C2EA7291A81A800355218 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EA6291A81A800355218 /* AppDelegate.m */; };
 		5D8C2EAA291A81A800355218 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EA9291A81A800355218 /* SceneDelegate.m */; };
 		5D8C2EAD291A81A800355218 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EAC291A81A800355218 /* ViewController.m */; };
@@ -24,6 +26,10 @@
 		5D8A0EAC291D215C004203E7 /* ModeButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModeButton.m; sourceTree = "<group>"; };
 		5D8A0EAF291D2297004203E7 /* ModeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModeView.h; sourceTree = "<group>"; };
 		5D8A0EB0291D2297004203E7 /* ModeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModeView.m; sourceTree = "<group>"; };
+		5D8A0EB3291D3819004203E7 /* VolumeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VolumeView.h; sourceTree = "<group>"; };
+		5D8A0EB4291D3819004203E7 /* VolumeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VolumeView.m; sourceTree = "<group>"; };
+		5D8A0EB7291D390E004203E7 /* VolumeSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VolumeSlider.h; sourceTree = "<group>"; };
+		5D8A0EB8291D390E004203E7 /* VolumeSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VolumeSlider.m; sourceTree = "<group>"; };
 		5D8C2EA2291A81A800355218 /* AmpliferNav.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmpliferNav.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8C2EA5291A81A800355218 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5D8C2EA6291A81A800355218 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -87,6 +93,10 @@
 				5D8A0EAC291D215C004203E7 /* ModeButton.m */,
 				5D8A0EAF291D2297004203E7 /* ModeView.h */,
 				5D8A0EB0291D2297004203E7 /* ModeView.m */,
+				5D8A0EB3291D3819004203E7 /* VolumeView.h */,
+				5D8A0EB4291D3819004203E7 /* VolumeView.m */,
+				5D8A0EB7291D390E004203E7 /* VolumeSlider.h */,
+				5D8A0EB8291D390E004203E7 /* VolumeSlider.m */,
 			);
 			path = AmpliferNav;
 			sourceTree = "<group>";
@@ -162,6 +172,8 @@
 			files = (
 				5D8A0EAD291D215C004203E7 /* ModeButton.m in Sources */,
 				5D8C2EAD291A81A800355218 /* ViewController.m in Sources */,
+				5D8A0EB5291D3819004203E7 /* VolumeView.m in Sources */,
+				5D8A0EB9291D390E004203E7 /* VolumeSlider.m in Sources */,
 				5D8C2EA7291A81A800355218 /* AppDelegate.m in Sources */,
 				5D8A0EB1291D2297004203E7 /* ModeView.m in Sources */,
 				5D8C2EB8291A81A800355218 /* main.m in Sources */,
