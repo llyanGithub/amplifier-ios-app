@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D8A0EAD291D215C004203E7 /* ModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EAC291D215C004203E7 /* ModeButton.m */; };
+		5D8A0EB1291D2297004203E7 /* ModeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EB0291D2297004203E7 /* ModeView.m */; };
 		5D8C2EA7291A81A800355218 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EA6291A81A800355218 /* AppDelegate.m */; };
 		5D8C2EAA291A81A800355218 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EA9291A81A800355218 /* SceneDelegate.m */; };
 		5D8C2EAD291A81A800355218 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EAC291A81A800355218 /* ViewController.m */; };
@@ -18,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D8A0EAB291D215C004203E7 /* ModeButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModeButton.h; sourceTree = "<group>"; };
+		5D8A0EAC291D215C004203E7 /* ModeButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModeButton.m; sourceTree = "<group>"; };
+		5D8A0EAF291D2297004203E7 /* ModeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModeView.h; sourceTree = "<group>"; };
+		5D8A0EB0291D2297004203E7 /* ModeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModeView.m; sourceTree = "<group>"; };
 		5D8C2EA2291A81A800355218 /* AmpliferNav.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmpliferNav.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8C2EA5291A81A800355218 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5D8C2EA6291A81A800355218 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -77,6 +83,10 @@
 				5D8C2EB7291A81A800355218 /* main.m */,
 				5D8C2EBF291A912600355218 /* NavButton.h */,
 				5D8C2EC0291A912600355218 /* NavButton.m */,
+				5D8A0EAB291D215C004203E7 /* ModeButton.h */,
+				5D8A0EAC291D215C004203E7 /* ModeButton.m */,
+				5D8A0EAF291D2297004203E7 /* ModeView.h */,
+				5D8A0EB0291D2297004203E7 /* ModeView.m */,
 			);
 			path = AmpliferNav;
 			sourceTree = "<group>";
@@ -150,8 +160,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D8A0EAD291D215C004203E7 /* ModeButton.m in Sources */,
 				5D8C2EAD291A81A800355218 /* ViewController.m in Sources */,
 				5D8C2EA7291A81A800355218 /* AppDelegate.m in Sources */,
+				5D8A0EB1291D2297004203E7 /* ModeView.m in Sources */,
 				5D8C2EB8291A81A800355218 /* main.m in Sources */,
 				5D8C2EAA291A81A800355218 /* SceneDelegate.m in Sources */,
 				5D8C2EC1291A912600355218 /* NavButton.m in Sources */,
