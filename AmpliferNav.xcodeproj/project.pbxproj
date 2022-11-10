@@ -14,6 +14,7 @@
 		5D8C2EB2291A81A800355218 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8C2EB1291A81A800355218 /* Assets.xcassets */; };
 		5D8C2EB5291A81A800355218 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8C2EB3291A81A800355218 /* LaunchScreen.storyboard */; };
 		5D8C2EB8291A81A800355218 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EB7291A81A800355218 /* main.m */; };
+		5D8C2EC1291A912600355218 /* NavButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EC0291A912600355218 /* NavButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		5D8C2EB4291A81A800355218 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D8C2EB6291A81A800355218 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D8C2EB7291A81A800355218 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5D8C2EBF291A912600355218 /* NavButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavButton.h; sourceTree = "<group>"; };
+		5D8C2EC0291A912600355218 /* NavButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 				5D8C2EB3291A81A800355218 /* LaunchScreen.storyboard */,
 				5D8C2EB6291A81A800355218 /* Info.plist */,
 				5D8C2EB7291A81A800355218 /* main.m */,
+				5D8C2EBF291A912600355218 /* NavButton.h */,
+				5D8C2EC0291A912600355218 /* NavButton.m */,
 			);
 			path = AmpliferNav;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				5D8C2EA7291A81A800355218 /* AppDelegate.m in Sources */,
 				5D8C2EB8291A81A800355218 /* main.m in Sources */,
 				5D8C2EAA291A81A800355218 /* SceneDelegate.m in Sources */,
+				5D8C2EC1291A912600355218 /* NavButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
