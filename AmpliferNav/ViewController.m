@@ -17,6 +17,15 @@
 @property (nonatomic) NSMutableArray* buttonsArray;
 @property (nonatomic) NSMutableArray* viewsArray;
 @property (nonatomic) CGRect mainFrame;
+
+@property (nonatomic) UIButton* homeButton;
+@property (nonatomic) UILabel* leftBatLabel;
+@property (nonatomic) UIImageView* leftBatImageView;
+@property (nonatomic) UIImageView* rightBatImageView;
+@property (nonatomic) UILabel* rightBatLabel;
+
+@property (nonatomic) NSUInteger horizontalMargin;
+
 @end
 
 @implementation ViewController
@@ -25,6 +34,17 @@
     [super viewDidLoad];
     
     self.mainFrame = [UIScreen mainScreen].bounds;
+    self.horizontalMargin = 20;
+    
+    NSUInteger homeButtonTopMargin = 40;
+    
+    UIView* batteryView = [self createBatteryView];
+    NSUInteger batteryViewWidth = 75;
+    NSUInteger batteryPosX = self.mainFrame.size.width - self.horizontalMargin - batteryViewWidth;
+    batteryView.frame = CGRectMake(batteryPosX, homeButtonTopMargin, batteryViewWidth, 25);
+    
+    self.homeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.horizontalMargin, homeButtonTopMargin, 20, 20)];
+    [self.homeButton setImage:[UIImage imageNamed:@"返回主页按钮"] forState:UIControlStateNormal];
     
     [self createStack];
     
@@ -66,7 +86,37 @@
     [self.mainStack addSubview:self.navStack];
     
     [self.view addSubview:self.mainStack];
+    [self.view addSubview:self.homeButton];
+    [self.view addSubview:batteryView];
 }
+
+- (UIView*) createBatteryView
+{
+    UIStackView* stackView = [[UIStackView alloc] init];
+    stackView.axis = UILayoutConstraintAxisHorizontal;
+    stackView.distribution = UIStackViewDistributionFillEqually;
+    stackView.spacing = 3;
+    
+    self.leftBatLabel = [[UILabel alloc] init];
+    self.rightBatLabel = [[UILabel alloc] init];
+    self.leftBatImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"50％"]];
+    self.rightBatImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"50％"]];
+    
+    self.leftBatLabel.text = @"左";
+    self.rightBatLabel.text = @"右";
+    
+    UIFont* font = [UIFont systemFontOfSize:12];
+    self.leftBatLabel.font = font;
+    self.rightBatLabel.font = font;
+    
+    [stackView addArrangedSubview:self.leftBatLabel];
+    [stackView addArrangedSubview:self.leftBatImageView];
+    [stackView addArrangedSubview:self.rightBatImageView];
+    [stackView addArrangedSubview:self.rightBatLabel];
+    
+    return (UIView*)stackView;
+}
+
 
 - (void) createStack
 {
@@ -75,7 +125,7 @@
     self.mainStack.distribution = UIStackViewDistributionEqualSpacing;
     
     //nav 的位置在（20,80） 距离屏幕左右边界各20个point， 高度是40
-    self.navStack = [[UIStackView alloc] initWithFrame:CGRectMake(20, 80, self.mainFrame.size.width-40, 40)];
+    self.navStack = [[UIStackView alloc] initWithFrame:CGRectMake(self.horizontalMargin, 80, self.mainFrame.size.width-self.horizontalMargin*2, 40)];
     self.navStack.axis = UILayoutConstraintAxisHorizontal;
     self.navStack.alignment = UIStackViewAlignmentFill;
     self.navStack.distribution = UIStackViewDistributionEqualSpacing;
