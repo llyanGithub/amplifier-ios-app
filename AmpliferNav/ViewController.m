@@ -9,6 +9,7 @@
 #import "NavButton.h"
 #import "ModeView.h"
 #import "VolumeView.h"
+#import "FreqResponseView.h"
 
 @interface ViewController ()
 @property (nonatomic) UIStackView* mainStack;
@@ -41,10 +42,11 @@
     
     ModeView* modeView = [[ModeView alloc] initWithFrame:frame];
     VolumeView* volumeView = [[VolumeView alloc] initWithFrame:frame];
+    FreqResponseView* freqResponseView = [[FreqResponseView alloc] initWithFrame:frame];
     
     [self.viewsArray addObject:modeView];
     [self.viewsArray addObject:volumeView];
-    [self.viewsArray addObject:[self createViews:UIColor.brownColor frame:frame]];
+    [self.viewsArray addObject:freqResponseView];
     [self.viewsArray addObject:[self createViews:UIColor.clearColor frame:frame]];
     [self.viewsArray addObject:[self createViews:UIColor.cyanColor frame:frame]];
     

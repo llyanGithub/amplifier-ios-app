@@ -1,10 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "滑块.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "滑块@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
