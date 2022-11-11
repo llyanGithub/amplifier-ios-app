@@ -32,6 +32,10 @@
         UIImage* thumbImage = [UIImage imageNamed:@"滑块"];
         [self setThumbImage:thumbImage forState:UIControlStateNormal];
         
+        [self setMinimumTrackImage:[UIImage imageNamed:@"调频条蓝"] forState:UIControlStateNormal];
+        [self setMaximumTrackImage:[UIImage imageNamed:@"调频条"] forState:UIControlStateNormal];
+        
+        
 //        [self.layer setMasksToBounds:YES];
 //        [self.layer setCornerRadius:10.0];
 //        [self.layer setBorderWidth:5];
@@ -39,6 +43,14 @@
     }
     
     return self;
+}
+
+// 改变偏移滑块的位置
+- (CGRect)thumbRectForBounds:(CGRect)bounds trackRect:(CGRect)rect value:(float)value
+{
+    rect.origin.x = rect.origin.x - 5 ;
+    rect.size.width = rect.size.width +10;
+    return CGRectInset ([super thumbRectForBounds:bounds trackRect:rect value:value], 5 , 5);
 }
 
 + (CGRect) GetTransFrame:(CGRect)frame
