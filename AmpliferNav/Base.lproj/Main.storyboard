@@ -45,6 +45,10 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.40000000000000002" minValue="-0.90000000000000002" maxValue="1.5" translatesAutoresizingMaskIntoConstraints="NO" id="4z4-Of-3aH">
+                                <rect key="frame" x="203" y="207" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="rgP-ea-l43"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

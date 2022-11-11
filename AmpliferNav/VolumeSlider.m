@@ -19,7 +19,10 @@
 
 - (instancetype)initWithPosStyle:(CGRect)frame posStyle:(SliderPosStyle)posStyle
 {
-    frame = [VolumeSlider GetTransFrame:frame];
+    if (posStyle == SliderPosVertical) {
+        frame = [VolumeSlider GetTransFrame:frame];
+    }
+        
     self = [super initWithFrame:frame];
     
     if (self != nil) {
