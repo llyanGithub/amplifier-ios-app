@@ -51,15 +51,6 @@
     [self.layer setCornerRadius:radius];
 }
 
-- (void)buttonClicked
-{
-    if (self.checked) {
-        self.checked = false;
-    } else {
-        self.checked = true;
-    }
-}
-
 - (void)layoutButtonWithImageStyle:(ButtonImageStyle)style imageTitleToSpace:(CGFloat)space
 
 {

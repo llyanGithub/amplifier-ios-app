@@ -7,15 +7,23 @@
 
 #import "ModeView.h"
 
+#define INVALID_MODE        0xFF
+#define OUTDOOR_MODE        0x00
+#define INDOOR_MODE         0x01
+#define NORMAL_MODE         0x02
+
 @interface ModeView()
 
 @property (nonatomic) ModeButton* outdoorButton;
 @property (nonatomic) ModeButton* indoorButton;
 @property (nonatomic) ModeButton* normalButton;
 
+@property (nonatomic) NSArray* buttonArray;
+
 @property (nonatomic) UILabel* titleLable;
 @property (nonatomic) UILabel* contentLabel;
 
+@property (nonatomic) NSUInteger currentMode;
 @end
 
 @implementation ModeView
@@ -32,6 +40,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.currentMode = INVALID_MODE;
+        
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         
         NSUInteger topMargin = 20;
@@ -45,6 +55,8 @@
         self.outdoorButton = [self allocButton:CGRectMake(horizontalMargin, topMargin, buttonWidth, buttonHeight) checkedImageName:@"户外选中" unCheckedImageName:@"户外" titleText:@"户外模式"];
         self.indoorButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight+spacing+topMargin, buttonWidth, buttonHeight) checkedImageName:@"室内选中" unCheckedImageName:@"室内" titleText:@"室内模式"];
         self.normalButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight*2+spacing*2+topMargin, buttonWidth, buttonHeight)  checkedImageName:@"常规选中" unCheckedImageName:@"常规" titleText:@"常规模式"];
+        
+        self.buttonArray = @[self.outdoorButton, self.indoorButton, self.normalButton];
         
         
         NSUInteger labelTopMargin = 10;
@@ -73,6 +85,8 @@
 - (ModeButton*)allocButton:(CGRect)frame checkedImageName:(NSString*)checkedImageName unCheckedImageName:(NSString*)unCheckedImageName titleText:(NSString*)titleText
 {
     ModeButton* button = [[ModeButton alloc] initWithCheckedImage:frame checkedImage:[UIImage imageNamed:checkedImageName] unCheckedImage:[UIImage imageNamed:unCheckedImageName]];
+    [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchDown];
+    
     [button  setTitle:titleText forState:UIControlStateNormal];
     [button layoutButtonWithImageStyle:ButtonImageStyleTop imageTitleToSpace:20];
     
@@ -80,5 +94,27 @@
     
     return button;
 }
+
+- (void)buttonClicked:(ModeButton*)sender
+{
+    for (ModeButton* button in self.buttonArray) {
+        button.checked = false;
+    }
+    sender.checked = true;
+    
+    NSUInteger index = [self.buttonArray indexOfObject:sender];
+    if (index == 0) {
+        self.currentMode = OUTDOOR_MODE;
+    } else if (index == 1) {
+        self.currentMode = INDOOR_MODE;
+    } else if (index == 2) {
+        self.currentMode = NORMAL_MODE;
+    } else {
+        self.currentMode = INVALID_MODE;
+    }
+    
+    NSLog(@"current mode: %ld", self.currentMode);
+}
+
 
 @end
