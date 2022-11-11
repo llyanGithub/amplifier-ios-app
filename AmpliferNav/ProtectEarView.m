@@ -13,6 +13,12 @@
 @property (nonatomic) ProtectEarSlider* leftSlider;
 @property (nonatomic) ProtectEarSlider* rightSlider;
 
+@property (nonatomic) NSUInteger topMargin;
+@property (nonatomic) NSUInteger horizontalMargin;
+
+@property (nonatomic) UILabel* leftChannLabel;
+@property (nonatomic) UILabel* rightChannLabel;
+
 @end
 
 @implementation ProtectEarView
@@ -21,11 +27,24 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.leftSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(20, 20, 200, 40)];
-        self.rightSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(20, 80, 200, 40)];
+        NSUInteger labelWidth = 40;
+        NSUInteger labelHeight = 40;
+        self.topMargin = 20;
+        self.horizontalMargin = 20;
+        
+        self.leftChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin, labelWidth, labelHeight)];
+        self.leftChannLabel.text = @"左耳";
+        
+        self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin+80, labelWidth, labelHeight)];
+        self.rightChannLabel.text = @"右耳";
+        
+        self.leftSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(self.horizontalMargin+labelWidth+10, self.topMargin, 200, 40)];
+        self.rightSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(self.horizontalMargin+labelWidth+10, self.topMargin+80, 200, 40)];
         
         [self addSubview:self.leftSlider];
         [self addSubview:self.rightSlider];
+        [self addSubview:self.leftChannLabel];
+        [self addSubview:self.rightChannLabel];
         
         self.hidden = true;
     }
