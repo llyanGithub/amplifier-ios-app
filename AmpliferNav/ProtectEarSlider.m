@@ -35,7 +35,7 @@
         
         self.step = 1;
         self.minimumValue = 0;
-        self.maximumValue = 4;
+        self.maximumValue = 3;
         
         [self addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
