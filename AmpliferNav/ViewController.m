@@ -11,6 +11,7 @@
 #import "VolumeView.h"
 #import "FreqResponseView.h"
 #import "ProtectEarView.h"
+#import "OtherView.h"
 
 @interface ViewController ()
 @property (nonatomic) UIStackView* mainStack;
@@ -65,12 +66,13 @@
     VolumeView* volumeView = [[VolumeView alloc] initWithFrame:frame];
     FreqResponseView* freqResponseView = [[FreqResponseView alloc] initWithFrame:frame];
     ProtectEarView* protectEarView = [[ProtectEarView alloc] initWithFrame:frame];
+    OtherView* otherView = [[OtherView alloc] initWithFrame:frame];
     
     [self.viewsArray addObject:modeView];
     [self.viewsArray addObject:volumeView];
     [self.viewsArray addObject:freqResponseView];
     [self.viewsArray addObject:protectEarView];
-    [self.viewsArray addObject:[self createViews:UIColor.cyanColor frame:frame]];
+    [self.viewsArray addObject:otherView];
     
     modeView.hidden = false;
     
