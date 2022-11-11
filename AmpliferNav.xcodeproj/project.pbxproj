@@ -69,6 +69,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D0FC836291F10010057DF6D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5D8C2EAB291A81A800355218 /* ViewController.h */,
+				5D8C2EAC291A81A800355218 /* ViewController.m */,
+				5D0FC832291E9E610057DF6D /* OtherView.h */,
+				5D0FC833291E9E610057DF6D /* OtherView.m */,
+				5D8A0EBF291DC9D2004203E7 /* ProtectEarView.h */,
+				5D8A0EC0291DC9D2004203E7 /* ProtectEarView.m */,
+				5D8A0EBB291D4053004203E7 /* FreqResponseView.h */,
+				5D8A0EBC291D4053004203E7 /* FreqResponseView.m */,
+				5D8A0EB3291D3819004203E7 /* VolumeView.h */,
+				5D8A0EB4291D3819004203E7 /* VolumeView.m */,
+				5D8A0EAF291D2297004203E7 /* ModeView.h */,
+				5D8A0EB0291D2297004203E7 /* ModeView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5D0FC839291F10C40057DF6D /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				5D8C2EBF291A912600355218 /* NavButton.h */,
+				5D8C2EC0291A912600355218 /* NavButton.m */,
+				5D8A0EAB291D215C004203E7 /* ModeButton.h */,
+				5D8A0EAC291D215C004203E7 /* ModeButton.m */,
+				5D8A0EB7291D390E004203E7 /* VolumeSlider.h */,
+				5D8A0EB8291D390E004203E7 /* VolumeSlider.m */,
+				5D8A0EC3291DCB45004203E7 /* ProtectEarSlider.h */,
+				5D8A0EC4291DCB45004203E7 /* ProtectEarSlider.m */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		5D0FC83A291F10F30057DF6D /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				5D8C2EB1291A81A800355218 /* Assets.xcassets */,
+				5D8C2EB7291A81A800355218 /* main.m */,
+				5D8C2EA5291A81A800355218 /* AppDelegate.h */,
+				5D8C2EA6291A81A800355218 /* AppDelegate.m */,
+				5D8C2EA8291A81A800355218 /* SceneDelegate.h */,
+				5D8C2EA9291A81A800355218 /* SceneDelegate.m */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		5D8C2E99291A81A800355218 = {
 			isa = PBXGroup;
 			children = (
@@ -88,35 +135,12 @@
 		5D8C2EA4291A81A800355218 /* AmpliferNav */ = {
 			isa = PBXGroup;
 			children = (
-				5D8C2EA5291A81A800355218 /* AppDelegate.h */,
-				5D8C2EA6291A81A800355218 /* AppDelegate.m */,
-				5D8C2EA8291A81A800355218 /* SceneDelegate.h */,
-				5D8C2EA9291A81A800355218 /* SceneDelegate.m */,
-				5D8C2EAB291A81A800355218 /* ViewController.h */,
-				5D8C2EAC291A81A800355218 /* ViewController.m */,
-				5D8C2EAE291A81A800355218 /* Main.storyboard */,
-				5D8C2EB1291A81A800355218 /* Assets.xcassets */,
-				5D8C2EB3291A81A800355218 /* LaunchScreen.storyboard */,
 				5D8C2EB6291A81A800355218 /* Info.plist */,
-				5D8C2EB7291A81A800355218 /* main.m */,
-				5D8C2EBF291A912600355218 /* NavButton.h */,
-				5D8C2EC0291A912600355218 /* NavButton.m */,
-				5D8A0EAB291D215C004203E7 /* ModeButton.h */,
-				5D8A0EAC291D215C004203E7 /* ModeButton.m */,
-				5D8A0EAF291D2297004203E7 /* ModeView.h */,
-				5D8A0EB0291D2297004203E7 /* ModeView.m */,
-				5D8A0EB3291D3819004203E7 /* VolumeView.h */,
-				5D8A0EB4291D3819004203E7 /* VolumeView.m */,
-				5D8A0EB7291D390E004203E7 /* VolumeSlider.h */,
-				5D8A0EB8291D390E004203E7 /* VolumeSlider.m */,
-				5D8A0EBB291D4053004203E7 /* FreqResponseView.h */,
-				5D8A0EBC291D4053004203E7 /* FreqResponseView.m */,
-				5D8A0EBF291DC9D2004203E7 /* ProtectEarView.h */,
-				5D8A0EC0291DC9D2004203E7 /* ProtectEarView.m */,
-				5D8A0EC3291DCB45004203E7 /* ProtectEarSlider.h */,
-				5D8A0EC4291DCB45004203E7 /* ProtectEarSlider.m */,
-				5D0FC832291E9E610057DF6D /* OtherView.h */,
-				5D0FC833291E9E610057DF6D /* OtherView.m */,
+				5D0FC83A291F10F30057DF6D /* Support */,
+				5D0FC839291F10C40057DF6D /* Widget */,
+				5D0FC836291F10010057DF6D /* Views */,
+				5D8C2EAE291A81A800355218 /* Main.storyboard */,
+				5D8C2EB3291A81A800355218 /* LaunchScreen.storyboard */,
 			);
 			path = AmpliferNav;
 			sourceTree = "<group>";
