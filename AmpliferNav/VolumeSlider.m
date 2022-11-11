@@ -35,7 +35,7 @@
         UIImage* thumbImage = [UIImage imageNamed:@"滑块"];
         [self setThumbImage:thumbImage forState:UIControlStateNormal];
         
-        [self setMinimumTrackImage:[UIImage imageNamed:@"调频条蓝"] forState:UIControlStateNormal];
+        [self setMinimumTrackImage:[UIImage imageNamed:@"调频蓝条"] forState:UIControlStateNormal];
         [self setMaximumTrackImage:[UIImage imageNamed:@"调频条"] forState:UIControlStateNormal];
         
         

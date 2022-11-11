@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "调频条蓝.png",
+      "filename" : "滑条.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "调频条蓝@2x.png",
+      "filename" : "滑条@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "调频条蓝@3x.png",
+      "filename" : "滑条@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
