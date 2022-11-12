@@ -24,43 +24,112 @@
             <point key="canvasLocation" x="139" y="131"/>
         </scene>
         <!--View Controller-->
-        <scene sceneID="gq3-9M-Re7">
+        <scene sceneID="LpU-Cn-u9D">
             <objects>
-                <viewController id="9Gk-AU-WmU" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="lUk-Dr-mPw" customClass="TestView">
+                <viewController id="ijp-dn-atl" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3kz-92-pgm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="cTy-qL-XgQ">
-                                <rect key="frame" x="130" y="333" width="25" height="37.5"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="模式选中" translatesAutoresizingMaskIntoConstraints="NO" id="WqR-jC-l6A">
-                                        <rect key="frame" x="3" y="0.0" width="19" height="19"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="模式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gpz-th-oBJ">
-                                        <rect key="frame" x="0.0" y="23" width="25" height="14.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.40000000000000002" minValue="-0.90000000000000002" maxValue="1.5" translatesAutoresizingMaskIntoConstraints="NO" id="4z4-Of-3aH">
-                                <rect key="frame" x="203" y="207" width="118" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </slider>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_frame" translatesAutoresizingMaskIntoConstraints="NO" id="Ic7-EV-clV">
+                                <rect key="frame" x="87" y="194" width="240" height="418"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="search_icon" translatesAutoresizingMaskIntoConstraints="NO" id="0aQ-vK-CyB">
+                                <rect key="frame" x="87" y="339" width="240" height="128"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击搜索设备" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LN-78-0hJ">
+                                <rect key="frame" x="164" y="642" width="86" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="rgP-ea-l43"/>
+                        <viewLayoutGuide key="safeArea" id="YjL-j1-ccK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="0aQ-vK-CyB" firstAttribute="centerX" secondItem="Ic7-EV-clV" secondAttribute="centerX" id="7oY-GD-1Mo"/>
+                            <constraint firstItem="Ic7-EV-clV" firstAttribute="leading" secondItem="YjL-j1-ccK" secondAttribute="leading" constant="87" id="GX3-2l-Gqk"/>
+                            <constraint firstItem="4LN-78-0hJ" firstAttribute="top" secondItem="Ic7-EV-clV" secondAttribute="bottom" constant="30" id="Mb3-kH-Rqv"/>
+                            <constraint firstItem="YjL-j1-ccK" firstAttribute="trailing" secondItem="Ic7-EV-clV" secondAttribute="trailing" constant="87" id="RS7-Vy-H9L"/>
+                            <constraint firstItem="4LN-78-0hJ" firstAttribute="centerX" secondItem="YjL-j1-ccK" secondAttribute="centerX" id="Vi3-gu-I9m"/>
+                            <constraint firstItem="YjL-j1-ccK" firstAttribute="bottom" secondItem="Ic7-EV-clV" secondAttribute="bottom" constant="250" id="VtI-dw-cOw"/>
+                            <constraint firstItem="Ic7-EV-clV" firstAttribute="top" secondItem="YjL-j1-ccK" secondAttribute="top" constant="150" id="kCo-D3-XdZ"/>
+                            <constraint firstItem="0aQ-vK-CyB" firstAttribute="centerY" secondItem="Ic7-EV-clV" secondAttribute="centerY" id="w6E-DF-QDK"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UXe-bG-PpJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1191.304347826087" y="128.57142857142856"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="gy7-vA-trY">
+            <objects>
+                <viewController id="cwq-Mc-HEo" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Z5V-9m-rqu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="搜索图标" translatesAutoresizingMaskIntoConstraints="NO" id="a8F-jY-Hl2">
+                                <rect key="frame" x="120" y="94" width="174" height="468"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="搜索中心图标" translatesAutoresizingMaskIntoConstraints="NO" id="IS3-yW-IFy">
+                                <rect key="frame" x="87" y="264" width="240" height="128"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正在搜索附近设备..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbC-up-mZD">
+                                <rect key="frame" x="144" y="97" width="126.5" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Lge-Qv-HjF">
+                                <rect key="frame" x="0.0" y="552" width="414" height="344"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="xJL-N7-XCL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="a8F-jY-Hl2" firstAttribute="top" secondItem="jbC-up-mZD" secondAttribute="bottom" constant="-20" id="1Cu-Xj-H2u"/>
+                            <constraint firstItem="Lge-Qv-HjF" firstAttribute="leading" secondItem="xJL-N7-XCL" secondAttribute="leading" id="1SP-3X-XBP"/>
+                            <constraint firstItem="jbC-up-mZD" firstAttribute="centerX" secondItem="xJL-N7-XCL" secondAttribute="centerX" id="5xi-lw-QmO"/>
+                            <constraint firstItem="Lge-Qv-HjF" firstAttribute="trailing" secondItem="xJL-N7-XCL" secondAttribute="trailing" id="7xw-yN-SuK"/>
+                            <constraint firstItem="xJL-N7-XCL" firstAttribute="bottom" secondItem="a8F-jY-Hl2" secondAttribute="bottom" constant="300" id="AZE-zm-mcO"/>
+                            <constraint firstItem="Lge-Qv-HjF" firstAttribute="top" secondItem="a8F-jY-Hl2" secondAttribute="bottom" constant="-10" id="O0x-Vm-pNq"/>
+                            <constraint firstAttribute="bottom" secondItem="Lge-Qv-HjF" secondAttribute="bottom" id="WGn-it-aAh"/>
+                            <constraint firstItem="IS3-yW-IFy" firstAttribute="centerY" secondItem="a8F-jY-Hl2" secondAttribute="centerY" id="eKO-nq-QrY"/>
+                            <constraint firstItem="a8F-jY-Hl2" firstAttribute="leading" secondItem="xJL-N7-XCL" secondAttribute="leading" constant="120" id="gXP-dl-mbB"/>
+                            <constraint firstItem="xJL-N7-XCL" firstAttribute="trailing" secondItem="a8F-jY-Hl2" secondAttribute="trailing" constant="120" id="nIj-KZ-ygj"/>
+                            <constraint firstItem="IS3-yW-IFy" firstAttribute="centerX" secondItem="a8F-jY-Hl2" secondAttribute="centerX" id="udO-fW-E77"/>
+                            <constraint firstItem="a8F-jY-Hl2" firstAttribute="top" secondItem="xJL-N7-XCL" secondAttribute="top" constant="50" id="yO6-JQ-ssf"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aX8-Yc-Odm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2165.217391304348" y="122.54464285714285"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="xxx-LL-oYn">
+            <objects>
+                <viewController id="QTv-3f-aBW" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rOn-gn-4hj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="NnZ-cg-bpE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hNO-vd-Dqp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="09t-1R-aS7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="960" y="137"/>
+            <point key="canvasLocation" x="3188" y="103"/>
         </scene>
     </scenes>
     <resources>
-        <image name="模式选中" width="19" height="19"/>
+        <image name="search_frame" width="233" height="233"/>
+        <image name="search_icon" width="64.5" height="69"/>
+        <image name="搜索中心图标" width="19.5" height="25"/>
+        <image name="搜索图标" width="81" height="81"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
