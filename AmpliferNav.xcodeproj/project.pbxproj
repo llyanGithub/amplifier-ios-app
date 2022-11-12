@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D09BCF8291F8C2C00B18B7F /* BleCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09BCF7291F8C2C00B18B7F /* BleCentralManager.m */; };
 		5D0FC834291E9E610057DF6D /* OtherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC833291E9E610057DF6D /* OtherView.m */; };
 		5D0FC841291F1DF90057DF6D /* SelectedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC840291F1DF90057DF6D /* SelectedButton.m */; };
 		5D8A0EAD291D215C004203E7 /* ModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EAC291D215C004203E7 /* ModeButton.m */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D09BCF6291F8C2C00B18B7F /* BleCentralManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BleCentralManager.h; sourceTree = "<group>"; };
+		5D09BCF7291F8C2C00B18B7F /* BleCentralManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BleCentralManager.m; sourceTree = "<group>"; };
 		5D0FC832291E9E610057DF6D /* OtherView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtherView.h; sourceTree = "<group>"; };
 		5D0FC833291E9E610057DF6D /* OtherView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OtherView.m; sourceTree = "<group>"; };
 		5D0FC83F291F1DF90057DF6D /* SelectedButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectedButton.h; sourceTree = "<group>"; };
@@ -72,6 +75,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5D09BCF5291F8AEB00B18B7F /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				5D09BCF6291F8C2C00B18B7F /* BleCentralManager.h */,
+				5D09BCF7291F8C2C00B18B7F /* BleCentralManager.m */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
 		5D0FC836291F10010057DF6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +152,7 @@
 		5D8C2EA4291A81A800355218 /* AmpliferNav */ = {
 			isa = PBXGroup;
 			children = (
+				5D09BCF5291F8AEB00B18B7F /* Bluetooth */,
 				5D8C2EB6291A81A800355218 /* Info.plist */,
 				5D0FC83A291F10F30057DF6D /* Support */,
 				5D0FC839291F10C40057DF6D /* Widget */,
@@ -221,6 +234,7 @@
 			files = (
 				5D8A0EAD291D215C004203E7 /* ModeButton.m in Sources */,
 				5D8A0EC5291DCB45004203E7 /* ProtectEarSlider.m in Sources */,
+				5D09BCF8291F8C2C00B18B7F /* BleCentralManager.m in Sources */,
 				5D8C2EAD291A81A800355218 /* ViewController.m in Sources */,
 				5D8A0EB5291D3819004203E7 /* VolumeView.m in Sources */,
 				5D8A0EBD291D4053004203E7 /* FreqResponseView.m in Sources */,
