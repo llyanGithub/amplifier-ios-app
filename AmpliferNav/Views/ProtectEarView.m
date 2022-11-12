@@ -7,11 +7,15 @@
 
 #import "ProtectEarView.h"
 #import "ProtectEarSlider.h"
+#import "SelectedButton.h"
 
 @interface ProtectEarView ()
 
 @property (nonatomic) ProtectEarSlider* leftSlider;
 @property (nonatomic) ProtectEarSlider* rightSlider;
+
+@property (nonatomic) NSUInteger leftEarCompressValue;
+@property (nonatomic) NSUInteger rightEarCompressValue;
 
 @property (nonatomic) NSUInteger topMargin;
 @property (nonatomic) NSUInteger horizontalMargin;
@@ -24,7 +28,7 @@
 @property (nonatomic) UILabel* leftCompressLabel;
 @property (nonatomic) UILabel* rightCompressLabel;
 
-@property (nonatomic) UIButton* allSelectedButton;
+@property (nonatomic) SelectedButton* allSelectedButton;
 
 @end
 
@@ -57,6 +61,7 @@
         NSUInteger sliderWidth = mainFrame.size.width - 2*self.horizontalMargin - labelWidth - sliderLeftMargin;
         
         self.leftSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(slidePosX, self.topMargin, sliderWidth, sliderHeight)];
+        [self.leftSlider addTarget:self action:@selector(leftSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         
         UIView* leftEarScaleView = [self createScaleView];
         NSUInteger scalePosX = slidePosX + 9;
@@ -75,6 +80,8 @@
         
         self.rightSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(slidePosX, rightSliderPosY, sliderWidth, sliderHeight)];
         
+        [self.rightSlider addTarget:self action:@selector(rightSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        
         self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, rightSliderPosY, labelWidth, labelHeight)];
         self.rightChannLabel.text = @"右耳";
         self.rightChannLabel.font = font;
@@ -87,9 +94,10 @@
         self.rightCompressLabel.text = @"压缩程度";
         self.rightCompressLabel.font = [UIFont systemFontOfSize:11];
         
-        self.allSelectedButton = [[UIButton alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin+60, 30, 54)];
-        [self.allSelectedButton setImage:[UIImage imageNamed:@"护耳链接选中"] forState:UIControlStateNormal];
+        self.allSelectedButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"护耳链接选中"] unCheckedImage:[UIImage imageNamed:@"护耳链接"]];
+        self.allSelectedButton.frame = CGRectMake(self.horizontalMargin, self.topMargin+60, 30, 54);
         
+        [self.allSelectedButton addTarget:self action:@selector(selectedButtonClicked) forControlEvents:UIControlEventTouchDown];
         
         [self addSubview:self.leftSlider];
         [self addSubview:self.rightSlider];
@@ -105,9 +113,47 @@
         
         [self addSubview:self.allSelectedButton];
         
+        self.leftEarCompressValue = 0;
+        self.rightEarCompressValue = 0;
+        
         self.hidden = true;
     }
     return self;
+}
+
+- (void) selectedButtonClicked
+{
+    self.allSelectedButton.checked = !self.allSelectedButton.checked;
+    self.leftSlider.enabled = self.allSelectedButton.checked;
+    self.rightSlider.enabled = self.allSelectedButton.checked;
+}
+
+- (void) leftSliderValueChanged:(ProtectEarSlider*)sender
+{
+    NSUInteger roundedValue = round(sender.value / sender.step) * sender.step;
+    sender.value = roundedValue;
+    
+    _leftEarCompressValue = roundedValue;
+}
+
+- (void) rightSliderValueChanged:(ProtectEarSlider*)sender
+{
+    NSUInteger roundedValue = round(sender.value / sender.step) * sender.step;
+    sender.value = roundedValue;
+    
+    _rightEarCompressValue = roundedValue;
+}
+
+- (void) setLeftEarCompressValue:(NSUInteger)leftEarCompressValue
+{
+    _leftEarCompressValue = leftEarCompressValue;
+    self.leftSlider.value = _leftEarCompressValue;
+}
+
+- (void) setRightEarCompressValue:(NSUInteger)rightEarCompressValue
+{
+    _rightEarCompressValue = rightEarCompressValue;
+    self.rightSlider.value = _rightEarCompressValue;
 }
 
 - (UIView*) createScaleView

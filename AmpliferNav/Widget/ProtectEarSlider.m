@@ -9,8 +9,6 @@
 
 @interface ProtectEarSlider ()
 
-@property (nonatomic) NSUInteger step;
-
 @end
 
 @implementation ProtectEarSlider

@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ProtectEarSlider : UISlider
 
+@property (nonatomic) NSUInteger step;
+
 @end
 
 NS_ASSUME_NONNULL_END
