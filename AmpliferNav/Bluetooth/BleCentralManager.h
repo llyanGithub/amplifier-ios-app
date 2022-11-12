@@ -22,8 +22,17 @@ typedef void (^DiscoveryCharacteristicsCallback)(CBPeripheral *peripheral,CBServ
 
 typedef void (^NotifyCallback)(CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error);
 
+typedef void (^WriteDoneCallback)(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error);
+
+typedef void (^ReadCharCallback)(CBPeripheral *,CBCharacteristic * nullable, NSError *);
+
+typedef void (^NotifyReceived)(CBPeripheral *peripheral,CBCharacteristic *characteristic,NSError *error);
+
 @interface BleCentralManager : NSObject
 + (BleCentralManager*)getInstance;
+
+@property (nonatomic) CBManagerState blePowerState;
+
 - (void)startScan:(ScanCallback)handler;
 - (void)stopScan;
 
@@ -35,10 +44,14 @@ typedef void (^NotifyCallback)(CBPeripheral *peripheral, CBCharacteristic *ctic,
         connectedCallback:(ConnectedCallback)connectedCallback;
 
 /*
- 发现设备服务
+ 发现设备上所有服务
  */
 - (void) discoveryServices:(nonnull CBPeripheral *)peripheral discoveryCallback:(DiscoveryServiceCallback)discoveryCallback;
 
+/*
+ 发现设备上某个服务
+ */
+- (void) discoveryService:(nonnull CBPeripheral *)peripheral serviceUUID:(nullable CBUUID*)serviceUUID discoveryCallback:(DiscoveryServiceCallback)discoveryCallback;
 
 /*
  发现服务的属性
@@ -55,6 +68,24 @@ typedef void (^NotifyCallback)(CBPeripheral *peripheral, CBCharacteristic *ctic,
             characteristic:(nonnull CBUUID *)characteristicUUID
                notifyValue:(BOOL)isNotify
         callback:(NotifyCallback)callback;
+
+
+/*
+ 往设备中写入数据
+ */
+- (void) writeToPeripheral:(CBPeripheral*)peripheral uuid:(CBUUID*)uuid  valueData:(NSData *)valueData callback:(WriteDoneCallback)callback;
+
+/*
+ 读某个属性的值
+ */
+- (void) readToPeripheral:(CBPeripheral *)peripheral
+              descriptor:(CBUUID *)characteristicUUID
+callback:(ReadCharCallback)callback;
+
+/*
+ 注册Notify的回调函数
+ */
+- (void) registerNotifyRecivedCallback:(NotifyReceived)callback;
 
 @end
 

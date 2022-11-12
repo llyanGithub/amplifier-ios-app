@@ -32,6 +32,21 @@
  */
 @property (nonatomic) NotifyCallback notifyCallback;
 
+/*
+ 写回数据的回调函数
+ */
+@property (nonatomic) WriteDoneCallback writeDoneCallback;
+
+/*
+ 读属性数据的回调函数
+ */
+@property (nonatomic) ReadCharCallback readCharCallback;
+
+/*
+ Notify数据的接收函数
+ */
+@property (nonatomic) NotifyReceived notifyRecevied;
+
 @end
 
 @implementation BleCentralManager
@@ -55,6 +70,8 @@
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
     NSLog(@"Bluetooth State: %ld", central.state);
+    
+    self.blePowerState = central.state;
 }
 
 /*
@@ -256,12 +273,21 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
 }
 
 /*
- 发现设备服务
+ 发现设备上所有的服务
  */
 - (void)discoveryServices:(nonnull CBPeripheral *)peripheral discoveryCallback:(DiscoveryServiceCallback)discoveryCallback
 {
     self.discoveryCallback = discoveryCallback;
     [peripheral discoverServices:nil];
+}
+
+/*
+ 发现设备上的某个服务
+ */
+- (void) discoveryService:(nonnull CBPeripheral *)peripheral serviceUUID:(nullable CBUUID*)serviceUUID discoveryCallback:(DiscoveryServiceCallback)discoveryCallback
+{
+    self.discoveryCallback = discoveryCallback;
+    [peripheral discoverServices:@[serviceUUID]];
 }
 
 /*
@@ -303,6 +329,94 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
         NSLog(@"Properties cannot be subscribed to");
     }
     
+}
+
+/*
+ 往设备中写入数据
+ */
+- (void) writeToPeripheral:(CBPeripheral*)peripheral uuid:(CBUUID*)uuid  valueData:(NSData *)valueData callback:(WriteDoneCallback)callback
+{
+    self.writeDoneCallback = callback;
+    
+    NSError* error;
+    CBCharacteristic* characteristic = [self findCharacteristic:uuid inPeripheral:peripheral withError:&error];
+    if (error) {
+        if (_writeDoneCallback) {
+            _writeDoneCallback(peripheral, nil, error);
+        }
+        return;
+    }
+    
+    CBCharacteristicWriteType type = CBCharacteristicWriteWithoutResponse;
+    if (characteristic.properties & CBCharacteristicPropertyWrite) {
+        
+        type = CBCharacteristicWriteWithResponse;
+    }
+    [peripheral writeValue:valueData forCharacteristic:characteristic type:type];
+}
+
+/*
+ 读某个属性的值
+ */
+- (void)readToPeripheral:(CBPeripheral *)peripheral
+              descriptor:(CBUUID *)characteristicUUID
+                callback:(ReadCharCallback)callback
+{
+    self.readCharCallback = callback;
+    NSError *error;
+    CBCharacteristic *targetChtic = [self findCharacteristic:characteristicUUID inPeripheral:peripheral withError:&error];
+    if (error) {
+        if (_readCharCallback) {
+            _readCharCallback(peripheral,nil,error);
+        }
+        return;
+    }
+    
+    if (targetChtic.properties & CBCharacteristicPropertyRead) {
+        [peripheral readValueForCharacteristic:targetChtic];
+    }else {
+        
+        NSError *error  = [NSError errorWithDomain:@"XCYReadCharacterNoPermissions" code:-2 userInfo:nil];
+        if (_readCharCallback) {
+            _readCharCallback(peripheral,nil,error);
+        }
+    }
+}
+
+/*
+ 注册Notify的回调函数
+ */
+- (void) registerNotifyRecivedCallback:(NotifyReceived)callback
+{
+    self.notifyCallback = callback;
+}
+
+/*
+ 读某个属性的值，或者设备端发来的Notify数据，也会回调这个函数
+ */
+- (void)peripheral:(CBPeripheral *)peripheral
+            didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(nullable NSError *)error
+{
+    if (_notifyCallback && (characteristic.properties & CBCharacteristicPropertyNotify)){
+        _notifyCallback(peripheral,characteristic,error);
+        return;
+    }
+    
+    if (_readCharCallback && (characteristic.properties & CBCharacteristicPropertyRead)) {
+        _readCharCallback(peripheral,characteristic,error);
+    }
+    
+    
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral
+didWriteValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(nullable NSError *)error
+{
+   if (_writeDoneCallback) {
+       _writeDoneCallback(peripheral,characteristic,error);
+   }
 }
 
 @end

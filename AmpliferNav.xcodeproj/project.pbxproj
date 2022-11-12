@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5D09BCF8291F8C2C00B18B7F /* BleCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09BCF7291F8C2C00B18B7F /* BleCentralManager.m */; };
+		5D09BCFF291FF25100B18B7F /* BleProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D09BCFE291FF25100B18B7F /* BleProfile.m */; };
 		5D0FC834291E9E610057DF6D /* OtherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC833291E9E610057DF6D /* OtherView.m */; };
 		5D0FC841291F1DF90057DF6D /* SelectedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0FC840291F1DF90057DF6D /* SelectedButton.m */; };
 		5D8A0EAD291D215C004203E7 /* ModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EAC291D215C004203E7 /* ModeButton.m */; };
@@ -30,6 +31,9 @@
 /* Begin PBXFileReference section */
 		5D09BCF6291F8C2C00B18B7F /* BleCentralManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BleCentralManager.h; sourceTree = "<group>"; };
 		5D09BCF7291F8C2C00B18B7F /* BleCentralManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BleCentralManager.m; sourceTree = "<group>"; };
+		5D09BCFB291FEEA600B18B7F /* BleUserDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BleUserDelegate.h; sourceTree = "<group>"; };
+		5D09BCFD291FF25100B18B7F /* BleProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BleProfile.h; sourceTree = "<group>"; };
+		5D09BCFE291FF25100B18B7F /* BleProfile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BleProfile.m; sourceTree = "<group>"; };
 		5D0FC832291E9E610057DF6D /* OtherView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtherView.h; sourceTree = "<group>"; };
 		5D0FC833291E9E610057DF6D /* OtherView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OtherView.m; sourceTree = "<group>"; };
 		5D0FC83F291F1DF90057DF6D /* SelectedButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectedButton.h; sourceTree = "<group>"; };
@@ -80,6 +84,9 @@
 			children = (
 				5D09BCF6291F8C2C00B18B7F /* BleCentralManager.h */,
 				5D09BCF7291F8C2C00B18B7F /* BleCentralManager.m */,
+				5D09BCFB291FEEA600B18B7F /* BleUserDelegate.h */,
+				5D09BCFD291FF25100B18B7F /* BleProfile.h */,
+				5D09BCFE291FF25100B18B7F /* BleProfile.m */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -243,6 +250,7 @@
 				5D8C2EA7291A81A800355218 /* AppDelegate.m in Sources */,
 				5D8A0EB1291D2297004203E7 /* ModeView.m in Sources */,
 				5D8C2EB8291A81A800355218 /* main.m in Sources */,
+				5D09BCFF291FF25100B18B7F /* BleProfile.m in Sources */,
 				5D0FC841291F1DF90057DF6D /* SelectedButton.m in Sources */,
 				5D8A0EC1291DC9D2004203E7 /* ProtectEarView.m in Sources */,
 				5D8C2EAA291A81A800355218 /* SceneDelegate.m in Sources */,

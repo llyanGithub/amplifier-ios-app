@@ -13,6 +13,7 @@
 #import "ProtectEarView.h"
 #import "OtherView.h"
 #import "BleCentralManager.h"
+#import "BleProfile.h"
 
 @interface ViewController ()
 @property (nonatomic) UIStackView* mainStack;
@@ -33,11 +34,10 @@
 @property (nonatomic) NSUInteger navButtonWidth;
 @property (nonatomic) NSUInteger navButtonTopMargin;
 
+@property (nonatomic) BleProfile* bleProfile;
 @property (nonatomic) NSMutableArray* scanDeviceArray;
-@property (nonatomic) NSTimer* scanTimer;
-
-@property (nonatomic) BleCentralManager* bleCentralManager;
 @property (nonatomic) CBPeripheral* peripheral;
+@property (nonatomic) NSTimer* waitBleReadyTimer;
 
 @end
 
@@ -102,9 +102,10 @@
         [self.view addSubview:button];
     }
     
-    self.bleCentralManager = [BleCentralManager getInstance];
-    self.scanDeviceArray = [[NSMutableArray alloc]init];
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(bluetoothTest) userInfo:nil repeats:NO];
+    [self BleProfileTest];
+//    self.bleCentralManager = [BleCentralManager getInstance];
+//    self.scanDeviceArray = [[NSMutableArray alloc]init];
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(bluetoothTest) userInfo:nil repeats:NO];
 }
 
 - (UIView*) createBatteryView
@@ -195,6 +196,60 @@
     view.hidden = false;
 }
 
+- (void) testStart
+{
+    if (self.bleProfile.blePowerState != CBManagerStatePoweredOn) {
+        NSLog(@"请打开您的手机蓝牙...");
+        return;
+    }
+    
+    [self.bleProfile startScan:^(CBPeripheral *peripheral,NSDictionary *advertisementData, NSNumber *RSSI, BOOL timeout){
+        if (!timeout) {
+            [self.scanDeviceArray addObject:peripheral];
+            NSLog(@"Found Device: %@", peripheral.name);
+        } else {
+            if (self.scanDeviceArray.count) {
+                CBPeripheral *peripheral = self.scanDeviceArray.firstObject;
+                [self.bleProfile connectDevice:peripheral callback:^(BOOL isConnected, NSUInteger serviceDiscoverEvent, CBPeripheral *peripheral) {
+                    if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERING) {
+                        NSLog(@"蓝牙已连接，正在搜索服务...");
+                    } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERED) {
+                        NSLog(@"蓝牙已经连接，服务所搜完毕");
+                        self.peripheral = peripheral;
+                        [self.bleProfile notifyPeripheral:peripheral notifyValue:YES callback:^ (CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error) {
+                            if (error == nil) {
+                                NSLog(@"订阅成功...");
+                                
+                                char bytes[] = {1, 2, 3, 4};
+                                NSData* data = [[NSData alloc] initWithBytes:bytes length:sizeof(bytes)];
+                                [self.bleProfile writePeripheral:self.peripheral valueData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+                                    NSLog(@"向设备写入数据成功");
+                                }];
+                            }
+                        }];
+                    } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVER_FAIL) {
+                        NSLog(@"蓝牙已经连接，搜索服务失败");
+                    } else if (!isConnected) {
+                        NSLog(@"蓝牙连接失败");
+                    } else {
+                        NSLog(@"蓝牙连接过程中，出现未定义错误: %d %ld %@", isConnected, serviceDiscoverEvent, peripheral);
+                    }
+                }];
+            }
+        }
+    }];
+}
+
+- (void)BleProfileTest
+{
+    self.bleProfile = [BleProfile getInstance];
+    self.scanDeviceArray = [[NSMutableArray alloc] init];
+    
+    self.waitBleReadyTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(testStart) userInfo:nil repeats:NO];
+}
+
+
+/*
 - (void) bluetoothTest
 {
     NSUInteger scanDurations = 5;   // 扫描5秒
@@ -262,8 +317,15 @@
             NSLog(@"notify err: %@", error);
         } else {
             NSLog(@"notify char %@ done", ctic);
+            [self notifyEnabledDone];
         }
     }];
 }
+
+- (void) notifyEnabledDone
+{
+    
+}
+*/
 
 @end
