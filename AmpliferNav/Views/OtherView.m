@@ -7,6 +7,10 @@
 
 #import "OtherView.h"
 
+#define OUTER_MODE      0x00
+#define NORMAL_MODE     0x01
+#define INVALID_MODE    0xFF
+
 @interface OtherView ()
 
 @property (nonatomic) UIButton* modeButton;
@@ -18,7 +22,10 @@
 @property (nonatomic) UIImageView* outerImageView;
 @property (nonatomic) UIImageView* normalImageView;
 
-@property (nonatomic) BOOL outerButtonSelected;
+@property (nonatomic) NSUInteger currentMode;
+
+@property (nonatomic) UIImage* outerImage;
+@property (nonatomic) UIImage* normalImage;
 
 @end
 
@@ -42,18 +49,17 @@
         NSUInteger imageTopMargin = 50;
         NSUInteger imagePosX = mainFrame.size.width/2 - imageSize/2;
         
+        self.outerImage = [UIImage imageNamed:@"outer"];
+        self.normalImage = [UIImage imageNamed:@"normal"];
+        
         self.modeButton = [[UIButton alloc] initWithFrame:CGRectMake(imagePosX, imageTopMargin, imageSize, imageSize)];
-        [self.modeButton setImage:[UIImage imageNamed:@"normal"] forState:UIControlStateNormal];
+//        [self.modeButton setImage:[UIImage imageNamed:@"normal"] forState:UIControlStateNormal];
         self.modeButton.contentMode = UIViewContentModeScaleAspectFit;
         
         self.modeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imagePosX, imageTopMargin, imageSize, imageSize)];
-        self.modeLabel.text = @"NORMAL";
         self.modeLabel.textAlignment = NSTextAlignmentCenter;
         
         UIFont* font = [UIFont systemFontOfSize:12];
-        
-        
-
 
         UIImageView* bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"按键底"]];
         
@@ -77,9 +83,6 @@
         self.outerImageView.frame = CGRectMake(buttonGroupHorizontalMargin, buttonGroupPosY, buttonWidth, buttonHeight);
         self.normalImageView.frame = CGRectMake(mainFrame.size.width - buttonGroupHorizontalMargin - buttonWidth, buttonGroupPosY, buttonWidth, buttonHeight);
         
-        self.outerButtonSelected = true;
-        self.normalImageView.hidden = true;
-        
         bgView.frame = CGRectMake(buttonGroupHorizontalMargin, buttonGroupPosY, mainFrame.size.width - 2*buttonGroupHorizontalMargin, buttonHeight);
 
         [self.outerButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
@@ -99,27 +102,41 @@
         [self addSubview:self.normalImageView];
         [self addSubview:self.outerButton];
         [self addSubview:self.normalButton];
+        
+        self.currentMode = OUTER_MODE;
     }
     
     self.hidden = true;
     return self;
 }
 
+- (void) setCurrentMode:(NSUInteger)currentMode
+{
+    _currentMode = currentMode;
+    if (_currentMode == OUTER_MODE) {
+        self.normalImageView.hidden = true;
+        self.outerImageView.hidden = false;
+        self.modeLabel.text = @"OUTER";
+        [self.modeButton setImage:self.normalImage forState:UIControlStateNormal];
+    } else if (_currentMode == NORMAL_MODE) {
+        self.outerImageView.hidden = true;
+        self.normalImageView.hidden = false;
+        self.modeLabel.text = @"NORMAL";
+        [self.modeButton setImage:self.outerImage forState:UIControlStateNormal];
+    }
+}
+
 - (void) outerButtonClicked
 {
-    if (!self.outerButtonSelected) {
-        self.outerImageView.hidden = false;
-        self.normalImageView.hidden = true;
-        self.outerButtonSelected = true;
+    if (_currentMode == NORMAL_MODE) {
+        self.currentMode = OUTER_MODE;
     }
 }
 
 - (void) normalButtonClicked
 {
-    if (self.outerButtonSelected) {
-        self.normalImageView.hidden = false;
-        self.outerImageView.hidden = true;
-        self.outerButtonSelected = false;
+    if (_currentMode == OUTER_MODE) {
+        self.currentMode = NORMAL_MODE;
     }
 }
 
