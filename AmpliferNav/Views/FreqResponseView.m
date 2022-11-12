@@ -8,6 +8,8 @@
 #import "FreqResponseView.h"
 #import "VolumeSlider.h"
 
+int freqResponseValues[5] = {50, 50, 50, 50, 50};
+
 @interface FreqResponseView ()
 
 @property (nonatomic) VolumeSlider* slider500;
@@ -15,12 +17,14 @@
 @property (nonatomic) VolumeSlider* slider2K;
 @property (nonatomic) VolumeSlider* slider3K;
 @property (nonatomic) VolumeSlider* slider4K;
+@property (nonatomic) NSArray* sliderGroup;
 
 @property (nonatomic) UILabel* valueLabel500;
 @property (nonatomic) UILabel* valueLabel1K;
 @property (nonatomic) UILabel* valueLabel2K;
 @property (nonatomic) UILabel* valueLabel3K;
 @property (nonatomic) UILabel* valueLabel4K;
+@property (nonatomic) NSArray* valueLabelGroup;
 
 @property (nonatomic) UILabel* label500;
 @property (nonatomic) UILabel* label1K;
@@ -59,8 +63,8 @@
         self.valueLabel2K = [self createValueLabel:2 posY:topMargin];
         self.valueLabel3K = [self createValueLabel:3 posY:topMargin];
         self.valueLabel4K = [self createValueLabel:4 posY:topMargin];
-        
-        
+        self.valueLabelGroup = @[self.valueLabel500, self.valueLabel1K, self.valueLabel2K, self.valueLabel3K, self.valueLabel4K];
+                
         NSUInteger sliderTopMargin = 10;
         NSUInteger sliderPosY = topMargin + self.labelHeight + sliderTopMargin;
         
@@ -69,6 +73,10 @@
         self.slider2K = [self createSlider:2 posY:sliderPosY];
         self.slider3K = [self createSlider:3 posY:sliderPosY];
         self.slider4K = [self createSlider:4 posY:sliderPosY];
+        
+        self.sliderGroup = @[self.slider500, self.slider1K, self.slider2K, self.slider3K, self.slider4K];
+        
+        [self updateAllFreqResponseValues];
         
         NSUInteger labelTopMargin = 10;
         NSUInteger labelPosY = sliderPosY + self.sliderHeight + labelTopMargin;
@@ -118,7 +126,39 @@
     NSUInteger sliderWidth = 50;
     
     NSUInteger posX = [self getPosX:index horizontalMargin:self.horizontalMargin widthValue:sliderWidth];
-    return [[VolumeSlider alloc] initWithPosStyle:CGRectMake(posX, posY, sliderWidth, self.sliderHeight) posStyle:SliderPosVertical];
+    VolumeSlider* slider = [[VolumeSlider alloc] initWithPosStyle:CGRectMake(posX, posY, sliderWidth, self.sliderHeight) posStyle:SliderPosVertical];
+    
+    [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    slider.minimumValue = 0;
+    slider.maximumValue = 100;
+    
+    return slider;
+}
+
+- (void)sliderValueChanged:(VolumeSlider*)sender
+{
+    NSUInteger roundedValue = round(sender.value / sender.step) * sender.step;
+    sender.value = roundedValue;
+    
+    NSUInteger index = [self.sliderGroup indexOfObject:sender];
+    [self setFreqResponseValue:index value:roundedValue];
+}
+
+- (void) setFreqResponseValue:(NSUInteger)index value:(NSUInteger)value
+{
+    VolumeSlider* slider = [self.sliderGroup objectAtIndex:index];
+    UILabel* valueLabel = [self.valueLabelGroup objectAtIndex:index];
+    
+    slider.value = value;
+    valueLabel.text = [NSString stringWithFormat:@"%ld%%", value];
+}
+
+- (void) updateAllFreqResponseValues
+{
+    for (int i=0; i<5; i++) {
+        [self setFreqResponseValue:i value:freqResponseValues[i]];
+    }
 }
 
 - (UILabel*) createValueLabel:(NSUInteger)index posY:(NSUInteger)posY
