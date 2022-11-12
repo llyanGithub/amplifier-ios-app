@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, SliderPosStyle){
 
 @interface VolumeSlider : UISlider
 
+@property (nonatomic) NSUInteger step;
 @property (nonatomic, assign) SliderPosStyle posStyle;
 
 - (instancetype)initWithPosStyle:(CGRect)frame posStyle:(SliderPosStyle)posStyle;

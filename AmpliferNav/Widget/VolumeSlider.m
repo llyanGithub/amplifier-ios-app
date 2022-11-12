@@ -7,6 +7,10 @@
 
 #import "VolumeSlider.h"
 
+@interface VolumeSlider ()
+
+@end
+
 @implementation VolumeSlider
 
 /*
@@ -26,6 +30,8 @@
     self = [super initWithFrame:frame];
     
     if (self != nil) {
+        self.step = 1;
+        
         self.posStyle = posStyle;
         if (posStyle == SliderPosVertical) {
             // 将控件旋转90度
