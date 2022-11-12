@@ -26,7 +26,11 @@
 @property (nonatomic) UIImageView* rightBatImageView;
 @property (nonatomic) UILabel* rightBatLabel;
 
+@property (nonatomic) NSUInteger homeButtonTopMargin;
 @property (nonatomic) NSUInteger horizontalMargin;
+@property (nonatomic) NSUInteger navButtonHeight;
+@property (nonatomic) NSUInteger navButtonWidth;
+@property (nonatomic) NSUInteger navButtonTopMargin;
 
 @end
 
@@ -37,26 +41,29 @@
     
     self.mainFrame = [UIScreen mainScreen].bounds;
     self.horizontalMargin = 20;
+    self.navButtonHeight = 60;
+    self.navButtonTopMargin = 10;
+    self.navButtonWidth = (self.mainFrame.size.width - 2*self.horizontalMargin)/5;
     
-    NSUInteger homeButtonTopMargin = 40;
+    self.homeButtonTopMargin = 40;
     
     UIView* batteryView = [self createBatteryView];
     NSUInteger batteryViewWidth = 75;
     NSUInteger batteryPosX = self.mainFrame.size.width - self.horizontalMargin - batteryViewWidth;
-    batteryView.frame = CGRectMake(batteryPosX, homeButtonTopMargin, batteryViewWidth, 25);
+    batteryView.frame = CGRectMake(batteryPosX, self.homeButtonTopMargin, batteryViewWidth, 25);
     
-    self.homeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.horizontalMargin, homeButtonTopMargin, 20, 20)];
+    self.homeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.homeButtonTopMargin, 20, 20)];
     [self.homeButton setImage:[UIImage imageNamed:@"返回主页按钮"] forState:UIControlStateNormal];
     
     [self createStack];
     
     // 创建5个导航按钮，并将其放入可变数组中
     self.buttonsArray = [[NSMutableArray alloc]init];
-    [self.buttonsArray addObject:[self createNavButton:@"模式"]];
-    [self.buttonsArray addObject:[self createNavButton:@"音量"]];
-    [self.buttonsArray addObject:[self createNavButton:@"频响"]];
-    [self.buttonsArray addObject:[self createNavButton:@"护耳"]];
-    [self.buttonsArray addObject:[self createNavButton:@"其他"]];
+    [self.buttonsArray addObject:[self createNavButton:@"模式" index:0 checkedImageName:[UIImage imageNamed:@"模式选中"] unCheckedImageName:[UIImage imageNamed:@"模式"]]];
+    [self.buttonsArray addObject:[self createNavButton:@"音量" index:1 checkedImageName:[UIImage imageNamed:@"音量选中"] unCheckedImageName:[UIImage imageNamed:@"音量"]]];
+    [self.buttonsArray addObject:[self createNavButton:@"频响" index:2 checkedImageName:[UIImage imageNamed:@"频响选中"] unCheckedImageName:[UIImage imageNamed:@"频响"]]];
+    [self.buttonsArray addObject:[self createNavButton:@"护耳" index:3 checkedImageName:[UIImage imageNamed:@"听力保护选中"] unCheckedImageName:[UIImage imageNamed:@"听力保护"]]];
+    [self.buttonsArray addObject:[self createNavButton:@"其它" index:4 checkedImageName:[UIImage imageNamed:@"其它选中"] unCheckedImageName:[UIImage imageNamed:@"其它"]]];
     
     // 创建子页面
     self.viewsArray = [[NSMutableArray alloc]init];
@@ -76,22 +83,17 @@
     
     modeView.hidden = false;
     
-//    [self.viewsArray addObject:[self createViews:UIColor.darkGrayColor frame:frame]];
-    
     for (UIView* view in self.viewsArray) {
         [self.mainStack addSubview:view];
     }
     
-    // 将按钮放入导航layout中
-    for (UIView* button in self.buttonsArray) {
-        [self.navStack addArrangedSubview:button];
-    }
-    
-    [self.mainStack addSubview:self.navStack];
-    
     [self.view addSubview:self.mainStack];
     [self.view addSubview:self.homeButton];
     [self.view addSubview:batteryView];
+    
+    for (NavButton* button in self.buttonsArray) {
+        [self.view addSubview:button];
+    }
 }
 
 - (UIView*) createBatteryView
@@ -127,12 +129,6 @@
     self.mainStack = [[UIStackView alloc] initWithFrame: self.mainFrame];
     self.mainStack.axis = UILayoutConstraintAxisVertical;
     self.mainStack.distribution = UIStackViewDistributionEqualSpacing;
-    
-    //nav 的位置在（20,80） 距离屏幕左右边界各20个point， 高度是40
-    self.navStack = [[UIStackView alloc] initWithFrame:CGRectMake(self.horizontalMargin, 80, self.mainFrame.size.width-self.horizontalMargin*2, 40)];
-    self.navStack.axis = UILayoutConstraintAxisHorizontal;
-    self.navStack.alignment = UIStackViewAlignmentFill;
-    self.navStack.distribution = UIStackViewDistributionEqualSpacing;
 }
 
 - (UIView*) createViews:(UIColor*)color frame:(CGRect)frame
@@ -153,22 +149,32 @@
     return view;
 }
 
-- (UIButton*)createNavButton:(NSString*)titleName
+- (NavButton*)createNavButton:(NSString*)titleName index:(NSUInteger)index checkedImageName:(UIImage*) checkedImage unCheckedImageName:(UIImage*)unCheckedImage
 {
-    UIButton* button = [[UIButton alloc]init];
+    NSUInteger buttonPosX = self.horizontalMargin + self.navButtonWidth*index;
+    NSUInteger buttonPosY = self.homeButtonTopMargin + self.homeButton.frame.size.height + self.navButtonTopMargin;
+    
+    NavButton* button = [[NavButton alloc] initWithCheckedImage:CGRectMake(buttonPosX, buttonPosY, self.navButtonWidth, self.navButtonHeight) checkedImage:checkedImage unCheckedImage:unCheckedImage];
+
     [button setTitle:titleName forState:UIControlStateNormal];
     [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:12];
     [button addTarget:self action:@selector(navButtonClicked:) forControlEvents:UIControlEventTouchDown];
-    
-    button.backgroundColor = UIColor.whiteColor;
+
+    [button layoutButtonWithImageStyle:ZJButtonImageStyleTop imageTitleToSpace:8];
     
     return button;
 }
 
-- (void)navButtonClicked:(UIButton *)sender
+- (void)navButtonClicked:(NavButton *)sender
 {
     NSUInteger index = [self.buttonsArray indexOfObject:sender];
     NSLog(@"button: %@ index: %ld clicked", sender.titleLabel.text, index);
+    
+    for (NavButton* button in self.buttonsArray) {
+        button.checked = false;
+    }
+    sender.checked = true;
     
     for (UIView* view in self.viewsArray) {
         view.hidden = true;
