@@ -353,6 +353,7 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
         
         type = CBCharacteristicWriteWithResponse;
     }
+    NSLog(@"Sending: %@", valueData);
     [peripheral writeValue:valueData forCharacteristic:characteristic type:type];
 }
 
@@ -399,6 +400,7 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
             didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
              error:(nullable NSError *)error
 {
+    NSLog(@"Receive: %@", characteristic.value);
     if (_notifyRecevied && (characteristic.properties & CBCharacteristicPropertyNotify)){
         _notifyRecevied(peripheral,characteristic,error);
         return;

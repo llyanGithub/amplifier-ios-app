@@ -89,15 +89,52 @@
         case AXON_COMMAND_QUERY_DEVICE:
             _errCode = payloadBuff[index++];
             _isTwsConnected = payloadBuff[index++];
-            _rightEarVersion = [[NSData alloc]initWithBytes:payloadBuff length:4];
+            _rightEarVersion = [[NSData alloc]initWithBytes:(payloadBuff+index) length:4];
             index += 4;
             
-            _rightEarVersion = [[NSData alloc] initWithBytes:payloadBuff length:4];
+            _rightEarVersion = [[NSData alloc] initWithBytes:(payloadBuff+index) length:4];
             index += 4;
             
             _rightEarBattery = payloadBuff[index++];
             _leftEarBattery = payloadBuff[index++];
             
+            break;
+            
+        case AXON_COMMAND_ANC_SWITCH:
+            _errCode = payloadBuff[0];
+            break;
+        case AXON_COMMAND_QUERY_ANC:
+            _errCode = payloadBuff[index++];
+            if (payloadLength == 2) {
+                _ancState = payloadBuff[index++];
+            }
+            break;
+        case AXON_COMMAND_QUERY_SOUND:
+        {
+            _errCode = payloadBuff[index++];
+            if (payloadLength > 1) {
+                _mode = payloadBuff[index++];
+                _rightVolume = payloadBuff[index++];
+                _leftVolume = payloadBuff[index++];
+                _rightFreqs = [[NSData alloc] initWithBytes:(payloadBuff+index) length:5];
+                index += 5;
+                _leftFreqs = [[NSData alloc] initWithBytes:(payloadBuff+index) length:5];
+                index += 5;
+                _rightEarProtection = payloadBuff[index] & 0x0F;
+                _leftEarProtection = (payloadBuff[index]&0xF0) >> 4;
+            }
+        }
+            break;
+        case AXON_COMMAND_EAR_PROTECT_SET:
+        case AXON_COMMAND_SET_FREQ:
+        case AXON_COMMAND_MODE_SELECTION:
+        case AXON_COMMAND_CONTROL_VOLUME:
+            
+        case AXON_COMMAND_DUT_MODE:
+        case AXON_COMMAND_FACTORY_MODE:
+        case AXON_COMMAND_OTA_MODE:
+        case AXON_COMMAND_SINGLE_MODE:
+            _errCode = payloadBuff[index++];
             break;
             
         default:
@@ -165,7 +202,7 @@
 
 - (NSData*) packVolumeModeSet
 {
-    byte cmd[5] = {0xFE, 0x05, 0x00, 0x01, 0x00, 0x00, 0x00};
+    byte cmd[] = {0xFE, 0x05, 0x00, 0x01, 0x00, 0x00, 0x00};
     cmd[4] = (byte)self.mode;
     
     [self addCrc16Value:cmd totalLen:sizeof(cmd)];

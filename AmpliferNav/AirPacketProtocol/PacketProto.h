@@ -25,20 +25,27 @@ NS_ASSUME_NONNULL_BEGIN
 #define AXON_COMMAND_SET_FREQ               (0x07)
 #define AXON_COMMAND_EAR_PROTECT_SET        (0x08)
 
+#define AXON_COMMAND_DUT_MODE               (0x09)
+#define AXON_COMMAND_FACTORY_MODE           (0x0A)
+#define AXON_COMMAND_OTA_MODE               (0x0B)
+#define AXON_COMMAND_SINGLE_MODE            (0x0C)
+
 typedef unsigned char byte;
 
 typedef void (^RxHandler) (NSUInteger cmdId, NSData* payload);
 
 @interface PacketProto : NSObject
 
-@property (nonatomic) NSUInteger ancState;
-@property (nonatomic) NSUInteger mode;
-@property (nonatomic) NSUInteger leftVolume;
-@property (nonatomic) NSUInteger rightVolume;
-@property (nonatomic) NSData* leftFreqs;
-@property (nonatomic) NSData* rightFreqs;
-@property (nonatomic) NSUInteger leftMode;
-@property (nonatomic) NSUInteger rightMode;
+@property (nonatomic, readwrite) NSUInteger ancState;
+@property (nonatomic, readwrite) NSUInteger mode;
+@property (nonatomic, readwrite) NSUInteger leftVolume;
+@property (nonatomic, readwrite) NSUInteger rightVolume;
+@property (nonatomic, readwrite) NSData* leftFreqs;
+@property (nonatomic, readwrite) NSData* rightFreqs;
+@property (nonatomic, readwrite) NSUInteger leftEarProtection;
+@property (nonatomic, readwrite) NSUInteger rightEarProtection;
+@property (nonatomic, readwrite) NSUInteger leftMode;
+@property (nonatomic, readwrite) NSUInteger rightMode;
 
 @property (nonatomic, readonly) NSUInteger errCode;
 @property (nonatomic, readonly) BOOL isTwsConnected;

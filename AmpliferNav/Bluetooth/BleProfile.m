@@ -65,7 +65,7 @@
         
         self.deviceName = @"H001-D";
 //        self.deviceName = @"H034-G";
-        self.scanDuration = 5;
+        self.scanDuration = 2;
         
         self.scanDeviceArray = [[NSMutableArray alloc] init];
     }
