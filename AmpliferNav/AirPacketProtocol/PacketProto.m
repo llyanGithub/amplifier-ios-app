@@ -72,8 +72,6 @@
     
     NSData* validateData = [data subdataWithRange: NSMakeRange(0, totalLen - 2)];
     
-    PacketInfo packetInfo;
-    
 //    NSLog(@"checksum: 0x%04x", [self crc16:validateData]);
     
     if (crc == [self crc16:validateData]) {
@@ -89,14 +87,16 @@
     unsigned char* payloadBuff = (unsigned char*)payload.bytes;
     switch (cmdId) {
         case AXON_COMMAND_QUERY_DEVICE:
-            packetInfo.errCode = payloadBuff[index++];
-            packetInfo.isTwsConnected = payloadBuff[index++];
-            memcpy(packetInfo.rightEarVerson, payloadBuff+index, 4);
+            _errCode = payloadBuff[index++];
+            _isTwsConnected = payloadBuff[index++];
+            _rightEarVersion = [[NSData alloc]initWithBytes:payloadBuff length:4];
             index += 4;
-            memcpy(packetInfo.leftEarVerson, payloadBuff+index, 4);
+            
+            _rightEarVersion = [[NSData alloc] initWithBytes:payloadBuff length:4];
             index += 4;
-            packetInfo.rightEarBattery = payloadBuff[index++];
-            packetInfo.leftEarBattery = payloadBuff[index++];
+            
+            _rightEarBattery = payloadBuff[index++];
+            _leftEarBattery = payloadBuff[index++];
             
             break;
             
@@ -105,7 +105,7 @@
     }
     
     if (handler) {
-        handler(cmdId, payload, &packetInfo);
+        handler(cmdId, payload);
     }
 }
 

@@ -25,18 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 #define AXON_COMMAND_SET_FREQ               (0x07)
 #define AXON_COMMAND_EAR_PROTECT_SET        (0x08)
 
-typedef struct {
-    unsigned char errCode;
-    unsigned char isTwsConnected;
-    unsigned char leftEarVerson[4];
-    unsigned char rightEarVerson[4];
-    unsigned char leftEarBattery;
-    unsigned char rightEarBattery;
-} PacketInfo ;
-
 typedef unsigned char byte;
 
-typedef void (^RxHandler) (NSUInteger cmdId, NSData* payload, PacketInfo* packetInfo);
+typedef void (^RxHandler) (NSUInteger cmdId, NSData* payload);
 
 @interface PacketProto : NSObject
 
@@ -48,6 +39,13 @@ typedef void (^RxHandler) (NSUInteger cmdId, NSData* payload, PacketInfo* packet
 @property (nonatomic) NSData* rightFreqs;
 @property (nonatomic) NSUInteger leftMode;
 @property (nonatomic) NSUInteger rightMode;
+
+@property (nonatomic, readonly) NSUInteger errCode;
+@property (nonatomic, readonly) BOOL isTwsConnected;
+@property (nonatomic, readonly) NSData* leftEarVersiion;
+@property (nonatomic, readonly) NSData* rightEarVersion;
+@property (nonatomic, readonly) NSUInteger leftEarBattery;
+@property (nonatomic, readonly) NSUInteger rightEarBattery;
 
 + (PacketProto*)getInstance;
 

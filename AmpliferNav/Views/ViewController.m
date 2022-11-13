@@ -206,10 +206,11 @@
     [self.bleProfile registerNotifyInd:^(CBPeripheral *peripheral,CBCharacteristic *characteristic,NSError *error) {
 //        NSLog(@"Received BLE Data: %@", characteristic.value);
         
-        [[PacketProto getInstance] parseReceviedPacket:characteristic.value compeletionHandler:^(NSUInteger cmdId, NSData* payload, PacketInfo* packetInfo) {
+        [[PacketProto getInstance] parseReceviedPacket:characteristic.value compeletionHandler:^(NSUInteger cmdId, NSData* payload) {
 //            NSLog(@"cmd: %ld, payload: %@", cmdId, payload);
+
             if (cmdId == AXON_COMMAND_QUERY_DEVICE) {
-                NSLog(@"leftBattery: %d rightBattery: %d isTwsConnected: %d", packetInfo->leftEarBattery, packetInfo->rightEarBattery, packetInfo->isTwsConnected);
+                NSLog(@"leftBattery: %ld rightBattery: %ld isTwsConnected: %d", self.packetProto.leftEarBattery, self.packetProto.rightEarBattery, self.packetProto.isTwsConnected);
             }
         }];
     }];
