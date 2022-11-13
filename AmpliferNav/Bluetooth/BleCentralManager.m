@@ -316,7 +316,7 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
     CBCharacteristic *targetChar = [self findCharacteristic:characteristicUUID inPeripheral:peripheral withError:&error];
     
     if (error) {
-//        NSLog(@"Can Not Found uuid: %@", characteristicUUID);
+        NSLog(@"Can Not Found uuid: %@", characteristicUUID);
         if (_notifyCallback) {
             _notifyCallback(peripheral, nil, error);
             return;
@@ -324,6 +324,7 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
     }
     
     if (targetChar.properties & CBCharacteristicPropertyNotify) {
+        NSLog(@"Notifying %@", targetChar);
          [peripheral setNotifyValue:isNotify forCharacteristic:targetChar];
     } else {
         NSLog(@"Properties cannot be subscribed to");
@@ -388,7 +389,7 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
  */
 - (void) registerNotifyRecivedCallback:(NotifyReceived)callback
 {
-    self.notifyCallback = callback;
+    self.notifyRecevied = callback;
 }
 
 /*
@@ -398,8 +399,8 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
             didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
              error:(nullable NSError *)error
 {
-    if (_notifyCallback && (characteristic.properties & CBCharacteristicPropertyNotify)){
-        _notifyCallback(peripheral,characteristic,error);
+    if (_notifyRecevied && (characteristic.properties & CBCharacteristicPropertyNotify)){
+        _notifyRecevied(peripheral,characteristic,error);
         return;
     }
     

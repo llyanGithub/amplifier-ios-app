@@ -8,6 +8,9 @@
 #import "BleProfile.h"
 
 
+#define USE_16BIT_UUID
+
+
 @interface BleProfile () <BleUserDelegate>
 
 @property (nonatomic) BleCentralManager* bleCentralManager;
@@ -45,11 +48,23 @@
     self = [super init];
     if (self) {
         self.bleCentralManager = [BleCentralManager getInstance];
-        self.serviceUUID = [CBUUID UUIDWithString:@"55AA0001-B5A3-F393-E0A9-E50E24DCCA9E"];
-        self.txUUID = [CBUUID UUIDWithString:@"55AA0002-B5A3-F393-E0A9-E50E24DCCA9E"];
-        self.rxUUID = [CBUUID UUIDWithString:@"55AA0003-B5A3-F393-E0A9-E50E24DCCA9E"];
+
         
-        self.deviceName = @"HJS_ZFZ";
+        self.serviceUUID = [CBUUID UUIDWithString:@"01005357-0000-1000-8000-00805f9b34fb"];
+//        self.serviceUUID = [CBUUID UUIDWithString:@"55AA0001-B5A3-F393-E0A9-E50E24DCCA9E"];
+#ifndef USE_16BIT_UUID
+        self.txUUID = [CBUUID UUIDWithString:@"00000057-0000-1000-8000-00805f9b34fb"];
+        self.rxUUID = [CBUUID UUIDWithString:@"00000052-0000-1000-8000-00805f9b34fb"];
+        
+//        self.txUUID = [CBUUID UUIDWithString:@"55AA0002-B5A3-F393-E0A9-E50E24DCCA9E"];
+//        self.rxUUID = [CBUUID UUIDWithString:@"55AA0003-B5A3-F393-E0A9-E50E24DCCA9E"];
+#else
+        self.txUUID = [CBUUID UUIDWithString:@"0057"];
+        self.rxUUID = [CBUUID UUIDWithString:@"0052"];
+#endif
+        
+        self.deviceName = @"H001-D";
+//        self.deviceName = @"H034-G";
         self.scanDuration = 5;
         
         self.scanDeviceArray = [[NSMutableArray alloc] init];
@@ -83,11 +98,12 @@
                         NSLog(@"Characteristics %@", service.characteristics);
                         
                         for (CBCharacteristic* characteristic in service.characteristics) {
-                            if ([characteristic.UUID.UUIDString isEqualToString:self.txUUID.UUIDString]) {
+                            NSLog(@"UUID: %@", characteristic.UUID.UUIDString);
+                            if ([characteristic.UUID.UUIDString isEqualToString:self.txUUID.UUIDString] || [characteristic.UUID.UUIDString isEqualToString:self.txUUID.UUIDString]) {
                                 txValidateDone = YES;
                             }
                             
-                            if ([characteristic.UUID.UUIDString isEqualToString:self.rxUUID.UUIDString]) {
+                            if ([characteristic.UUID.UUIDString isEqualToString:self.rxUUID.UUIDString] || [characteristic.UUID.UUIDString isEqualToString:self.rxUUID.UUIDString]) {
                                 rxValidateDone = YES;
                             }
                         }
@@ -116,7 +132,7 @@
 
 - (void)notifyPeripheral:(nonnull CBPeripheral *)peripheral notifyValue:(BOOL)isNotify callback:(nonnull NotifyCallback)callback
 {
-    [self.bleCentralManager notifyToPeripheral:peripheral characteristic:self.rxUUID notifyValue:true callback:^(CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error) {
+    [self.bleCentralManager notifyToPeripheral:peripheral characteristic:self.rxUUID notifyValue:isNotify callback:^(CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error) {
         if (error) {
             NSLog(@"notify err: %@", error);
         } else {

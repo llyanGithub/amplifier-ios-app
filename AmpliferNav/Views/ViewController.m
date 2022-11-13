@@ -14,6 +14,7 @@
 #import "OtherView.h"
 #import "BleCentralManager.h"
 #import "BleProfile.h"
+#import "PacketProto.h"
 
 @interface ViewController ()
 @property (nonatomic) UIStackView* mainStack;
@@ -38,6 +39,8 @@
 @property (nonatomic) NSMutableArray* scanDeviceArray;
 @property (nonatomic) CBPeripheral* peripheral;
 @property (nonatomic) NSTimer* waitBleReadyTimer;
+
+@property (nonatomic) PacketProto* packetProto;
 
 @end
 
@@ -102,6 +105,8 @@
         [self.view addSubview:button];
     }
     
+    self.packetProto = [PacketProto getInstance];
+    NSLog(@"packetProto: %@", self.packetProto);
     [self BleProfileTest];
 //    self.bleCentralManager = [BleCentralManager getInstance];
 //    self.scanDeviceArray = [[NSMutableArray alloc]init];
@@ -196,6 +201,30 @@
     view.hidden = false;
 }
 
+- (void) registerBleRxHandler
+{
+    [self.bleProfile registerNotifyInd:^(CBPeripheral *peripheral,CBCharacteristic *characteristic,NSError *error) {
+//        NSLog(@"Received BLE Data: %@", characteristic.value);
+        
+        [[PacketProto getInstance] parseReceviedPacket:characteristic.value compeletionHandler:^(NSUInteger cmdId, NSData* payload, PacketInfo* packetInfo) {
+//            NSLog(@"cmd: %ld, payload: %@", cmdId, payload);
+            if (cmdId == AXON_COMMAND_QUERY_DEVICE) {
+                NSLog(@"leftBattery: %d rightBattery: %d isTwsConnected: %d", packetInfo->leftEarBattery, packetInfo->rightEarBattery, packetInfo->isTwsConnected);
+            }
+        }];
+    }];
+}
+
+- (void) sendTestData
+{
+    NSData* queryDeviceInfoPkt = [[PacketProto getInstance] packInfoQuery];
+
+    NSLog(@"queryDeviceInfoPkt: %@", queryDeviceInfoPkt);
+    [[BleProfile getInstance] writePeripheral:self.peripheral valueData:queryDeviceInfoPkt callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入设备信息查询指令成功");
+    }];
+}
+
 - (void) testStart
 {
     if (self.bleProfile.blePowerState != CBManagerStatePoweredOn) {
@@ -216,15 +245,12 @@
                     } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERED) {
                         NSLog(@"蓝牙已经连接，服务所搜完毕");
                         self.peripheral = peripheral;
+                        [self registerBleRxHandler];
+                        
                         [self.bleProfile notifyPeripheral:peripheral notifyValue:YES callback:^ (CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error) {
                             if (error == nil) {
                                 NSLog(@"订阅成功...");
-                                
-                                char bytes[] = {1, 2, 3, 4};
-                                NSData* data = [[NSData alloc] initWithBytes:bytes length:sizeof(bytes)];
-                                [self.bleProfile writePeripheral:self.peripheral valueData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
-                                    NSLog(@"向设备写入数据成功");
-                                }];
+                                [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(sendTestData) userInfo:nil repeats:NO];
                             }
                         }];
                     } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVER_FAIL) {
@@ -243,89 +269,10 @@
 - (void)BleProfileTest
 {
     self.bleProfile = [BleProfile getInstance];
+    
     self.scanDeviceArray = [[NSMutableArray alloc] init];
     
     self.waitBleReadyTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(testStart) userInfo:nil repeats:NO];
 }
-
-
-/*
-- (void) bluetoothTest
-{
-    NSUInteger scanDurations = 5;   // 扫描5秒
-    self.scanTimer = [NSTimer scheduledTimerWithTimeInterval:scanDurations target:self selector:@selector(scanTimeout) userInfo:nil repeats:NO];
-    
-    [self.bleCentralManager startScan: ^(CBCentralManager *central,CBPeripheral *peripheral,NSDictionary *advertisementData, NSNumber *RSSI){
-        if (![self.scanDeviceArray containsObject:peripheral]) {
-            [self.scanDeviceArray addObject:peripheral];
-            NSLog(@"scan device: %@", peripheral.name);
-            
-            NSString *regex =@"HJS_ZFZ";
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
-            BOOL matched = [predicate evaluateWithObject:peripheral.name];
-            if (matched) {
-                NSLog(@"Found Device !!!!!!");
-                [self.scanTimer invalidate];
-//                [self.bleCentralManager connec]
-                [self connectDevice:peripheral];
-            }
-        }
-    }];
-}
-
-- (void) scanTimeout
-{
-    [self.bleCentralManager stopScan];
-    NSLog(@"BLE scanTimeout scan device num: %ld", self.scanDeviceArray.count);
-}
-
-- (void) connectDevice: (CBPeripheral*)peripheral
-{
-    [self.bleCentralManager connectPeripheral:peripheral options:nil connectedCallback: ^(BOOL isConnected) {
-        if (isConnected) {
-            NSLog(@"Device Connected Success !!!!");
-            [self discoveryServices:peripheral];
-        } else {
-            NSLog(@"Device Connected Fail !!!!");
-        }
-    }];
-}
-
-- (void)discoveryServices: (CBPeripheral *)peripheral
-{
-    [self.bleCentralManager discoveryServices:peripheral discoveryCallback:^(CBPeripheral *peripheral, NSError *error) {
-        
-        NSArray<CBService *> *services = peripheral.services;
-        NSLog(@"Discovery Services: %@", services);
-        for (CBService *service in services) {
-            [self.bleCentralManager discoverCharacteristics:nil forService:service inPeripheral:peripheral callback:^(CBPeripheral *peripheral,CBService *service,NSError *error){
-                NSLog(@"Characteristics %@", service.characteristics);
-                
-                self.peripheral = peripheral;
-                [self discoveryServicesDone];
-            }];
-        }
-    }];
-}
-
-- (void) discoveryServicesDone
-{
-    CBUUID* uuid = [CBUUID UUIDWithString:@"55AA0003-B5A3-F393-E0A9-E50E24DCCA9E"];
-    NSLog(@"uuid: %@", uuid);
-    [self.bleCentralManager notifyToPeripheral:self.peripheral characteristic:uuid notifyValue:true callback:^(CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error) {
-        if (error) {
-            NSLog(@"notify err: %@", error);
-        } else {
-            NSLog(@"notify char %@ done", ctic);
-            [self notifyEnabledDone];
-        }
-    }];
-}
-
-- (void) notifyEnabledDone
-{
-    
-}
-*/
 
 @end
