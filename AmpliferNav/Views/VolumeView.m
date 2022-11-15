@@ -8,6 +8,8 @@
 #import "VolumeView.h"
 #import "VolumeSlider.h"
 #import "SelectedButton.h"
+#import "PacketProto.h"
+#import "BleProfile.h"
 
 @interface VolumeView ()
 
@@ -15,8 +17,6 @@
 @property (nonatomic) UISlider* rightVolumeSlider;
 
 @property (nonatomic) NSArray* sliderArray;
-@property (nonatomic) NSUInteger leftVolumeValue;
-@property (nonatomic) NSUInteger rightVolumeValue;
 
 @property (nonatomic) UILabel* leftVolumeLabel;
 @property (nonatomic) UILabel* rightVolumeLabel;
@@ -69,6 +69,10 @@
         
         [self.leftVolumeSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         [self.rightVolumeSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        
+        [self.leftVolumeSlider addTarget:self action:@selector(sliderReleased:) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchUpOutside];
+        
+        [self.rightVolumeSlider addTarget:self action:@selector(sliderReleased:) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchUpOutside];
         
         self.leftVolumeSlider.minimumValue = 0;
         self.leftVolumeSlider.maximumValue = 100;
@@ -124,6 +128,18 @@
     self.rightVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", _rightVolumeValue];
 }
 
+- (void)sliderReleased:(VolumeSlider*)sender
+{
+    NSLog(@"sliderReleased leftVolume: %ld rightVolume: %ld", self.leftVolumeValue, self.rightVolumeValue);
+    [PacketProto getInstance].leftVolume = self.leftVolumeValue;
+    [PacketProto getInstance].rightVolume = self.rightVolumeValue;
+    
+    NSData* volumeControl = [[PacketProto getInstance] packVolumeControl];
+    [[BleProfile getInstance] writeDeviceData:volumeControl callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入音量控制指令成功");
+    }];
+}
+
 - (void)sliderValueChanged:(VolumeSlider*)sender
 {
     NSUInteger roundedValue = round(sender.value / sender.step) * sender.step;
@@ -131,11 +147,13 @@
     
     NSUInteger index = [self.sliderArray indexOfObject:sender];
     if (index == 0) {
+        _leftVolumeValue = roundedValue;
         self.leftVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
-        NSLog(@"Left Volume Changed: value: %ld", roundedValue);
+//        NSLog(@"Left Volume Changed: value: %ld", roundedValue);
     } else if (index == 1) {
+        _rightVolumeValue = roundedValue;
         self.rightVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
-        NSLog(@"Right Volume Changed: value: %ld", roundedValue);
+//        NSLog(@"Right Volume Changed: value: %ld", roundedValue);
     }
 }
 

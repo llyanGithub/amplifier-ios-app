@@ -7,6 +7,8 @@
 
 #import "FreqResponseView.h"
 #import "VolumeSlider.h"
+#import "PacketProto.h"
+#import "BleProfile.h"
 
 int freqResponseValues[5] = {50, 50, 50, 50, 50};
 
@@ -130,6 +132,8 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
     
     [slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     
+    [slider addTarget:self action:@selector(sliderReleased:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
+    
     slider.minimumValue = 0;
     slider.maximumValue = 100;
     
@@ -143,6 +147,32 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
     
     NSUInteger index = [self.sliderGroup indexOfObject:sender];
     [self setFreqResponseValue:index value:roundedValue];
+}
+
+- (void) sliderReleased:(VolumeSlider*) sender
+{
+    unsigned char value[5];
+    
+    for (int i=0; i<5; i++) {
+        VolumeSlider* slider = [self.sliderGroup objectAtIndex:i];
+        value[i] = (int)slider.value;
+    }
+    
+    [PacketProto getInstance].leftFreqs = [[NSData alloc] initWithBytes:value length:sizeof(value)];
+    
+    NSData* freqsSet = [[PacketProto getInstance] packFreqSet];
+    
+    [[BleProfile getInstance] writeDeviceData:freqsSet callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入频响控制指令成功");
+    }];
+}
+
+- (void)setLeftFreqResponseValue:(NSData*) data
+{
+    for (int i=0; i<5; i++) {
+        unsigned char* bytes = (unsigned char*)data.bytes;
+        [self setFreqResponseValue:i value:bytes[i]];
+    }
 }
 
 - (void) setFreqResponseValue:(NSUInteger)index value:(NSUInteger)value

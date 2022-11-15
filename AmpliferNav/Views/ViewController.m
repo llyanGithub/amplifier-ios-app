@@ -237,15 +237,30 @@
             /* 设置耳机ANC模式,回复Ack */
             } else if (cmdId == AXON_COMMAND_ANC_SWITCH) {
                 NSLog(@"收到ACK: AXON_COMMAND_ANC_SWITCH，errCode: %ld", self.packetProto.errCode);
+                
             /* 查询设备ANC模式 */
             } else if (cmdId == AXON_COMMAND_QUERY_ANC) {
                 NSLog(@"收到ACK: AXON_COMMAND_QUERY_ANC errCode: %ld ancState: %ld", self.packetProto.errCode, self.packetProto.ancState);
+                
+                // 设置当前ANC模式
+                self.otherView.currentMode = self.packetProto.ancState;
+                
             /* 查询耳机频响信息：当前模式（户内、户外、其他），左右耳音量，左右耳频响值，左右耳听力保护等级 */
             } else if (cmdId == AXON_COMMAND_QUERY_SOUND) {
                 NSLog(@"收到ACK: AXON_COMMAND_QUERY_SOUND errCode: %ld mode: %ld, rightVolume: %ld leftVolume: %ld, rightFreqs: %@, leftFreqs: %@, rightProtection: %ld leftProtection: %ld", self.packetProto.errCode, self.packetProto.mode, self.packetProto.rightVolume, self.packetProto.leftVolume, self.packetProto.rightFreqs, self.packetProto.leftFreqs, self.packetProto.rightEarProtection, self.packetProto.leftEarProtection);
                 
                 // 更新界面模式显示
                 self.modeView.currentMode = self.packetProto.mode;
+                // 更新左右耳音量显示
+                self.volumeView.leftVolumeValue = self.packetProto.leftVolume;
+                self.volumeView.rightVolumeValue = self.packetProto.rightVolume;
+                
+                // 更新耳机频响参数
+                [self.freqResponseView setLeftFreqResponseValue: self.packetProto.leftFreqs];
+                
+                // 更新护耳参数
+                [self.protectEarView setEarCompressValue:self.packetProto.leftEarProtection rightEarCompressValue:self.packetProto.rightEarProtection];
+                
             /* 设置耳机当前模式（户内、户外、其他） */
             } else if (cmdId == AXON_COMMAND_MODE_SELECTION) {
                 NSLog(@"收到ACK: AXON_COMMAND_MODE_SELECTION errCode: %ld", self.packetProto.errCode);

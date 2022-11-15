@@ -8,6 +8,9 @@
 #import "ProtectEarView.h"
 #import "ProtectEarSlider.h"
 #import "SelectedButton.h"
+#import "PacketProto.h"
+#import "BleProfile.h"
+
 
 @interface ProtectEarView ()
 
@@ -62,6 +65,7 @@
         
         self.leftSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(slidePosX, self.topMargin, sliderWidth, sliderHeight)];
         [self.leftSlider addTarget:self action:@selector(leftSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [self.leftSlider addTarget:self action:@selector(sliderReleased) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
         
         UIView* leftEarScaleView = [self createScaleView];
         NSUInteger scalePosX = slidePosX + 9;
@@ -81,6 +85,8 @@
         self.rightSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(slidePosX, rightSliderPosY, sliderWidth, sliderHeight)];
         
         [self.rightSlider addTarget:self action:@selector(rightSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        
+        [self.rightSlider addTarget:self action:@selector(sliderReleased) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
         
         self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, rightSliderPosY, labelWidth, labelHeight)];
         self.rightChannLabel.text = @"右耳";
@@ -134,6 +140,29 @@
     sender.value = roundedValue;
     
     _leftEarCompressValue = roundedValue;
+}
+
+- (void) sliderReleased
+{
+    PacketProto* packetProto = [PacketProto getInstance];
+    packetProto.leftEarProtection = _leftEarCompressValue;
+    packetProto.rightEarProtection = _rightEarCompressValue;
+    
+    NSLog(@"leftEarProtection: %ld rightEarProtection: %ld", _leftEarCompressValue, _rightEarCompressValue);
+    
+    NSData* data = [packetProto packEarProtectModeSet];
+    [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入护耳控制指令成功");
+    }];
+}
+
+- (void) setEarCompressValue:(NSUInteger)leftEarCompressValue rightEarCompressValue:(NSUInteger)rightEarCompressValue
+{
+    _leftEarCompressValue = leftEarCompressValue;
+    _rightEarCompressValue = rightEarCompressValue;
+    
+    self.leftSlider.value = _leftEarCompressValue;
+    self.rightSlider.value = _rightEarCompressValue;
 }
 
 - (void) rightSliderValueChanged:(ProtectEarSlider*)sender

@@ -11,6 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VolumeView : UIView
 
+@property (nonatomic) NSUInteger leftVolumeValue;
+@property (nonatomic) NSUInteger rightVolumeValue;
+
 @end
 
 NS_ASSUME_NONNULL_END

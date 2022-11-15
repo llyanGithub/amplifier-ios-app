@@ -66,8 +66,6 @@ typedef void (^RxHandler) (NSUInteger cmdId, NSData* payload);
 @property (nonatomic, readwrite) NSData* rightFreqs;
 @property (nonatomic, readwrite) NSUInteger leftEarProtection;
 @property (nonatomic, readwrite) NSUInteger rightEarProtection;
-@property (nonatomic, readwrite) NSUInteger leftMode;
-@property (nonatomic, readwrite) NSUInteger rightMode;
 
 @property (nonatomic, readonly) NSUInteger errCode;
 @property (nonatomic, readonly) BOOL isTwsConnected;

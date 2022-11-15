@@ -6,6 +6,9 @@
 //
 
 #import "OtherView.h"
+#import "PacketProto.h"
+#import "BleProfile.h"
+
 
 #define OUTER_MODE      0x00
 #define NORMAL_MODE     0x01
@@ -21,8 +24,6 @@
 
 @property (nonatomic) UIImageView* outerImageView;
 @property (nonatomic) UIImageView* normalImageView;
-
-@property (nonatomic) NSUInteger currentMode;
 
 @property (nonatomic) UIImage* outerImage;
 @property (nonatomic) UIImage* normalImage;
@@ -126,10 +127,22 @@
     }
 }
 
+- (void) writeDeviceAncMode:(NSUInteger) ancMode
+{
+    PacketProto* packetProto = [PacketProto getInstance];
+    packetProto.ancState = ancMode;
+    NSData* ancStatePacket = [packetProto packAncSwitch];
+    [[BleProfile getInstance] writeDeviceData:ancStatePacket callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入ANC切换指令成功");
+    }];
+}
+
 - (void) outerButtonClicked
 {
     if (_currentMode == NORMAL_MODE) {
         self.currentMode = OUTER_MODE;
+        
+        [self writeDeviceAncMode:OUTER_MODE];
     }
 }
 
@@ -137,6 +150,8 @@
 {
     if (_currentMode == OUTER_MODE) {
         self.currentMode = NORMAL_MODE;
+        
+        [self writeDeviceAncMode:NORMAL_MODE];
     }
 }
 

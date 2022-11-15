@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OtherView : UIView
 
+@property (nonatomic) NSUInteger currentMode;
+
 @end
 
 NS_ASSUME_NONNULL_END

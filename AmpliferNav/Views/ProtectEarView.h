@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ProtectEarView : UIView
 
+- (void) setEarCompressValue:(NSUInteger)leftEarCompressValue rightEarCompressValue:(NSUInteger)rightEarCompressValue;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -217,8 +217,8 @@
 - (NSData*) packVolumeControl
 {
     byte cmd[] = {0xFE, 0x06, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00};
-    cmd[4] = (byte)self.leftVolume;
-    cmd[5] = (byte)self.rightVolume;
+    cmd[4] = (byte)self.rightVolume;
+    cmd[5] = (byte)self.leftVolume;
     
     [self addCrc16Value:cmd totalLen:sizeof(cmd)];
     
@@ -232,8 +232,8 @@
 - (NSData*) packFreqSet;
 {
     byte cmd[] = {0xFE, 0x07, 0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-    byte* leftFreqs = (byte*)self.leftFreqs.bytes;
-    byte* rightFreqs = (byte*)self.rightFreqs.bytes;
+    byte* leftFreqs = (byte*)self.rightFreqs.bytes;
+    byte* rightFreqs = (byte*)self.leftFreqs.bytes;
     
 
     memcpy(cmd+4, leftFreqs, 5);
@@ -252,7 +252,7 @@
 - (NSData*) packEarProtectModeSet
 {
     byte cmd[] = {0xFE, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00};
-    byte mode = (self.leftMode<<4) | self.rightMode;
+    byte mode = (self.leftEarProtection<<4) | self.rightEarProtection;
     cmd[4] = (byte)mode;
     
     [self addCrc16Value:cmd totalLen:sizeof(cmd)];

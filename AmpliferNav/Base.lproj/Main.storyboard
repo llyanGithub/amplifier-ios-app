@@ -116,6 +116,12 @@
                     <view key="view" contentMode="scaleToFill" id="rOn-gn-4hj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5oD-1h-dre">
+                                <rect key="frame" x="148" y="375" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </slider>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="NnZ-cg-bpE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
