@@ -6,6 +6,7 @@
 //
 
 #import "BleProfile.h"
+#import "Queue.h"
 
 
 #define USE_16BIT_UUID
@@ -14,6 +15,7 @@
 @interface BleProfile () <BleUserDelegate>
 
 @property (nonatomic) BleCentralManager* bleCentralManager;
+@property (nonatomic) CBPeripheral* peripheral;
 @property (nonatomic) NSTimer* scanTimer;
 
 @property (nonatomic) CBUUID* serviceUUID;
@@ -27,6 +29,9 @@
 
 @property (nonatomic) UserScanCallback scanCallback;
 @property (nonatomic) UserConnectedCallback connectedCallback;
+
+@property (nonatomic) Queue* queue;
+@property (nonatomic) BOOL txBusy;
 
 @end
 
@@ -68,6 +73,8 @@
         self.scanDuration = 2;
         
         self.scanDeviceArray = [[NSMutableArray alloc] init];
+        self.queue = [[Queue alloc] init];
+        self.txBusy = NO;
     }
     return self;
 }
@@ -75,6 +82,41 @@
 - (CBManagerState)blePowerState
 {
     return self.bleCentralManager.blePowerState;
+}
+
+- (void) postTxTask
+{
+    NSLog(@"queue count: %ld", self.queue.count);
+    
+    if ([self.queue isEmpty]) {
+        return;
+    }
+    
+    if (self.txBusy) {
+        return;
+    }
+    
+    QueueItem* item = (QueueItem*)[self.queue peekItem];
+    
+    [self.bleCentralManager writeToPeripheral:self.peripheral uuid:self.txUUID valueData:item.data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        QueueItem* item = [self.queue pop];
+        if (item) {
+            item.block(peripheral, charactic, error);
+        }
+        
+        self.txBusy = NO;
+        [self postTxTask];
+    }];
+    
+    self.txBusy = YES;
+}
+
+- (void) writeDeviceData:(NSData*)data callback:(nonnull WriteDoneCallback)callback
+{
+    QueueItem* item = [[QueueItem alloc] initWithDataBlock:data block:callback];
+    
+    [self.queue push:item];
+    [self postTxTask];
 }
 
 - (void)connectDevice:(nonnull CBPeripheral *)peripheral callback:(nonnull UserConnectedCallback)callback
@@ -87,6 +129,8 @@
             if (self.connectedCallback) {
                 self.connectedCallback(YES, SERVICE_DISCOVERING, peripheral);
             }
+            
+            self.peripheral = peripheral;
             
             [self.bleCentralManager discoveryService:peripheral serviceUUID:self.serviceUUID discoveryCallback:^(CBPeripheral *peripheral, NSError *error) {
                 if (error == nil) {

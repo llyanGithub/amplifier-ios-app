@@ -16,18 +16,40 @@ NS_ASSUME_NONNULL_BEGIN
 #define AXON_MODE_INDOOR   0x02
 #define AXON_MODE_NORMAL   0x03
 
+/* 查询设备信息：tws是否连接上、左右耳机固件的版本，左右耳机的电量信息 */
 #define AXON_COMMAND_QUERY_DEVICE           (0x01)
+
+/* 设置耳机ANC模式 */
 #define AXON_COMMAND_ANC_SWITCH             (0x02)
+
+/* 查询设备ANC模式 */
 #define AXON_COMMAND_QUERY_ANC              (0x03)
+
+/* 查询耳机频响信息：当前模式（户内、户外、其他），左右耳音量，左右耳频响值，左右耳听力保护等级 */
 #define AXON_COMMAND_QUERY_SOUND            (0x04)
+
+/* 设置耳机当前模式（户内、户外、其他） */
 #define AXON_COMMAND_MODE_SELECTION         (0x05)
+
+/* 设置左右耳音量 */
 #define AXON_COMMAND_CONTROL_VOLUME         (0x06)
+
+/* 设置左右耳频响参数 */
 #define AXON_COMMAND_SET_FREQ               (0x07)
+
+/* 设置左右耳听力保护等级 */
 #define AXON_COMMAND_EAR_PROTECT_SET        (0x08)
 
+/* 设置耳机进入DUT模式 */
 #define AXON_COMMAND_DUT_MODE               (0x09)
+
+/* 设置耳机进入出厂设置模式 */
 #define AXON_COMMAND_FACTORY_MODE           (0x0A)
+
+/* 设置耳机进入OTA模式 */
 #define AXON_COMMAND_OTA_MODE               (0x0B)
+
+/* 设置耳机进入单耳模式 */
 #define AXON_COMMAND_SINGLE_MODE            (0x0C)
 
 typedef unsigned char byte;

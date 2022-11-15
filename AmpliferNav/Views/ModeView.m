@@ -6,6 +6,9 @@
 //
 
 #import "ModeView.h"
+#import "PacketProto.h"
+#include "BleProfile.h"
+#import <CoreBluetooth/CoreBluetooth.h>
 
 #define INVALID_MODE        0xFF
 #define OUTDOOR_MODE        0x00
@@ -23,7 +26,6 @@
 @property (nonatomic) UILabel* titleLable;
 @property (nonatomic) UILabel* contentLabel;
 
-@property (nonatomic) NSUInteger currentMode;
 @end
 
 @implementation ModeView
@@ -97,23 +99,36 @@
 
 - (void)buttonClicked:(ModeButton*)sender
 {
+    self.currentMode = [self.buttonArray indexOfObject:sender];
+    NSLog(@"current mode: %ld", self.currentMode);
+    
+    [PacketProto getInstance].mode = _currentMode;
+    NSData* modeSet = [[PacketProto getInstance] packVolumeModeSet];
+    [[BleProfile getInstance] writeDeviceData:modeSet callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入模式设置指令成功");
+    }];
+}
+
+- (void)setCurrentMode:(NSUInteger)currentMode
+{
+    switch (currentMode) {
+        case OUTDOOR_MODE:
+        case INDOOR_MODE:
+        case NORMAL_MODE:
+            break;
+            
+        default:
+            return;;
+    }
+    
+    _currentMode = currentMode;
+    
     for (ModeButton* button in self.buttonArray) {
         button.checked = false;
     }
-    sender.checked = true;
     
-    NSUInteger index = [self.buttonArray indexOfObject:sender];
-    if (index == 0) {
-        self.currentMode = OUTDOOR_MODE;
-    } else if (index == 1) {
-        self.currentMode = INDOOR_MODE;
-    } else if (index == 2) {
-        self.currentMode = NORMAL_MODE;
-    } else {
-        self.currentMode = INVALID_MODE;
-    }
-    
-    NSLog(@"current mode: %ld", self.currentMode);
+    ModeButton* button = (ModeButton*)[self.buttonArray objectAtIndex:currentMode];
+    button.checked = true;
 }
 
 

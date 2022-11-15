@@ -35,6 +35,12 @@
 @property (nonatomic) NSUInteger navButtonWidth;
 @property (nonatomic) NSUInteger navButtonTopMargin;
 
+@property (nonatomic) ModeView* modeView;
+@property (nonatomic) VolumeView* volumeView;
+@property (nonatomic) FreqResponseView* freqResponseView;
+@property (nonatomic) ProtectEarView* protectEarView;
+@property (nonatomic) OtherView* otherView;
+
 @property (nonatomic) BleProfile* bleProfile;
 @property (nonatomic) NSMutableArray* scanDeviceArray;
 @property (nonatomic) CBPeripheral* peripheral;
@@ -43,9 +49,24 @@
 @property (nonatomic) PacketProto* packetProto;
 @property (nonatomic) NSUInteger testCount;
 
+@property (nonatomic) NSUInteger currentMode;
+@property (nonatomic) NSUInteger isTwsConnected;
+@property (nonatomic) NSData* leftEarFirmwareVersion;
+@property (nonatomic) NSData* rightEarFirmVersion;
+@property (nonatomic) NSUInteger leftEarBatteryLevel;
+@property (nonatomic) NSUInteger rightEarBatteryLevel;
+@property (nonatomic) NSUInteger currentAncMode;
+
+
 @end
 
 @implementation ViewController
+
+- (void)setCurrentMode:(NSUInteger)currentMode
+{
+    _currentMode = currentMode;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,19 +101,19 @@
     self.viewsArray = [[NSMutableArray alloc]init];
     CGRect frame = CGRectMake(0, 120, self.mainFrame.size.width, self.mainFrame.size.height-120);
     
-    ModeView* modeView = [[ModeView alloc] initWithFrame:frame];
-    VolumeView* volumeView = [[VolumeView alloc] initWithFrame:frame];
-    FreqResponseView* freqResponseView = [[FreqResponseView alloc] initWithFrame:frame];
-    ProtectEarView* protectEarView = [[ProtectEarView alloc] initWithFrame:frame];
-    OtherView* otherView = [[OtherView alloc] initWithFrame:frame];
+    self.modeView = [[ModeView alloc] initWithFrame:frame];
+    self.volumeView = [[VolumeView alloc] initWithFrame:frame];
+    self.freqResponseView = [[FreqResponseView alloc] initWithFrame:frame];
+    self.protectEarView = [[ProtectEarView alloc] initWithFrame:frame];
+    self.otherView = [[OtherView alloc] initWithFrame:frame];
     
-    [self.viewsArray addObject:modeView];
-    [self.viewsArray addObject:volumeView];
-    [self.viewsArray addObject:freqResponseView];
-    [self.viewsArray addObject:protectEarView];
-    [self.viewsArray addObject:otherView];
+    [self.viewsArray addObject:self.modeView];
+    [self.viewsArray addObject:self.volumeView];
+    [self.viewsArray addObject:self.freqResponseView];
+    [self.viewsArray addObject:self.protectEarView];
+    [self.viewsArray addObject:self.otherView];
     
-    modeView.hidden = false;
+    self.modeView.hidden = false;
     
     for (UIView* view in self.viewsArray) {
         [self.mainStack addSubview:view];
@@ -210,28 +231,43 @@
         [[PacketProto getInstance] parseReceviedPacket:characteristic.value compeletionHandler:^(NSUInteger cmdId, NSData* payload) {
 //            NSLog(@"cmd: %ld, payload: %@", cmdId, payload);
 
+            /* 查询设备信息：tws是否连接上、左右耳机固件的版本，左右耳机的电量信息 */
             if (cmdId == AXON_COMMAND_QUERY_DEVICE) {
                 NSLog(@"收到ACK：AXON_COMMAND_QUERY_DEVICE，errCode: %ld leftBattery: %ld rightBattery: %ld isTwsConnected: %d", self.packetProto.errCode, self.packetProto.leftEarBattery, self.packetProto.rightEarBattery, self.packetProto.isTwsConnected);
+            /* 设置耳机ANC模式,回复Ack */
             } else if (cmdId == AXON_COMMAND_ANC_SWITCH) {
                 NSLog(@"收到ACK: AXON_COMMAND_ANC_SWITCH，errCode: %ld", self.packetProto.errCode);
+            /* 查询设备ANC模式 */
             } else if (cmdId == AXON_COMMAND_QUERY_ANC) {
                 NSLog(@"收到ACK: AXON_COMMAND_QUERY_ANC errCode: %ld ancState: %ld", self.packetProto.errCode, self.packetProto.ancState);
+            /* 查询耳机频响信息：当前模式（户内、户外、其他），左右耳音量，左右耳频响值，左右耳听力保护等级 */
             } else if (cmdId == AXON_COMMAND_QUERY_SOUND) {
                 NSLog(@"收到ACK: AXON_COMMAND_QUERY_SOUND errCode: %ld mode: %ld, rightVolume: %ld leftVolume: %ld, rightFreqs: %@, leftFreqs: %@, rightProtection: %ld leftProtection: %ld", self.packetProto.errCode, self.packetProto.mode, self.packetProto.rightVolume, self.packetProto.leftVolume, self.packetProto.rightFreqs, self.packetProto.leftFreqs, self.packetProto.rightEarProtection, self.packetProto.leftEarProtection);
+                
+                // 更新界面模式显示
+                self.modeView.currentMode = self.packetProto.mode;
+            /* 设置耳机当前模式（户内、户外、其他） */
             } else if (cmdId == AXON_COMMAND_MODE_SELECTION) {
                 NSLog(@"收到ACK: AXON_COMMAND_MODE_SELECTION errCode: %ld", self.packetProto.errCode);
+            /* 设置左右耳音量 */
             } else if (cmdId == AXON_COMMAND_CONTROL_VOLUME) {
                 NSLog(@"收到ACK: AXON_COMMAND_CONTROL_VOLUME errCode: %ld", self.packetProto.errCode);
+            /* 设置左右耳频响参数 */
             } else if (cmdId == AXON_COMMAND_SET_FREQ) {
                 NSLog(@"收到ACK: AXON_COMMAND_SET_FREQ errCode: %ld", self.packetProto.errCode);
+            /* 设置左右耳听力保护等级 */
             } else if (cmdId == AXON_COMMAND_EAR_PROTECT_SET) {
                 NSLog(@"收到ACK: AXON_COMMAND_EAR_PROTECT_SET errCode: %ld", self.packetProto.errCode);
+            /* 设置耳机进入DUT模式 */
             } else if (cmdId == AXON_COMMAND_DUT_MODE) {
                 NSLog(@"收到ACK: AXON_COMMAND_DUT_MODE errCode: %ld", self.packetProto.errCode);
+            /* 设置耳机进入出厂设置模式 */
             } else if (cmdId == AXON_COMMAND_FACTORY_MODE) {
                 NSLog(@"收到ACK: AXON_COMMAND_FACTORY_MODE errCode: %ld", self.packetProto.errCode);
+            /* 设置耳机进入OTA模式 */
             } else if (cmdId == AXON_COMMAND_OTA_MODE) {
                 NSLog(@"收到ACK: AXON_COMMAND_OTA_MODE errCode: %ld", self.packetProto.errCode);
+            /* 设置耳机进入单耳模式 */
             } else if (cmdId == AXON_COMMAND_SINGLE_MODE) {
                 NSLog(@"收到ACK: AXON_COMMAND_SINGLE_MODE errCode: %ld", self.packetProto.errCode);
             }
@@ -239,9 +275,23 @@
     }];
 }
 
-- (void) writeDeviceData:(NSData*)data callback:(nonnull WriteDoneCallback)callback
+- (void) getDeviceInfo
 {
-    [[BleProfile getInstance] writePeripheral:self.peripheral valueData:data callback:callback];
+    NSData* queryDeviceInfoPkt = [[PacketProto getInstance] packInfoQuery];
+    NSLog(@"queryDeviceInfoPkt: %@", queryDeviceInfoPkt);
+    [[BleProfile getInstance] writeDeviceData:queryDeviceInfoPkt callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入设备信息查询指令成功");
+    }];
+
+    NSData* queryAncState = [self.packetProto packAncStateQuery];
+    [[BleProfile getInstance] writeDeviceData:queryAncState callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入ANC状态查询指令成功");
+    }];
+
+    NSData* queryVolume = [self.packetProto packVolumeStateQuery];
+    [[BleProfile getInstance] writeDeviceData:queryVolume callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入声音查询指令成功");
+    }];
 }
 
 - (void) sendTestData
@@ -257,7 +307,7 @@
         {
             NSData* queryDeviceInfoPkt = [[PacketProto getInstance] packInfoQuery];
             NSLog(@"queryDeviceInfoPkt: %@", queryDeviceInfoPkt);
-            [self writeDeviceData:queryDeviceInfoPkt callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:queryDeviceInfoPkt callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入设备信息查询指令成功");
             }];
         }
@@ -266,7 +316,7 @@
         {
             self.packetProto.ancState = AXON_ANC_OUTER;
             NSData* ancStatePacket = [self.packetProto packAncSwitch];
-            [self writeDeviceData:ancStatePacket callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:ancStatePacket callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入ANC切换指令成功");
             }];
         }
@@ -275,7 +325,7 @@
         case 3:
         {
             NSData* queryAncState = [self.packetProto packAncStateQuery];
-            [self writeDeviceData:queryAncState callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:queryAncState callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入ANC状态查询指令成功");
             }];
         }
@@ -283,7 +333,7 @@
         case 4:
         {
             NSData* queryVolume = [self.packetProto packVolumeStateQuery];
-            [self writeDeviceData:queryVolume callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:queryVolume callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入声音查询指令成功");
             }];
         }
@@ -292,7 +342,7 @@
         {
             self.packetProto.mode = AXON_MODE_INDOOR;
             NSData* modeSet = [self.packetProto packVolumeModeSet];
-            [self writeDeviceData:modeSet callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:modeSet callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入模式设置指令成功");
             }];
         }
@@ -302,7 +352,7 @@
             self.packetProto.leftVolume = 20;
             self.packetProto.rightVolume = 30;
             NSData* volumeControl = [self.packetProto packVolumeControl];
-            [self writeDeviceData:volumeControl callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:volumeControl callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入音量控制指令成功");
             }];
         }
@@ -313,7 +363,7 @@
             self.packetProto.leftFreqs = [[NSData alloc] initWithBytes:leftFreqs length:sizeof(leftFreqs)];
             self.packetProto.rightFreqs = [[NSData alloc] initWithBytes:rightFreqs length:sizeof(rightFreqs)];
             NSData* freqsSet = [self.packetProto packFreqSet];
-            [self writeDeviceData:freqsSet callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:freqsSet callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入频响控制指令成功");
             }];
         }
@@ -322,26 +372,26 @@
             self.packetProto.leftEarProtection = 1;
             self.packetProto.rightEarProtection = 2;
             NSData* data = [self.packetProto packEarProtectModeSet];
-            [self writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入护耳控制指令成功");
             }];
         }
         case 9:
-            [self writeDeviceData:[self.packetProto packDutModeSet] callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:[self.packetProto packDutModeSet] callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入DUT控制指令成功");
             }];
             break;
         case 10:
-            [self writeDeviceData:[self.packetProto packFactoryModeSet] callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:[self.packetProto packFactoryModeSet] callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入恢复工厂设置指令成功");
             }];
             break;
         case 11:
-            [self writeDeviceData:[self.packetProto packOtaModeSet] callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:[self.packetProto packOtaModeSet] callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入OTA指令成功");
             }];
         case 12:
-            [self writeDeviceData:[self.packetProto packSingleEarModeSet] callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            [[BleProfile getInstance] writeDeviceData:[self.packetProto packSingleEarModeSet] callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
                 NSLog(@"写入单耳模式指令成功");
             }];
             break;
@@ -379,7 +429,7 @@
                                 NSLog(@"订阅成功...");
                                 
                                 self.testCount = 0;
-                                [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(sendTestData) userInfo:nil repeats:YES];
+                                [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
                             }
                         }];
                     } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVER_FAIL) {

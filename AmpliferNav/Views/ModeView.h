@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithFrame:(CGRect)frame;
 
+@property (nonatomic) NSUInteger currentMode;
+
 @end
 
 NS_ASSUME_NONNULL_END
