@@ -53,8 +53,6 @@
 @property (nonatomic) NSUInteger isTwsConnected;
 @property (nonatomic) NSData* leftEarFirmwareVersion;
 @property (nonatomic) NSData* rightEarFirmVersion;
-@property (nonatomic) NSUInteger leftEarBatteryLevel;
-@property (nonatomic) NSUInteger rightEarBatteryLevel;
 @property (nonatomic) NSUInteger currentAncMode;
 
 
@@ -234,6 +232,10 @@
             /* 查询设备信息：tws是否连接上、左右耳机固件的版本，左右耳机的电量信息 */
             if (cmdId == AXON_COMMAND_QUERY_DEVICE) {
                 NSLog(@"收到ACK：AXON_COMMAND_QUERY_DEVICE，errCode: %ld leftBattery: %ld rightBattery: %ld isTwsConnected: %d", self.packetProto.errCode, self.packetProto.leftEarBattery, self.packetProto.rightEarBattery, self.packetProto.isTwsConnected);
+                
+                // 设置左右耳电量信息，更新电量信息的图标
+                [self setLeftEarBatteryLevel:self.packetProto.leftEarBattery];
+                [self setRightEarBatteryLevel:self.packetProto.rightEarBattery];
             /* 设置耳机ANC模式,回复Ack */
             } else if (cmdId == AXON_COMMAND_ANC_SWITCH) {
                 NSLog(@"收到ACK: AXON_COMMAND_ANC_SWITCH，errCode: %ld", self.packetProto.errCode);
@@ -288,6 +290,45 @@
             }
         }];
     }];
+}
+
+- (UIImage*) getBatLevelImage:(NSUInteger)value
+{
+    if (value >=0 && value < 10) {
+        return [UIImage imageNamed:@"0％"];
+    } else if (value >=10 && value < 25) {
+        return [UIImage imageNamed:@"25％"];
+    } else if (value >= 25 && value < 50) {
+        return [UIImage imageNamed:@"50％"];
+    } else if (value >=50 && value < 75) {
+        return [UIImage imageNamed:@"75％"];
+    } else {
+        return [UIImage imageNamed:@"100％"];
+    }
+}
+
+- (void) setLeftEarBatteryLevel:(NSUInteger)leftEarBatteryLevel
+{
+    if (leftEarBatteryLevel == 0xFF || leftEarBatteryLevel == 0x00) {
+        self.leftBatLabel.hidden = true;
+        self.leftBatImageView.hidden = true;
+    } else {
+        self.leftBatImageView.hidden = false;
+        self.leftBatLabel.hidden = false;
+        [self.leftBatImageView setImage:[self getBatLevelImage:leftEarBatteryLevel]];
+    }
+}
+
+- (void) setRightEarBatteryLevel:(NSUInteger)rightEarBatteryLevel
+{
+    if (rightEarBatteryLevel == 0xFF || rightEarBatteryLevel == 0x00) {
+        self.rightBatLabel.hidden = true;
+        self.rightBatImageView.hidden = true;
+    } else {
+        self.rightBatImageView.hidden = false;
+        self.rightBatLabel.hidden = false;
+        [self.rightBatImageView setImage:[self getBatLevelImage:rightEarBatteryLevel]];
+    }
 }
 
 - (void) getDeviceInfo
