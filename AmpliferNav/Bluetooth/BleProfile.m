@@ -68,8 +68,7 @@
         self.rxUUID = [CBUUID UUIDWithString:@"0052"];
 #endif
         
-        self.deviceName = @"H001-D";
-//        self.deviceName = @"H034-G";
+        self.deviceName = @"[HTJ]0..-[GD]";
         self.scanDuration = 2;
         
         self.scanDeviceArray = [[NSMutableArray alloc] init];
@@ -207,6 +206,7 @@
             
             NSString *regex = self.deviceName;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
+            
             BOOL matched = [predicate evaluateWithObject:peripheral.name];
             if (matched && scanCallback) {
                 scanCallback(peripheral, advertisementData, RSSI, NO);
