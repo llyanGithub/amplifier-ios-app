@@ -31,7 +31,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xkh-BA-GBt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <viewLayoutGuide key="safeArea" id="7U6-1J-hkY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -127,7 +127,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-Pm-K7H">
+                                                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-Pm-K7H" customClass="ConnecteButton">
                                                     <rect key="frame" x="320" y="11" width="74" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
@@ -171,6 +171,7 @@
                         <outlet property="searchBorderImage" destination="a8F-jY-Hl2" id="R0i-hC-04S"/>
                         <outlet property="searchCenterImage" destination="IS3-yW-IFy" id="eih-uy-6j7"/>
                         <outlet property="searchTable" destination="Lge-Qv-HjF" id="5Ob-HT-QCR"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="segueMain" id="f9V-9c-Mg5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aX8-Yc-Odm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

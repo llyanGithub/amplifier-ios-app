@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BleProfile*) getInstance;
 
 @property (nonatomic, readonly) CBManagerState blePowerState;
+@property (nonatomic) CBPeripheral* peripheral;
 
 - (void) startScan:(UserScanCallback)scanCallback;
 

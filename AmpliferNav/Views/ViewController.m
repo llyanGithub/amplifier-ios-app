@@ -126,11 +126,13 @@
     }
     
     self.packetProto = [PacketProto getInstance];
+    self.bleProfile = [BleProfile getInstance];
+    
+    self.peripheral = self.bleProfile.peripheral;
+    [self registerBleRxHandler];
+    
     NSLog(@"packetProto: %@", self.packetProto);
-    [self BleProfileTest];
-//    self.bleCentralManager = [BleCentralManager getInstance];
-//    self.scanDeviceArray = [[NSMutableArray alloc]init];
-//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(bluetoothTest) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
 }
 
 - (UIView*) createBatteryView

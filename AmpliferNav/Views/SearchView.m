@@ -9,6 +9,8 @@
 #import "BleCentralManager.h"
 #import "BleProfile.h"
 #import "PacketProto.h"
+#import "ConnecteButton.h"
+#import "ViewController.h"
 
 
 #define ROTATE_TMER_INTERVAL (1/15.0)
@@ -28,6 +30,8 @@
 
 /* 需要拿到BLE PowerOn的通知之后才能扫描BLE广播，因此需要稍微延时一下 */
 @property (nonatomic) NSTimer* waitBleReadyTimer;
+
+@property (nonatomic)CBPeripheral* peripheral;
 
 @end
 
@@ -113,13 +117,67 @@
     UITableViewCell* cell = (UITableViewCell*)[self.searchTable dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     UILabel* nameLabel = (UILabel*)[cell viewWithTag:1];
     CBPeripheral *peripheral = [self.scanDeviceArray objectAtIndex:indexPath.row];
     nameLabel.text = peripheral.name;
     
+    ConnecteButton* button = (ConnecteButton*)[cell viewWithTag:2];
+    [button addTarget:self action:@selector(connectButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    button.row = indexPath.row;
+    
     return cell;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier  isEqual: @"segueMain"]) {
+        NSLog(@"prepareForSegue");
+        ViewController* destView = (ViewController*)segue.destinationViewController;
+        
+        //为视图控制器设置过渡类型
+        destView.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+        //为视图控制器设置显示样式
+        destView.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
+}
+
+- (void) connectDevice:(CBPeripheral*)peripheral
+{
+    [self.bleProfile connectDevice:peripheral callback:^(BOOL isConnected, NSUInteger serviceDiscoverEvent, CBPeripheral *peripheral) {
+        if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERING) {
+            NSLog(@"蓝牙已连接，正在搜索服务...");
+        } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERED) {
+            NSLog(@"蓝牙已经连接，服务所搜完毕");
+            self.peripheral = peripheral;
+            
+            [self.bleProfile notifyPeripheral:peripheral notifyValue:YES callback:^ (CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error) {
+                if (error == nil) {
+                    NSLog(@"订阅成功...");
+                    
+                    [self performSegueWithIdentifier:@"segueMain" sender:self];
+                }
+            }];
+        } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVER_FAIL) {
+            NSLog(@"蓝牙已经连接，搜索服务失败");
+        } else if (!isConnected) {
+            NSLog(@"蓝牙连接失败");
+        } else {
+            NSLog(@"蓝牙连接过程中，出现未定义错误: %d %ld %@", isConnected, serviceDiscoverEvent, peripheral);
+        }
+    }];
+}
+
+- (void) connectButtonClicked:(ConnecteButton*)sender
+{
+    NSLog(@"connectButtonClicked: %ld", sender.row);
+    
+    CBPeripheral* peripheral = [self.scanDeviceArray objectAtIndex:sender.row];
+    
+    [self connectDevice:peripheral];
 }
 
 /*

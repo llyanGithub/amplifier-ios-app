@@ -15,7 +15,6 @@
 @interface BleProfile () <BleUserDelegate>
 
 @property (nonatomic) BleCentralManager* bleCentralManager;
-@property (nonatomic) CBPeripheral* peripheral;
 @property (nonatomic) NSTimer* scanTimer;
 
 @property (nonatomic) CBUUID* serviceUUID;
