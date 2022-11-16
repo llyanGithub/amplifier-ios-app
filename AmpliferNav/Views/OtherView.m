@@ -10,10 +10,6 @@
 #import "BleProfile.h"
 
 
-#define OUTER_MODE      0x00
-#define NORMAL_MODE     0x01
-#define INVALID_MODE    0xFF
-
 @interface OtherView ()
 
 @property (nonatomic) UIButton* modeButton;
@@ -104,7 +100,7 @@
         [self addSubview:self.outerButton];
         [self addSubview:self.normalButton];
         
-        self.currentMode = OUTER_MODE;
+        self.currentMode = AXON_ANC_OUTER;
     }
     
     self.hidden = true;
@@ -114,12 +110,12 @@
 - (void) setCurrentMode:(NSUInteger)currentMode
 {
     _currentMode = currentMode;
-    if (_currentMode == OUTER_MODE) {
+    if (_currentMode == AXON_ANC_OUTER) {
         self.normalImageView.hidden = true;
         self.outerImageView.hidden = false;
         self.modeLabel.text = @"OUTER";
         [self.modeButton setImage:self.normalImage forState:UIControlStateNormal];
-    } else if (_currentMode == NORMAL_MODE) {
+    } else if (_currentMode == AXON_ANC_NORMAL) {
         self.outerImageView.hidden = true;
         self.normalImageView.hidden = false;
         self.modeLabel.text = @"NORMAL";
@@ -139,19 +135,21 @@
 
 - (void) outerButtonClicked
 {
-    if (_currentMode == NORMAL_MODE) {
-        self.currentMode = OUTER_MODE;
+    NSLog(@"outerButtonClicked");
+    if (_currentMode == AXON_ANC_NORMAL) {
+        self.currentMode = AXON_ANC_OUTER;
         
-        [self writeDeviceAncMode:OUTER_MODE];
+        [self writeDeviceAncMode:AXON_ANC_OUTER];
     }
 }
 
 - (void) normalButtonClicked
 {
-    if (_currentMode == OUTER_MODE) {
-        self.currentMode = NORMAL_MODE;
+    NSLog(@"normalButtonClicked");
+    if (_currentMode == AXON_ANC_OUTER) {
+        self.currentMode = AXON_ANC_NORMAL;
         
-        [self writeDeviceAncMode:NORMAL_MODE];
+        [self writeDeviceAncMode:AXON_ANC_NORMAL];
     }
 }
 

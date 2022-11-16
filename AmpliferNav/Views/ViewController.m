@@ -246,8 +246,10 @@
             } else if (cmdId == AXON_COMMAND_QUERY_ANC) {
                 NSLog(@"收到ACK: AXON_COMMAND_QUERY_ANC errCode: %ld ancState: %ld", self.packetProto.errCode, self.packetProto.ancState);
                 
-                // 设置当前ANC模式
-                self.otherView.currentMode = self.packetProto.ancState;
+                // 设置当前ANC模式,忽略模式AXON_ANC_ON，UI上看到好像不支持
+                if (self.packetProto.ancState != AXON_ANC_ON) {
+                    self.otherView.currentMode = self.packetProto.ancState;
+                }
                 
             /* 查询耳机频响信息：当前模式（户内、户外、其他），左右耳音量，左右耳频响值，左右耳听力保护等级 */
             } else if (cmdId == AXON_COMMAND_QUERY_SOUND) {
