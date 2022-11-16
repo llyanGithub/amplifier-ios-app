@@ -101,7 +101,7 @@
                                 <rect key="frame" x="120" y="50" width="174" height="458"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="搜索中心图标" translatesAutoresizingMaskIntoConstraints="NO" id="IS3-yW-IFy">
-                                <rect key="frame" x="87" y="264" width="240" height="128"/>
+                                <rect key="frame" x="87" y="215" width="240" height="128"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正在搜索附近设备..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbC-up-mZD">
                                 <rect key="frame" x="144" y="53" width="126.5" height="17"/>
@@ -113,17 +113,25 @@
                                 <rect key="frame" x="0.0" y="498" width="414" height="344"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发现的听力设备" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cR-8r-39F">
+                                <rect key="frame" x="20" y="469" width="122" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xJL-N7-XCL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="a8F-jY-Hl2" firstAttribute="top" secondItem="jbC-up-mZD" secondAttribute="bottom" constant="-20" id="1Cu-Xj-H2u"/>
                             <constraint firstItem="Lge-Qv-HjF" firstAttribute="leading" secondItem="xJL-N7-XCL" secondAttribute="leading" id="1SP-3X-XBP"/>
+                            <constraint firstItem="0cR-8r-39F" firstAttribute="leading" secondItem="xJL-N7-XCL" secondAttribute="leading" constant="20" id="4RG-0A-iBv"/>
                             <constraint firstItem="jbC-up-mZD" firstAttribute="centerX" secondItem="xJL-N7-XCL" secondAttribute="centerX" id="5xi-lw-QmO"/>
                             <constraint firstItem="Lge-Qv-HjF" firstAttribute="trailing" secondItem="xJL-N7-XCL" secondAttribute="trailing" id="7xw-yN-SuK"/>
                             <constraint firstItem="xJL-N7-XCL" firstAttribute="bottom" secondItem="a8F-jY-Hl2" secondAttribute="bottom" constant="300" id="AZE-zm-mcO"/>
                             <constraint firstItem="Lge-Qv-HjF" firstAttribute="top" secondItem="a8F-jY-Hl2" secondAttribute="bottom" constant="-10" id="O0x-Vm-pNq"/>
                             <constraint firstAttribute="bottom" secondItem="Lge-Qv-HjF" secondAttribute="bottom" id="WGn-it-aAh"/>
+                            <constraint firstItem="Lge-Qv-HjF" firstAttribute="top" secondItem="0cR-8r-39F" secondAttribute="bottom" constant="8" symbolic="YES" id="ZWs-kg-nNw"/>
                             <constraint firstItem="IS3-yW-IFy" firstAttribute="centerY" secondItem="a8F-jY-Hl2" secondAttribute="centerY" id="eKO-nq-QrY"/>
                             <constraint firstItem="a8F-jY-Hl2" firstAttribute="leading" secondItem="xJL-N7-XCL" secondAttribute="leading" constant="120" id="gXP-dl-mbB"/>
                             <constraint firstItem="xJL-N7-XCL" firstAttribute="trailing" secondItem="a8F-jY-Hl2" secondAttribute="trailing" constant="120" id="nIj-KZ-ygj"/>
@@ -132,6 +140,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lpt-eb-bPU"/>
+                    <connections>
+                        <outlet property="searchBorderImage" destination="a8F-jY-Hl2" id="R0i-hC-04S"/>
+                        <outlet property="searchCenterImage" destination="IS3-yW-IFy" id="eih-uy-6j7"/>
+                        <outlet property="searchTable" destination="Lge-Qv-HjF" id="5Ob-HT-QCR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aX8-Yc-Odm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

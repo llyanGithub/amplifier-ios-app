@@ -11,10 +11,20 @@
 #import "PacketProto.h"
 
 
+#define ROTATE_TMER_INTERVAL (1/15.0)
+#define ROTATE_DEGREE       (M_PI/6.0)
+
+
 @interface SearchView ()
 
 @property (nonatomic) BleProfile* bleProfile;
 @property (nonatomic) NSMutableArray* scanDeviceArray;
+@property (weak, nonatomic) IBOutlet UITableView *searchTable;
+@property (weak, nonatomic) IBOutlet UIImageView *searchCenterImage;
+@property (weak, nonatomic) IBOutlet UIImageView *searchBorderImage;
+
+@property (nonatomic) CGFloat currentDegree;
+@property (nonatomic) NSTimer* searchIconRotateTimer;
 
 /* 需要拿到BLE PowerOn的通知之后才能扫描BLE广播，因此需要稍微延时一下 */
 @property (nonatomic) NSTimer* waitBleReadyTimer;
@@ -44,14 +54,45 @@
     // 扫描之前，清空所有之前已经扫描到的设备
     [self.scanDeviceArray removeAllObjects];
     
+    self.currentDegree = 0.0;
+    [self startRotate];
+    
     [self.bleProfile startScan:^(CBPeripheral *peripheral,NSDictionary *advertisementData, NSNumber *RSSI, BOOL timeout){
         if (!timeout) {
             [self.scanDeviceArray addObject:peripheral];
             NSLog(@"Found Device: %@", peripheral.name);
         } else {
             NSLog(@"Scan Devices: %ld", self.scanDeviceArray.count);
+            [self stopRotate];
+            
+            self.currentDegree = 0.0;
+            CGAffineTransform trans = CGAffineTransformMakeRotation(self.currentDegree);
+            self.searchBorderImage.transform = trans;
+            
+            self.searchCenterImage.hidden = true;
+            [self.searchBorderImage setImage:[UIImage imageNamed:@"搜索完成图标"]];
         }
     }];
+}
+
+- (void) startRotate
+{
+    self.searchIconRotateTimer = [NSTimer scheduledTimerWithTimeInterval:ROTATE_TMER_INTERVAL target:self selector:@selector(rotateTimerHandler) userInfo:nil repeats:YES];
+}
+
+- (void) stopRotate
+{
+    if (self.searchIconRotateTimer) {
+        [self.searchIconRotateTimer invalidate];
+    }
+}
+
+- (void) rotateTimerHandler
+{
+    self.currentDegree = (self.currentDegree + ROTATE_DEGREE) <= M_PI*2 ? (self.currentDegree + ROTATE_DEGREE) : (self.currentDegree + ROTATE_DEGREE) - M_PI*2;
+    
+    CGAffineTransform trans = CGAffineTransformMakeRotation(self.currentDegree);
+    self.searchBorderImage.transform = trans;
 }
 
 /*
