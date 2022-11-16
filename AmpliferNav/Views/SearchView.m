@@ -11,6 +11,7 @@
 #import "PacketProto.h"
 #import "ConnecteButton.h"
 #import "ViewController.h"
+#include "ConnectedView.h"
 
 
 #define ROTATE_TMER_INTERVAL (1/15.0)
@@ -133,9 +134,19 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier  isEqual: @"segueMain"]) {
+    if ([segue.identifier  isEqual: @"segueConnected"]) {
         NSLog(@"prepareForSegue");
-        ViewController* destView = (ViewController*)segue.destinationViewController;
+        ConnectedView* destView = (ConnectedView*)segue.destinationViewController;
+        
+        destView.deviceName = self.peripheral.name;
+        NSUInteger strLen = self.peripheral.name.length;
+        NSString* lastLetter = [self.peripheral.name substringWithRange:NSMakeRange(strLen-2, 1)];
+        
+        if ([lastLetter isEqualToString:@"D"]) {
+            destView.deviceType = TWS_DEVICE_TYPE_D;
+        } else if ([lastLetter isEqualToString:@"G"]) {
+            destView.deviceType = TWS_DEVICE_TYPE_G;
+        }
         
         //为视图控制器设置过渡类型
         destView.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -158,7 +169,7 @@
                 if (error == nil) {
                     NSLog(@"订阅成功...");
                     
-                    [self performSegueWithIdentifier:@"segueMain" sender:self];
+                    [self performSegueWithIdentifier:@"segueConnected" sender:self];
                 }
             }];
         } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVER_FAIL) {

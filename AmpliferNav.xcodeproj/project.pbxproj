@@ -35,6 +35,7 @@
 		5D8C2EB8291A81A800355218 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EB7291A81A800355218 /* main.m */; };
 		5D8C2EC1291A912600355218 /* NavButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8C2EC0291A912600355218 /* NavButton.m */; };
 		5DF104DF2924D9EC001CDB9D /* ConnecteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF104DE2924D9EC001CDB9D /* ConnecteButton.m */; };
+		5DF104E32924E7D4001CDB9D /* ConnectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF104E22924E7D4001CDB9D /* ConnectedView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,8 @@
 		5D8C2EC0291A912600355218 /* NavButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavButton.m; sourceTree = "<group>"; };
 		5DF104DD2924D9EC001CDB9D /* ConnecteButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnecteButton.h; sourceTree = "<group>"; };
 		5DF104DE2924D9EC001CDB9D /* ConnecteButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnecteButton.m; sourceTree = "<group>"; };
+		5DF104E12924E7D4001CDB9D /* ConnectedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectedView.h; sourceTree = "<group>"; };
+		5DF104E22924E7D4001CDB9D /* ConnectedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnectedView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +155,8 @@
 				5D3BCF932924933A00454D64 /* SearchView.m */,
 				5D3BCF992924960F00454D64 /* LoadingView.h */,
 				5D3BCF9A2924960F00454D64 /* LoadingView.m */,
+				5DF104E12924E7D4001CDB9D /* ConnectedView.h */,
+				5DF104E22924E7D4001CDB9D /* ConnectedView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -317,6 +322,7 @@
 				5D3BCF8C2923C14100454D64 /* QueueItem.m in Sources */,
 				5DF104DF2924D9EC001CDB9D /* ConnecteButton.m in Sources */,
 				5D8C2EC1291A912600355218 /* NavButton.m in Sources */,
+				5DF104E32924E7D4001CDB9D /* ConnectedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
