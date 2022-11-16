@@ -15,7 +15,7 @@
 #define ROTATE_DEGREE       (M_PI/6.0)
 
 
-@interface SearchView ()
+@interface SearchView () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic) BleProfile* bleProfile;
 @property (nonatomic) NSMutableArray* scanDeviceArray;
@@ -36,6 +36,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.searchTable.dataSource = self;
+    self.searchTable.delegate = self;
     
     self.bleProfile = [BleProfile getInstance];
     self.scanDeviceArray = [[NSMutableArray alloc] init];
@@ -61,6 +64,7 @@
         if (!timeout) {
             [self.scanDeviceArray addObject:peripheral];
             NSLog(@"Found Device: %@", peripheral.name);
+            [self.searchTable reloadData];
         } else {
             NSLog(@"Scan Devices: %ld", self.scanDeviceArray.count);
             [self stopRotate];
@@ -93,6 +97,29 @@
     
     CGAffineTransform trans = CGAffineTransformMakeRotation(self.currentDegree);
     self.searchBorderImage.transform = trans;
+}
+
+
+// 返回行数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.scanDeviceArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* cellId = @"deviceCell";
+    
+    UITableViewCell* cell = (UITableViewCell*)[self.searchTable dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
+    }
+    
+    UILabel* nameLabel = (UILabel*)[cell viewWithTag:1];
+    CBPeripheral *peripheral = [self.scanDeviceArray objectAtIndex:indexPath.row];
+    nameLabel.text = peripheral.name;
+    
+    return cell;
 }
 
 /*
