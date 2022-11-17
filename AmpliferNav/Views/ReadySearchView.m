@@ -24,6 +24,10 @@
 - (IBAction)buttonClicked:(UIButton *)sender {
     NSLog(@"Search Button Clicked");
     [self performSegueWithIdentifier:@"segue2" sender:self];
+    
+    CGRect mainFrame = [UIScreen mainScreen].nativeBounds;
+    NSLog(@"22 %ld %ld", self.view.frame.size.width, self.view.frame.size.height);
+    NSLog(@"mainFrame: %ld %ld", mainFrame.size.width, mainFrame.size.height);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -92,6 +92,7 @@
 		5D8C2EB7291A81A800355218 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D8C2EBF291A912600355218 /* NavButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NavButton.h; sourceTree = "<group>"; };
 		5D8C2EC0291A912600355218 /* NavButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavButton.m; sourceTree = "<group>"; };
+		5D9175E82925FB2F003903E1 /* ScreenAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScreenAdapter.h; sourceTree = "<group>"; };
 		5DF104DD2924D9EC001CDB9D /* ConnecteButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnecteButton.h; sourceTree = "<group>"; };
 		5DF104DE2924D9EC001CDB9D /* ConnecteButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConnecteButton.m; sourceTree = "<group>"; };
 		5DF104E12924E7D4001CDB9D /* ConnectedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConnectedView.h; sourceTree = "<group>"; };
@@ -192,6 +193,7 @@
 				5D8C2EA6291A81A800355218 /* AppDelegate.m */,
 				5D8C2EA8291A81A800355218 /* SceneDelegate.h */,
 				5D8C2EA9291A81A800355218 /* SceneDelegate.m */,
+				5D9175E82925FB2F003903E1 /* ScreenAdapter.h */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -389,6 +391,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -446,6 +450,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

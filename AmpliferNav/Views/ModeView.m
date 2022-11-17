@@ -9,6 +9,7 @@
 #import "PacketProto.h"
 #include "BleProfile.h"
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "ScreenAdapter.h"
 
 #define INVALID_MODE        0xFF
 #define OUTDOOR_MODE        0x00
@@ -46,13 +47,12 @@
         
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         
-        NSUInteger topMargin = 20;
-        NSUInteger horizontalMargin = 20;
-        NSUInteger buttonHeight = 80;
+        NSUInteger topMargin = SHReadValue(20);
+        NSUInteger horizontalMargin = SHReadValue(20);
         NSUInteger buttonWidth = mainFrame.size.width - horizontalMargin*2;
-        NSUInteger spacing = 20;
+        NSUInteger spacing = SHReadValue(15);
+        NSUInteger buttonHeight = SHReadValue(100); //(mainFrame.size.height*2/3)/3 - spacing;
         
-        UIFont* font = [UIFont systemFontOfSize:12];
         
         self.outdoorButton = [self allocButton:CGRectMake(horizontalMargin, topMargin, buttonWidth, buttonHeight) checkedImageName:@"户外选中" unCheckedImageName:@"户外" titleText:@"户外模式"];
         self.indoorButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight+spacing+topMargin, buttonWidth, buttonHeight) checkedImageName:@"室内选中" unCheckedImageName:@"室内" titleText:@"室内模式"];
@@ -61,7 +61,7 @@
         self.buttonArray = @[self.outdoorButton, self.indoorButton, self.normalButton];
         
         
-        NSUInteger labelTopMargin = 10;
+        NSUInteger labelTopMargin = SHReadValue(30);
         NSUInteger labelYPos = buttonHeight*3+spacing*2+topMargin + labelTopMargin;
         
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos, buttonWidth, 40)];
@@ -70,6 +70,8 @@
         self.titleLable.text = @"常规模式：用于地铁或飞机等场景";
         self.contentLabel.text = @"请在其中选择最合适您的模式进行使用。\n如左右耳都已连接设备，将同步进行模式切换";
         self.contentLabel.numberOfLines = 2;
+        
+        UIFont* font = [UIFont systemFontOfSize:14];
         [self.titleLable setFont:font];
         [self.contentLabel setFont:font];
         

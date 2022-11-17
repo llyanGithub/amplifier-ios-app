@@ -15,6 +15,8 @@
 #import "BleCentralManager.h"
 #import "BleProfile.h"
 #import "PacketProto.h"
+#import "ScreenAdapter.h"
+
 
 @interface ViewController ()
 @property (nonatomic) UIStackView* mainStack;
@@ -55,6 +57,8 @@
 @property (nonatomic) NSData* rightEarFirmVersion;
 @property (nonatomic) NSUInteger currentAncMode;
 
+@property (nonatomic) BOOL isBangsScreen;
+
 
 @end
 
@@ -69,20 +73,39 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (UIApplication.sharedApplication.keyWindow.safeAreaInsets.top > 20) {
+        self.isBangsScreen = YES;
+        NSLog(@"是刘海屏");
+    } else {
+        self.isBangsScreen = NO;
+        NSLog(@"不是刘海屏");
+    }
+    
     self.mainFrame = [UIScreen mainScreen].bounds;
-    self.horizontalMargin = 20;
-    self.navButtonHeight = 60;
-    self.navButtonTopMargin = 10;
+    self.horizontalMargin = SHReadValue(20);
+    self.navButtonHeight = SHReadValue(45);
+    self.navButtonTopMargin = SHReadValue(20);
     self.navButtonWidth = (self.mainFrame.size.width - 2*self.horizontalMargin)/5;
     
-    self.homeButtonTopMargin = 40;
+    if (self.isBangsScreen) {
+        self.homeButtonTopMargin = SHReadValue(80);
+    } else {
+        self.homeButtonTopMargin = SHReadValue(40);
+    }
+    
+    self.homeButtonTopMargin = SHReadValue(60);
+
     
     UIView* batteryView = [self createBatteryView];
-    NSUInteger batteryViewWidth = 75;
+    NSUInteger batteryViewWidth = SHReadValue(60);
+    NSUInteger batteryViewHeight = SHReadValue(20);
     NSUInteger batteryPosX = self.mainFrame.size.width - self.horizontalMargin - batteryViewWidth;
-    batteryView.frame = CGRectMake(batteryPosX, self.homeButtonTopMargin, batteryViewWidth, 25);
+    batteryView.frame = CGRectMake(batteryPosX, self.homeButtonTopMargin, batteryViewWidth, batteryViewHeight);
     
-    self.homeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.homeButtonTopMargin, 20, 20)];
+    NSUInteger homeButtonWidth = SWReadValue(20);
+    NSUInteger homeButtonHeight = SWReadValue(20);
+    
+    self.homeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.homeButtonTopMargin, homeButtonWidth, homeButtonHeight)];
     [self.homeButton setImage:[UIImage imageNamed:@"返回主页按钮"] forState:UIControlStateNormal];
     
     [self createStack];
@@ -95,9 +118,11 @@
     [self.buttonsArray addObject:[self createNavButton:@"护耳" index:3 checkedImageName:[UIImage imageNamed:@"听力保护选中"] unCheckedImageName:[UIImage imageNamed:@"听力保护"]]];
     [self.buttonsArray addObject:[self createNavButton:@"其它" index:4 checkedImageName:[UIImage imageNamed:@"其它选中"] unCheckedImageName:[UIImage imageNamed:@"其它"]]];
     
+    NSUInteger subViewPosY = SWReadValue(self.homeButtonTopMargin + self.homeButton.frame.size.height + self.navButtonTopMargin + self.navButtonHeight);
+    
     // 创建子页面
     self.viewsArray = [[NSMutableArray alloc]init];
-    CGRect frame = CGRectMake(0, 120, self.mainFrame.size.width, self.mainFrame.size.height-120);
+    CGRect frame = CGRectMake(0, subViewPosY, self.mainFrame.size.width, self.mainFrame.size.height-subViewPosY);
     
     self.modeView = [[ModeView alloc] initWithFrame:frame];
     self.volumeView = [[VolumeView alloc] initWithFrame:frame];
@@ -125,6 +150,7 @@
         [self.view addSubview:button];
     }
     
+#if 0
     self.packetProto = [PacketProto getInstance];
     self.bleProfile = [BleProfile getInstance];
     
@@ -133,6 +159,8 @@
     
     NSLog(@"packetProto: %@", self.packetProto);
     [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
+#endif
+    
 }
 
 - (UIView*) createBatteryView
@@ -168,24 +196,6 @@
     self.mainStack = [[UIStackView alloc] initWithFrame: self.mainFrame];
     self.mainStack.axis = UILayoutConstraintAxisVertical;
     self.mainStack.distribution = UIStackViewDistributionEqualSpacing;
-}
-
-- (UIView*) createViews:(UIColor*)color frame:(CGRect)frame
-{
-    UIView* view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = color;
-    view.hidden = true;
-    
-    NavButton* navButton = [[NavButton alloc]initWithCheckedImage:CGRectMake(50, 100, 300, 100) checkedImage:[UIImage imageNamed:@"模式选中"] unCheckedImage: [UIImage imageNamed:@"模式"]];
-    
-    [navButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    [navButton  setTitle:@"模式" forState:UIControlStateNormal];
-    [navButton layoutButtonWithImageStyle:ZJButtonImageStyleTop imageTitleToSpace:20];
-    navButton.checked = true;
-    
-    [view addSubview: navButton];
-    
-    return view;
 }
 
 - (NavButton*)createNavButton:(NSString*)titleName index:(NSUInteger)index checkedImageName:(UIImage*) checkedImage unCheckedImageName:(UIImage*)unCheckedImage
