@@ -27,6 +27,7 @@
 
 @property (nonatomic) UIButton* homeButton;
 @property (nonatomic) UILabel* leftBatLabel;
+@property (nonatomic) UIImageView* connectedImageView;
 @property (nonatomic) UIImageView* leftBatImageView;
 @property (nonatomic) UIImageView* rightBatImageView;
 @property (nonatomic) UILabel* rightBatLabel;
@@ -83,10 +84,18 @@
 
     
     UIView* batteryView = [self createBatteryView];
-    NSUInteger batteryViewWidth = SHReadValue(60);
+    NSUInteger batteryViewWidth = SHReadValue(54);
     NSUInteger batteryViewHeight = SHReadValue(20);
     NSUInteger batteryPosX = self.mainFrame.size.width - self.horizontalMargin - batteryViewWidth;
     batteryView.frame = CGRectMake(batteryPosX, self.homeButtonTopMargin, batteryViewWidth, batteryViewHeight);
+    
+    self.connectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"已连接"]];
+    self.connectedImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    NSUInteger connectedImageWidth = SWReadValue(30);
+    NSUInteger connectedImageHeight = SHReadValue(20);
+    NSUInteger connectedImageRightMargin = SWReadValue(10);
+    self.connectedImageView.frame = CGRectMake(batteryPosX - connectedImageWidth - connectedImageRightMargin, self.homeButtonTopMargin, connectedImageWidth, connectedImageHeight);
     
     NSUInteger homeButtonWidth = SWReadValue(20);
     NSUInteger homeButtonHeight = SWReadValue(20);
@@ -131,6 +140,7 @@
     [self.view addSubview:self.mainStack];
     [self.view addSubview:self.homeButton];
     [self.view addSubview:batteryView];
+    [self.view addSubview:self.connectedImageView];
     
     for (NavButton* button in self.buttonsArray) {
         [self.view addSubview:button];
@@ -160,6 +170,11 @@
     self.rightBatLabel = [[UILabel alloc] init];
     self.leftBatImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"50％"]];
     self.rightBatImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"50％"]];
+    
+    self.leftBatLabel.contentMode = UIViewContentModeScaleAspectFit;
+    self.rightBatLabel.contentMode = UIViewContentModeScaleAspectFit;
+    self.leftBatImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.rightBatImageView.contentMode = UIViewContentModeScaleAspectFit;
     
     self.leftBatLabel.text = @"左";
     self.rightBatLabel.text = @"右";
