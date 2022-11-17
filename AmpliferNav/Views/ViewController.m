@@ -237,7 +237,8 @@
     self.volumeView.rightVolumeValue = self.packetProto.rightVolume;
     
     // 更新耳机频响参数
-    [self.freqResponseView setLeftFreqResponseValue: self.packetProto.leftFreqs];
+    self.freqResponseView.leftEarSelectedButton.checked = YES;
+    [self.freqResponseView showLeftFreqResponseValue];
     
     // 更新护耳参数
     [self.protectEarView setEarCompressValue:self.packetProto.leftEarProtection rightEarCompressValue:self.packetProto.rightEarProtection];
@@ -280,9 +281,6 @@
                 // 更新左右耳音量显示
                 self.volumeView.leftVolumeValue = self.packetProto.leftVolume;
                 self.volumeView.rightVolumeValue = self.packetProto.rightVolume;
-                
-                // 更新耳机频响参数
-                [self.freqResponseView setLeftFreqResponseValue: self.packetProto.leftFreqs];
                 
                 // 更新护耳参数
                 [self.protectEarView setEarCompressValue:self.packetProto.leftEarProtection rightEarCompressValue:self.packetProto.rightEarProtection];

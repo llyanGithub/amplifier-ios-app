@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SelectedButton.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,7 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSData* leftFreqResponseValue;
 @property (nonatomic) NSData* rightFreqResponseValue;
 
-- (void)setLeftFreqResponseValue:(NSData*) data;
+@property (nonatomic) SelectedButton* leftEarSelectedButton;
+@property (nonatomic) SelectedButton* rightEarSelectedButton;
+
+- (void)showLeftFreqResponseValue;
+- (void)showRightFreqResponseValue;
 
 @end
 

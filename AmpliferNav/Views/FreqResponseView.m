@@ -11,9 +11,14 @@
 #import "BleProfile.h"
 #import "ScreenAdapter.h"
 #import "SelectedButton.h"
+#import "PacketProto.h"
 
 
 int freqResponseValues[5] = {50, 50, 50, 50, 50};
+
+#define NONE_SIDE 0x00
+#define LEFT_EAR 0x01
+#define RIGHT_EAR 0x02
 
 @interface FreqResponseView ()
 
@@ -37,9 +42,6 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
 @property (nonatomic) UILabel* label3K;
 @property (nonatomic) UILabel* label4K;
 
-@property (nonatomic) SelectedButton* leftEarSelectedButton;
-@property (nonatomic) SelectedButton* rightEarSelectedButton;
-
 @property (nonatomic) UILabel* leftChannLabel;
 @property (nonatomic) UILabel* rightChannLabel;
 
@@ -48,6 +50,8 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
 @property (nonatomic) NSUInteger horizontalMargin;
 @property (nonatomic) NSUInteger labelHeight;
 @property (nonatomic) NSUInteger sliderHeight;
+
+@property (nonatomic) NSUInteger currentEarSide;
 
 @end
 
@@ -108,6 +112,7 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
         UIView* channButtonView = [self createSelectedButtonView];
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         channButtonView.frame = CGRectMake(channHorizontalMargin, channButtonPosY, mainFrame.size.width - 2*channHorizontalMargin, channButtonHeight);
+        self.currentEarSide = NONE_SIDE;
         
         NSUInteger labelsViewHorizontalMargin = SWReadValue(120);
         NSUInteger labelsViewTopMargin = SHReadValue(2);
@@ -194,9 +199,11 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
     if (!self.leftEarSelectedButton.checked) {
         self.leftEarSelectedButton.checked = YES;
         self.rightEarSelectedButton.checked = NO;
+        [self showLeftFreqResponseValue];
     } else {
         self.leftEarSelectedButton.checked = NO;
         self.rightEarSelectedButton.checked = YES;
+        [self showRightFreqResponseValue];
     }
     
 //    self.leftEarSelectedButton.checked = !self.leftEarSelectedButton.checked;
@@ -250,7 +257,14 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
         value[i] = (int)slider.value;
     }
     
-    [PacketProto getInstance].leftFreqs = [[NSData alloc] initWithBytes:value length:sizeof(value)];
+    if (self.currentEarSide == LEFT_EAR) {
+        [PacketProto getInstance].leftFreqs = [[NSData alloc] initWithBytes:value length:sizeof(value)];
+    } else if (self.currentEarSide == RIGHT_EAR) {
+        [PacketProto getInstance].rightFreqs = [[NSData alloc] initWithBytes:value length:sizeof(value)];
+    } else {
+        return;
+    }
+
     
     NSData* freqsSet = [[PacketProto getInstance] packFreqSet];
     
@@ -259,8 +273,20 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
     }];
 }
 
-- (void)setLeftFreqResponseValue:(NSData*) data
+- (void)showLeftFreqResponseValue
 {
+    NSData* data = [PacketProto getInstance].leftFreqs;
+    self.currentEarSide = LEFT_EAR;
+    for (int i=0; i<5; i++) {
+        unsigned char* bytes = (unsigned char*)data.bytes;
+        [self setFreqResponseValue:i value:bytes[i]];
+    }
+}
+
+- (void)showRightFreqResponseValue
+{
+    self.currentEarSide = RIGHT_EAR;
+    NSData* data = [PacketProto getInstance].rightFreqs;
     for (int i=0; i<5; i++) {
         unsigned char* bytes = (unsigned char*)data.bytes;
         [self setFreqResponseValue:i value:bytes[i]];
