@@ -153,11 +153,20 @@
     if (index == 0) {
         _leftVolumeValue = roundedValue;
         self.leftVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
-//        NSLog(@"Left Volume Changed: value: %ld", roundedValue);
+        
+        if (self.allChanButton.checked && self.rightVolumeSlider.enabled) {
+            self.rightVolumeSlider.value = roundedValue;
+            self.rightVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
+        }
+
     } else if (index == 1) {
         _rightVolumeValue = roundedValue;
         self.rightVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
-//        NSLog(@"Right Volume Changed: value: %ld", roundedValue);
+
+        if (self.allChanButton.checked && self.leftVolumeSlider.enabled) {
+            self.leftVolumeSlider.value = roundedValue;
+            self.leftVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
+        }
     }
 }
 
@@ -172,6 +181,7 @@
     self.rightChannButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"右"] unCheckedImage:[UIImage imageNamed:@"右耳灰"]];
     
     self.allChanButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"链接选中"] unCheckedImage:[UIImage imageNamed:@"链接"]];
+    self.allChanButton.checked = NO;
     
     [stackView addArrangedSubview:self.leftChannButton];
     [stackView addArrangedSubview:self.allChanButton];
@@ -188,21 +198,7 @@
 
 - (void) buttonClicked:(SelectedButton*)sender
 {
-    NSUInteger index = [self.buttonGroup indexOfObject:sender];
-    if (index == 0 || index == 1) {
-        sender.checked = !sender.checked;
-        if (self.leftChannButton.checked && self.rightChannButton.checked) {
-            self.allChanButton.checked = true;
-        } else if (!self.leftChannButton.checked && !self.rightChannButton.checked) {
-            self.allChanButton.checked = false;
-        }
-
-    } else if (index == 2) {
-        BOOL checked = !sender.checked;
-        for (SelectedButton* button in self.buttonGroup) {
-            button.checked = checked;
-        }
-    }
+    sender.checked = !sender.checked;
     
     self.leftVolumeSlider.enabled = self.leftChannButton.checked;
     self.rightVolumeSlider.enabled = self.rightChannButton.checked;
