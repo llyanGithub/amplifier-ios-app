@@ -105,6 +105,7 @@
         self.allSelectedButton.frame = CGRectMake(self.horizontalMargin, self.topMargin+SHReadValue(60), SWReadValue(30), SHReadValue(54));
         
         [self.allSelectedButton addTarget:self action:@selector(selectedButtonClicked) forControlEvents:UIControlEventTouchDown];
+        self.allSelectedButton.checked = NO;
         
         [self addSubview:self.leftSlider];
         [self addSubview:self.rightSlider];
@@ -131,8 +132,8 @@
 - (void) selectedButtonClicked
 {
     self.allSelectedButton.checked = !self.allSelectedButton.checked;
-    self.leftSlider.enabled = self.allSelectedButton.checked;
-    self.rightSlider.enabled = self.allSelectedButton.checked;
+//    self.leftSlider.enabled = self.allSelectedButton.checked;
+//    self.rightSlider.enabled = self.allSelectedButton.checked;
 }
 
 - (void) leftSliderValueChanged:(ProtectEarSlider*)sender
@@ -141,6 +142,10 @@
     sender.value = roundedValue;
     
     _leftEarCompressValue = roundedValue;
+    if (self.allSelectedButton.checked) {
+        self.rightSlider.value = roundedValue;
+        _rightEarCompressValue = roundedValue;
+    }
 }
 
 - (void) sliderReleased
@@ -172,6 +177,11 @@
     sender.value = roundedValue;
     
     _rightEarCompressValue = roundedValue;
+    
+    if (self.allSelectedButton.checked) {
+        self.leftSlider.value = roundedValue;
+        _leftEarCompressValue = roundedValue;
+    }
 }
 
 - (void) setLeftEarCompressValue:(NSUInteger)leftEarCompressValue

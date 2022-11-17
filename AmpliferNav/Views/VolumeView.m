@@ -155,6 +155,7 @@
         self.leftVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
         
         if (self.allChanButton.checked && self.rightVolumeSlider.enabled) {
+            _rightVolumeValue = roundedValue;
             self.rightVolumeSlider.value = roundedValue;
             self.rightVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
         }
@@ -164,6 +165,7 @@
         self.rightVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
 
         if (self.allChanButton.checked && self.leftVolumeSlider.enabled) {
+            _leftVolumeValue = roundedValue;
             self.leftVolumeSlider.value = roundedValue;
             self.leftVolumeLabel.text = [NSString stringWithFormat:@"%ld%%", roundedValue];
         }
