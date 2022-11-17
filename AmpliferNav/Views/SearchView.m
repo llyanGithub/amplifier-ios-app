@@ -184,6 +184,7 @@
 
 - (void) connectDevice:(CBPeripheral*)peripheral
 {
+    [self.bleProfile stopScan];
     [self.bleProfile connectDevice:peripheral callback:^(BOOL isConnected, NSUInteger serviceDiscoverEvent, CBPeripheral *peripheral) {
         if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERING) {
             NSLog(@"蓝牙已连接，正在搜索服务...");

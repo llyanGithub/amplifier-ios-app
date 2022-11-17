@@ -7,6 +7,7 @@
 
 #import "BleProfile.h"
 #import "Queue.h"
+#import "PacketProto.h"
 
 
 #define USE_16BIT_UUID
@@ -172,6 +173,25 @@
     }];
 }
 
+- (void) getDeviceInfo
+{
+    NSData* queryDeviceInfoPkt = [[PacketProto getInstance] packInfoQuery];
+    NSLog(@"queryDeviceInfoPkt: %@", queryDeviceInfoPkt);
+    [self writeDeviceData:queryDeviceInfoPkt callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入设备信息查询指令成功");
+    }];
+
+    NSData* queryAncState = [[PacketProto getInstance] packAncStateQuery];
+    [self writeDeviceData:queryAncState callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入ANC状态查询指令成功");
+    }];
+
+    NSData* queryVolume = [[PacketProto getInstance] packVolumeStateQuery];
+    [self writeDeviceData:queryVolume callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+        NSLog(@"写入声音查询指令成功");
+    }];
+}
+
 - (void)notifyPeripheral:(nonnull CBPeripheral *)peripheral notifyValue:(BOOL)isNotify callback:(nonnull NotifyCallback)callback
 {
     [self.bleCentralManager notifyToPeripheral:peripheral characteristic:self.rxUUID notifyValue:isNotify callback:^(CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error) {
@@ -179,6 +199,13 @@
             NSLog(@"notify err: %@", error);
         } else {
             NSLog(@"notify char %@ done", ctic);
+            [self registerNotifyInd:^(CBPeripheral *peripheral,CBCharacteristic *characteristic,NSError *error) {
+                [[PacketProto getInstance] parseReceviedPacket:characteristic.value compeletionHandler:^(NSUInteger cmdId, NSData* payload) {
+                    // Do Nothing;
+                }];
+            }];
+            
+            [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
         }
         if (callback) {
             callback(peripheral, ctic, error);

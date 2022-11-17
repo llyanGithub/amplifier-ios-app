@@ -144,8 +144,7 @@
     [self registerBleRxHandler];
     
     NSLog(@"packetProto: %@", self.packetProto);
-    [self getDeviceInfo];
-//    [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
+    [self syncDeviceInfo];
 #endif
     
 }
@@ -218,6 +217,30 @@
     
     UIView* view = [self.viewsArray objectAtIndex: index];
     view.hidden = false;
+}
+
+- (void) syncDeviceInfo
+{
+    // 设置左右耳电量信息，更新电量信息的图标
+    [self setLeftEarBatteryLevel:self.packetProto.leftEarBattery];
+    [self setRightEarBatteryLevel:self.packetProto.rightEarBattery];
+    
+    // 设置当前ANC模式,忽略模式AXON_ANC_ON，UI上看到好像不支持
+    if (self.packetProto.ancState != AXON_ANC_ON) {
+        self.otherView.currentMode = self.packetProto.ancState;
+    }
+    
+    // 更新界面模式显示
+    self.modeView.currentMode = self.packetProto.mode;
+    // 更新左右耳音量显示
+    self.volumeView.leftVolumeValue = self.packetProto.leftVolume;
+    self.volumeView.rightVolumeValue = self.packetProto.rightVolume;
+    
+    // 更新耳机频响参数
+    [self.freqResponseView setLeftFreqResponseValue: self.packetProto.leftFreqs];
+    
+    // 更新护耳参数
+    [self.protectEarView setEarCompressValue:self.packetProto.leftEarProtection rightEarCompressValue:self.packetProto.rightEarProtection];
 }
 
 - (void) registerBleRxHandler
@@ -330,25 +353,6 @@
         self.rightBatLabel.hidden = false;
         [self.rightBatImageView setImage:[self getBatLevelImage:rightEarBatteryLevel]];
     }
-}
-
-- (void) getDeviceInfo
-{
-    NSData* queryDeviceInfoPkt = [[PacketProto getInstance] packInfoQuery];
-    NSLog(@"queryDeviceInfoPkt: %@", queryDeviceInfoPkt);
-    [[BleProfile getInstance] writeDeviceData:queryDeviceInfoPkt callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
-        NSLog(@"写入设备信息查询指令成功");
-    }];
-
-    NSData* queryAncState = [self.packetProto packAncStateQuery];
-    [[BleProfile getInstance] writeDeviceData:queryAncState callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
-        NSLog(@"写入ANC状态查询指令成功");
-    }];
-
-    NSData* queryVolume = [self.packetProto packVolumeStateQuery];
-    [[BleProfile getInstance] writeDeviceData:queryVolume callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
-        NSLog(@"写入声音查询指令成功");
-    }];
 }
 
 - (void) sendTestData
@@ -485,8 +489,8 @@
                             if (error == nil) {
                                 NSLog(@"订阅成功...");
                                 
-                                self.testCount = 0;
-                                [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
+//                                self.testCount = 0;
+//                                [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
                             }
                         }];
                     } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVER_FAIL) {
