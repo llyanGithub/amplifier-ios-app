@@ -9,6 +9,7 @@
 #import "VolumeSlider.h"
 #import "PacketProto.h"
 #import "BleProfile.h"
+#import "ScreenAdapter.h"
 
 int freqResponseValues[5] = {50, 50, 50, 50, 50};
 
@@ -54,11 +55,11 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSUInteger topMargin = 20;
+        NSUInteger topMargin = SHReadValue(20);
         
-        self.horizontalMargin = 30;
-        self.labelHeight = 20;
-        self.sliderHeight = 280;
+        self.horizontalMargin = SWReadValue(30);
+        self.labelHeight = SHReadValue(20);
+        self.sliderHeight = SHReadValue(280);
         
         self.valueLabel500 = [self createValueLabel:0 posY:topMargin];
         self.valueLabel1K = [self createValueLabel:1 posY:topMargin];
@@ -67,7 +68,7 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
         self.valueLabel4K = [self createValueLabel:4 posY:topMargin];
         self.valueLabelGroup = @[self.valueLabel500, self.valueLabel1K, self.valueLabel2K, self.valueLabel3K, self.valueLabel4K];
                 
-        NSUInteger sliderTopMargin = 10;
+        NSUInteger sliderTopMargin = SHReadValue(10);
         NSUInteger sliderPosY = topMargin + self.labelHeight + sliderTopMargin;
         
         self.slider500 = [self createSlider:0 posY:sliderPosY];
@@ -80,7 +81,7 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
         
         [self updateAllFreqResponseValues];
         
-        NSUInteger labelTopMargin = 10;
+        NSUInteger labelTopMargin = SHReadValue(10);
         NSUInteger labelPosY = sliderPosY + self.sliderHeight + labelTopMargin;
         
         self.label500 = [self createFreqLabel:0 posY:labelPosY title:@"500HZ"];
@@ -125,7 +126,7 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
 - (VolumeSlider*) createSlider:(NSUInteger)index posY:(NSUInteger)posY
 {
 //    NSUInteger sliderHorizontalMargin = 20;
-    NSUInteger sliderWidth = 50;
+    NSUInteger sliderWidth = SWReadValue(50);
     
     NSUInteger posX = [self getPosX:index horizontalMargin:self.horizontalMargin widthValue:sliderWidth];
     VolumeSlider* slider = [[VolumeSlider alloc] initWithPosStyle:CGRectMake(posX, posY, sliderWidth, self.sliderHeight) posStyle:SliderPosVertical];
@@ -193,7 +194,7 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
 
 - (UILabel*) createValueLabel:(NSUInteger)index posY:(NSUInteger)posY
 {
-    NSUInteger valueLabelWidth = 45;
+    NSUInteger valueLabelWidth = SWReadValue(45);
     
     NSUInteger posX = [self getPosX:index horizontalMargin:self.horizontalMargin widthValue:valueLabelWidth];
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, valueLabelWidth, self.labelHeight)];
@@ -207,7 +208,7 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
 
 - (UILabel*) createFreqLabel:(NSUInteger)index posY:(NSUInteger)posY title:(NSString*)title
 {
-    NSUInteger labelWidth = 50;
+    NSUInteger labelWidth = SWReadValue(50);
     
     NSUInteger posX = [self getPosX:index horizontalMargin:self.horizontalMargin widthValue:labelWidth];
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(posX, posY, labelWidth, self.labelHeight)];

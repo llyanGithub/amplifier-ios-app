@@ -8,6 +8,7 @@
 #import "OtherView.h"
 #import "PacketProto.h"
 #import "BleProfile.h"
+#import "ScreenAdapter.h"
 
 
 @interface OtherView ()
@@ -42,8 +43,8 @@
     if (self) {
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         
-        NSUInteger imageSize = 150;
-        NSUInteger imageTopMargin = 50;
+        NSUInteger imageSize = SWReadValue(200);
+        NSUInteger imageTopMargin = SHReadValue(50);
         NSUInteger imagePosX = mainFrame.size.width/2 - imageSize/2;
         
         self.outerImage = [UIImage imageNamed:@"outer"];
@@ -60,16 +61,12 @@
 
         UIImageView* bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"按键底"]];
         
-        NSUInteger buttonGroupHorizontalMargin = 80;
-        NSUInteger buttonWidth = 80;
-//        NSUInteger buttonWidth = (mainFrame.size.width - 2*buttonGroupHorizontalMargin) / 2;
-        NSUInteger buttonHeight = 40;
-        NSUInteger buttonGroupTopMargin = 60;
+        NSUInteger buttonGroupHorizontalMargin = SWReadValue(90);
+        NSUInteger buttonGroupTopMargin = SHReadValue(60);
         NSUInteger buttonGroupPosY = imageTopMargin + imageSize + buttonGroupTopMargin;
         
-//        UIView* bgView = [[UIView alloc] initWithFrame:CGRectMake(imagePosX, imageTopMargin+imageSize+20, 200, 50)];
-        self.outerButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonGroupHorizontalMargin, buttonGroupPosY, buttonWidth, buttonHeight)];
-        self.normalButton = [[UIButton alloc] initWithFrame:CGRectMake(mainFrame.size.width - buttonGroupHorizontalMargin - buttonWidth, buttonGroupPosY, buttonWidth, buttonHeight)];
+
+        NSUInteger buttonHeight = SHReadValue(48);
         
         self.outerButton.titleLabel.font = font;
         self.normalButton.titleLabel.font = font;
@@ -77,10 +74,16 @@
         self.outerImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"圆角矩形"]];
         self.normalImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"圆角矩形"]];
         
-        self.outerImageView.frame = CGRectMake(buttonGroupHorizontalMargin, buttonGroupPosY, buttonWidth, buttonHeight);
-        self.normalImageView.frame = CGRectMake(mainFrame.size.width - buttonGroupHorizontalMargin - buttonWidth, buttonGroupPosY, buttonWidth, buttonHeight);
-        
         bgView.frame = CGRectMake(buttonGroupHorizontalMargin, buttonGroupPosY, mainFrame.size.width - 2*buttonGroupHorizontalMargin, buttonHeight);
+        
+        NSUInteger buttonWidth = bgView.frame.size.width/2;
+        self.outerButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonGroupHorizontalMargin, buttonGroupPosY, buttonWidth, buttonHeight)];
+        self.normalButton = [[UIButton alloc] initWithFrame:CGRectMake(mainFrame.size.width - buttonGroupHorizontalMargin - buttonWidth, buttonGroupPosY, buttonWidth, buttonHeight)];
+        
+        NSUInteger imageViewWidth = bgView.frame.size.width/2;
+        NSUInteger imageViewHeight = buttonHeight;
+        self.outerImageView.frame = CGRectMake(buttonGroupHorizontalMargin, buttonGroupPosY, imageViewWidth, imageViewHeight);
+        self.normalImageView.frame = CGRectMake(mainFrame.size.width - buttonGroupHorizontalMargin - imageViewWidth, buttonGroupPosY, imageViewWidth, imageViewHeight);
 
         [self.outerButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
         [self.normalButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];

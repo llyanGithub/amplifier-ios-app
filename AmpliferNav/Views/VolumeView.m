@@ -10,6 +10,8 @@
 #import "SelectedButton.h"
 #import "PacketProto.h"
 #import "BleProfile.h"
+#import "ScreenAdapter.h"
+
 
 @interface VolumeView ()
 
@@ -48,20 +50,22 @@
     if (self) {
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         
-        NSUInteger topMargin = 20;
-        NSUInteger sliderTopMargin = 40;
+        NSUInteger topMargin = SHReadValue(20);
+        NSUInteger sliderTopMargin = SHReadValue(40);
         
-        NSUInteger sliderWidth = 40;
-        NSUInteger sliderHeight = 250;
+        NSUInteger sliderWidth = SWReadValue(40);
+        NSUInteger sliderHeight = SHReadValue(250);
         
-        NSUInteger sliderHorizontalMargin = 80;
+        NSUInteger sliderHorizontalMargin = SHReadValue(80);
 
         
         NSUInteger leftSliderPosX = sliderHorizontalMargin;
         NSUInteger rightSliderPosX = mainFrame.size.width - sliderHorizontalMargin - sliderWidth;
         
-        self.leftVolumeLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftSliderPosX, topMargin, 50, 30)];
-        self.rightVolumeLabel = [[UILabel alloc] initWithFrame:CGRectMake(rightSliderPosX, topMargin, 50, 30)];
+        NSUInteger leftVolumeLabelPosX = leftSliderPosX + SWReadValue(5);
+        NSUInteger rightVolumeLabelPosX = rightSliderPosX + SWReadValue(5);
+        self.leftVolumeLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftVolumeLabelPosX, topMargin, SWReadValue(50), SHReadValue(30))];
+        self.rightVolumeLabel = [[UILabel alloc] initWithFrame:CGRectMake(rightVolumeLabelPosX, topMargin, SWReadValue(50), SHReadValue(30))];
         
         self.leftVolumeSlider = [[VolumeSlider alloc] initWithPosStyle:CGRectMake(leftSliderPosX, topMargin+sliderTopMargin, sliderWidth, sliderHeight) posStyle:SliderPosVertical];
         self.rightVolumeSlider = [[VolumeSlider alloc] initWithPosStyle:CGRectMake(rightSliderPosX, topMargin+sliderTopMargin, sliderWidth, sliderHeight) posStyle:SliderPosVertical];
@@ -90,17 +94,17 @@
         [self addSubview:self.leftVolumeLabel];
         [self addSubview:self.rightVolumeLabel];
         
-        NSUInteger channHorizontalMargin = 65;
-        NSUInteger channTopMargin = 20;
-        NSUInteger channButtonHeight = 35;
+        NSUInteger channHorizontalMargin = SWReadValue(65);
+        NSUInteger channTopMargin = SHReadValue(20);
+        NSUInteger channButtonHeight = SHReadValue(35);
         NSUInteger channButtonPosY = topMargin + sliderTopMargin + sliderHeight + channTopMargin;
         
         UIView* channButtonView = [self createChannButtonView];
         channButtonView.frame = CGRectMake(channHorizontalMargin, channButtonPosY, mainFrame.size.width - 2*channHorizontalMargin, channButtonHeight);
         
-        NSUInteger labelsViewHorizontalMargin = 80;
-        NSUInteger labelsViewTopMargin = 2;
-        NSUInteger labelsViewHeight = 35;
+        NSUInteger labelsViewHorizontalMargin = SWReadValue(100);
+        NSUInteger labelsViewTopMargin = SHReadValue(2);
+        NSUInteger labelsViewHeight = SHReadValue(35);
         NSUInteger labelsViewPosY = channButtonPosY + channButtonHeight + labelsViewTopMargin;
         
         UIView* labelsView = [self createLabelsView];

@@ -10,6 +10,7 @@
 #import "SelectedButton.h"
 #import "PacketProto.h"
 #import "BleProfile.h"
+#import "ScreenAdapter.h"
 
 
 @interface ProtectEarView ()
@@ -41,10 +42,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSUInteger labelWidth = 40;
-        NSUInteger labelHeight = 40;
-        self.topMargin = 40;
-        self.horizontalMargin = 20;
+        NSUInteger labelWidth = SWReadValue(40);
+        NSUInteger labelHeight = SHReadValue(40);
+        self.topMargin = SHReadValue(80);
+        self.horizontalMargin = SWReadValue(40);
         
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         
@@ -53,13 +54,13 @@
         self.leftChannLabel.text = @"左耳";
         self.leftChannLabel.font = font;
         
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin+250, mainFrame.size.width - self.horizontalMargin*2, labelHeight*2)];
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin+SHReadValue(280), mainFrame.size.width - self.horizontalMargin*2, labelHeight*2)];
         self.descriptionLabel.text = @"护耳模式能够压缩响度过大声音的增益。\n例如：汽车鸣笛声、爆竹声等，防止给您带来不适。";
         self.descriptionLabel.numberOfLines = 3;
-        self.descriptionLabel.font = [UIFont systemFontOfSize:12];
+        self.descriptionLabel.font = [UIFont systemFontOfSize:14];
         
-        NSUInteger sliderLeftMargin = 10;
-        NSUInteger sliderHeight = 40;
+        NSUInteger sliderLeftMargin = SWReadValue(10);
+        NSUInteger sliderHeight = SHReadValue(40);
         NSUInteger slidePosX = self.horizontalMargin+labelWidth+sliderLeftMargin;
         NSUInteger sliderWidth = mainFrame.size.width - 2*self.horizontalMargin - labelWidth - sliderLeftMargin;
         
@@ -68,19 +69,19 @@
         [self.leftSlider addTarget:self action:@selector(sliderReleased) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
         
         UIView* leftEarScaleView = [self createScaleView];
-        NSUInteger scalePosX = slidePosX + 9;
-        NSUInteger scaleWidth = sliderWidth - 20;
-        NSUInteger scaleTopMargin = 5;
-        NSUInteger scaleViewHeight = 20;
+        NSUInteger scalePosX = slidePosX + SWReadValue(9);
+        NSUInteger scaleWidth = sliderWidth - SWReadValue(20);
+        NSUInteger scaleTopMargin = SHReadValue(5);
+        NSUInteger scaleViewHeight = SHReadValue(20);
         NSUInteger leftScalePosY = self.topMargin + sliderHeight + scaleTopMargin;
         leftEarScaleView.frame = CGRectMake(scalePosX, leftScalePosY, scaleWidth, scaleViewHeight);
         
-        self.leftCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - 40, leftScalePosY + scaleViewHeight + 5, 100, 20)];
+        self.leftCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), leftScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
         self.leftCompressLabel.text = @"压缩程度";
         self.leftCompressLabel.font = [UIFont systemFontOfSize:11];
         
         
-        NSUInteger rightSliderPosY = leftScalePosY + scaleViewHeight + 80;
+        NSUInteger rightSliderPosY = leftScalePosY + scaleViewHeight + SHReadValue(80);
         
         self.rightSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(slidePosX, rightSliderPosY, sliderWidth, sliderHeight)];
         
@@ -96,12 +97,12 @@
         NSUInteger rightScalePosY = rightSliderPosY + sliderHeight + scaleTopMargin;
         rightEarScaleView.frame = CGRectMake(scalePosX, rightScalePosY, scaleWidth, scaleViewHeight);
         
-        self.rightCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - 40, rightScalePosY + scaleViewHeight + 5, 100, 20)];
+        self.rightCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), rightScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
         self.rightCompressLabel.text = @"压缩程度";
         self.rightCompressLabel.font = [UIFont systemFontOfSize:11];
         
         self.allSelectedButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"护耳链接选中"] unCheckedImage:[UIImage imageNamed:@"护耳链接"]];
-        self.allSelectedButton.frame = CGRectMake(self.horizontalMargin, self.topMargin+60, 30, 54);
+        self.allSelectedButton.frame = CGRectMake(self.horizontalMargin, self.topMargin+SHReadValue(60), SWReadValue(30), SHReadValue(54));
         
         [self.allSelectedButton addTarget:self action:@selector(selectedButtonClicked) forControlEvents:UIControlEventTouchDown];
         

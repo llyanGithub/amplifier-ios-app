@@ -150,7 +150,7 @@
         [self.view addSubview:button];
     }
     
-#if 0
+#if 1
     self.packetProto = [PacketProto getInstance];
     self.bleProfile = [BleProfile getInstance];
     
@@ -158,7 +158,8 @@
     [self registerBleRxHandler];
     
     NSLog(@"packetProto: %@", self.packetProto);
-    [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
+    [self getDeviceInfo];
+//    [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
 #endif
     
 }
