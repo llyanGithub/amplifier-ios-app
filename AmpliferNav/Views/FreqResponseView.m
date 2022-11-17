@@ -10,6 +10,8 @@
 #import "PacketProto.h"
 #import "BleProfile.h"
 #import "ScreenAdapter.h"
+#import "SelectedButton.h"
+
 
 int freqResponseValues[5] = {50, 50, 50, 50, 50};
 
@@ -34,6 +36,14 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
 @property (nonatomic) UILabel* label2K;
 @property (nonatomic) UILabel* label3K;
 @property (nonatomic) UILabel* label4K;
+
+@property (nonatomic) SelectedButton* leftEarSelectedButton;
+@property (nonatomic) SelectedButton* rightEarSelectedButton;
+
+@property (nonatomic) UILabel* leftChannLabel;
+@property (nonatomic) UILabel* rightChannLabel;
+
+@property (nonatomic) NSArray* buttonGroup;
 
 @property (nonatomic) NSUInteger horizontalMargin;
 @property (nonatomic) NSUInteger labelHeight;
@@ -90,6 +100,23 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
         self.label3K = [self createFreqLabel:3 posY:labelPosY title:@"3kHz"];
         self.label4K = [self createFreqLabel:4 posY:labelPosY title:@"4kHz"];
         
+        NSUInteger channHorizontalMargin = SWReadValue(65);
+        NSUInteger channTopMargin = SHReadValue(20);
+        NSUInteger channButtonHeight = SHReadValue(35);
+        NSUInteger channButtonPosY = self.label500.frame.origin.y + self.labelHeight + channTopMargin;
+        
+        UIView* channButtonView = [self createSelectedButtonView];
+        CGRect mainFrame = [UIScreen mainScreen].bounds;
+        channButtonView.frame = CGRectMake(channHorizontalMargin, channButtonPosY, mainFrame.size.width - 2*channHorizontalMargin, channButtonHeight);
+        
+        NSUInteger labelsViewHorizontalMargin = SWReadValue(120);
+        NSUInteger labelsViewTopMargin = SHReadValue(2);
+        NSUInteger labelsViewHeight = SHReadValue(35);
+        NSUInteger labelsViewPosY = channButtonView.frame.origin.y + channButtonView.frame.size.height + labelsViewTopMargin;
+        
+        UIView* labelsView = [self createLabelsView];
+        labelsView.frame = CGRectMake(labelsViewHorizontalMargin, labelsViewPosY, mainFrame.size.width - 2*labelsViewHorizontalMargin, labelsViewHeight);
+        
         [self addSubview:self.valueLabel500];
         [self addSubview:self.valueLabel1K];
         [self addSubview:self.valueLabel2K];
@@ -108,10 +135,74 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
         [self addSubview:self.label3K];
         [self addSubview:self.label4K];
         
+        [self addSubview:channButtonView];
+        [self addSubview:labelsView];
+        
         self.hidden = true;
     }
     return self;
 }
+
+- (UIView*) createSelectedButtonView
+{
+    UIStackView* stackView = [[UIStackView alloc] init];
+    stackView.axis = UILayoutConstraintAxisHorizontal;
+    stackView.distribution = UIStackViewDistributionFillEqually;
+    
+    self.leftEarSelectedButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"左"] unCheckedImage:[UIImage imageNamed:@"左耳灰"]];
+    self.rightEarSelectedButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"右"] unCheckedImage:[UIImage imageNamed:@"右耳灰"]];
+    
+    [stackView addArrangedSubview:self.leftEarSelectedButton];
+    [stackView addArrangedSubview:self.rightEarSelectedButton];
+    
+    self.buttonGroup = @[self.leftEarSelectedButton, self.rightEarSelectedButton];
+    
+    for (SelectedButton* button in self.buttonGroup) {
+        [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchDown];
+    }
+    
+    self.leftEarSelectedButton.checked = NO;
+    self.rightEarSelectedButton.checked = NO;
+    
+    return (UIView*)stackView;
+}
+
+- (UIView*) createLabelsView
+{
+    UIStackView* stackView = [[UIStackView alloc] init];
+    stackView.axis = UILayoutConstraintAxisHorizontal;
+    stackView.distribution = UIStackViewDistributionEqualCentering;
+    
+    self.leftChannLabel = [[UILabel alloc] init];
+    self.rightChannLabel = [[UILabel alloc] init];
+    
+    self.leftChannLabel.text = @"左耳";
+    self.rightChannLabel.text = @"右耳";
+    
+    [stackView addArrangedSubview:self.leftChannLabel];
+    [stackView addArrangedSubview:self.rightChannLabel];
+    
+    return stackView;
+}
+
+- (void) buttonClicked:(SelectedButton*)sender
+{
+    if (sender.checked) {
+        return;
+    }
+    
+    if (!self.leftEarSelectedButton.checked) {
+        self.leftEarSelectedButton.checked = YES;
+        self.rightEarSelectedButton.checked = NO;
+    } else {
+        self.leftEarSelectedButton.checked = NO;
+        self.rightEarSelectedButton.checked = YES;
+    }
+    
+//    self.leftEarSelectedButton.checked = !self.leftEarSelectedButton.checked;
+//    self.rightEarSelectedButton.checked = !self.rightEarSelectedButton.checked;
+}
+
 
 - (NSUInteger) getPosX:(NSUInteger)index horizontalMargin:(NSUInteger)horizontalMargin widthValue:(NSUInteger)widthValue
 {
@@ -219,5 +310,6 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
     
     return label;
 }
+
 
 @end
