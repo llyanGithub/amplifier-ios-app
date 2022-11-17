@@ -73,25 +73,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (UIApplication.sharedApplication.keyWindow.safeAreaInsets.top > 20) {
-        self.isBangsScreen = YES;
-        NSLog(@"是刘海屏");
-    } else {
-        self.isBangsScreen = NO;
-        NSLog(@"不是刘海屏");
-    }
-    
     self.mainFrame = [UIScreen mainScreen].bounds;
     self.horizontalMargin = SHReadValue(20);
     self.navButtonHeight = SHReadValue(45);
     self.navButtonTopMargin = SHReadValue(20);
     self.navButtonWidth = (self.mainFrame.size.width - 2*self.horizontalMargin)/5;
-    
-    if (self.isBangsScreen) {
-        self.homeButtonTopMargin = SHReadValue(80);
-    } else {
-        self.homeButtonTopMargin = SHReadValue(40);
-    }
     
     self.homeButtonTopMargin = SHReadValue(60);
 

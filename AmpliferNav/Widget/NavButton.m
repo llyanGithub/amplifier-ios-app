@@ -12,19 +12,36 @@
 - (void)setChecked:(BOOL)checked
 {
     if (checked) {
-//        self.backgroundColor = checkedColor;
         [self setImage:self.checkedImage forState:UIControlStateNormal];
         [self setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-        
-        [self setUnderLine:YES];
+    
+        [self setShadow:YES];
+//        [self setUnderLine:YES];
     } else {
-//        self.backgroundColor = unCheckedColor;
         [self setImage:self.unCheckedImage forState:UIControlStateNormal];
         [self setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
         
-        [self setUnderLine: NO];
+        [self setShadow:NO];
+//        [self setUnderLine: NO];
     }
     _checked = checked;
+}
+
+- (void) setShadow:(BOOL) yes
+{
+    if (yes) {
+        self.backgroundColor = UIColor.whiteColor;
+        self.layer.cornerRadius = 5;
+        self.layer.shadowOffset =  CGSizeMake(0, 5);
+        self.layer.shadowOpacity = 0.2;
+        self.layer.shadowColor =  [UIColor blackColor].CGColor;
+    } else {
+        self.backgroundColor = nil;
+        self.layer.cornerRadius = 0;
+        self.layer.shadowOffset =  CGSizeMake(0, -3);
+        self.layer.shadowOpacity = 0.0;
+        self.layer.shadowColor =  [UIColor blackColor].CGColor;
+    }
 }
 
 - (void) setUnderLine:(BOOL) yes

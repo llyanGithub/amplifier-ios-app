@@ -11,20 +11,37 @@
 
 - (void)setChecked:(BOOL)checked
 {
-    UIColor* checkedColor = UIColor.whiteColor;
-    UIColor* unCheckedColor = [UIColor colorWithRed:232/255.0 green:233/255.0 blue:234/255.0 alpha:1];
     UIColor* titleChckedColor = [UIColor colorWithRed:0.0 green:103/255.0 blue:182/255.0 alpha:1];
 
     if (checked) {
-        self.backgroundColor = checkedColor;
         [self setImage:self.checkedImage forState:UIControlStateNormal];
         [self setTitleColor:titleChckedColor forState:UIControlStateNormal];
+        
+        [self setShadow:YES];
     } else {
-        self.backgroundColor = unCheckedColor;
         [self setImage:self.unCheckedImage forState:UIControlStateNormal];
         [self setTitleColor:UIColor.grayColor forState:UIControlStateNormal];
+        
+        [self setShadow:NO];
     }
     _checked = checked;
+}
+
+- (void) setShadow:(BOOL) yes
+{
+    if (yes) {
+        self.backgroundColor = UIColor.whiteColor;
+        self.layer.cornerRadius = 10.0;
+        self.layer.shadowOffset =  CGSizeMake(0, 5);
+        self.layer.shadowOpacity = 0.2;
+        self.layer.shadowColor =  [UIColor blackColor].CGColor;
+    } else {
+        self.backgroundColor = [UIColor colorWithRed:232/255.0 green:233/255.0 blue:234/255.0 alpha:1];;
+        self.layer.cornerRadius = 10.0;
+        self.layer.shadowOffset =  CGSizeMake(0, -3);
+        self.layer.shadowOpacity = 0.0;
+        self.layer.shadowColor =  [UIColor blackColor].CGColor;
+    }
 }
 
 - (instancetype)initWithCheckedImage:(CGRect)frame checkedImage:(UIImage*)checkedImage unCheckedImage:(UIImage*)unCheckedImage

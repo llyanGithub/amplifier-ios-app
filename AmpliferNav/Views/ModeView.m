@@ -94,8 +94,6 @@
     [button  setTitle:titleText forState:UIControlStateNormal];
     [button layoutButtonWithImageStyle:ButtonImageStyleTop imageTitleToSpace:20];
     
-    [button setCornerRadius:10.0];
-    
     return button;
 }
 
