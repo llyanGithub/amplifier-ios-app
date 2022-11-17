@@ -50,7 +50,7 @@
     if (self) {
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         
-        NSUInteger topMargin = SHReadValue(20);
+        NSUInteger topMargin = SHReadValue(30);
         NSUInteger sliderTopMargin = SHReadValue(40);
         
         NSUInteger sliderWidth = SWReadValue(40);

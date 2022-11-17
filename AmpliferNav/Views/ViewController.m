@@ -118,7 +118,7 @@
     [self.buttonsArray addObject:[self createNavButton:@"护耳" index:3 checkedImageName:[UIImage imageNamed:@"听力保护选中"] unCheckedImageName:[UIImage imageNamed:@"听力保护"]]];
     [self.buttonsArray addObject:[self createNavButton:@"其它" index:4 checkedImageName:[UIImage imageNamed:@"其它选中"] unCheckedImageName:[UIImage imageNamed:@"其它"]]];
     
-    NSUInteger subViewPosY = SWReadValue(self.homeButtonTopMargin + self.homeButton.frame.size.height + self.navButtonTopMargin + self.navButtonHeight);
+    NSUInteger subViewPosY = self.homeButtonTopMargin + self.homeButton.frame.size.height + self.navButtonTopMargin + self.navButtonHeight;
     
     // 创建子页面
     self.viewsArray = [[NSMutableArray alloc]init];
@@ -150,7 +150,7 @@
         [self.view addSubview:button];
     }
     
-#if 1
+#if 0
     self.packetProto = [PacketProto getInstance];
     self.bleProfile = [BleProfile getInstance];
     

@@ -47,7 +47,7 @@
         
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         
-        NSUInteger topMargin = SHReadValue(20);
+        NSUInteger topMargin = SHReadValue(30);
         NSUInteger horizontalMargin = SHReadValue(20);
         NSUInteger buttonWidth = mainFrame.size.width - horizontalMargin*2;
         NSUInteger spacing = SHReadValue(15);

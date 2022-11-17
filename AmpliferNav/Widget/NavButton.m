@@ -11,10 +11,6 @@
 
 - (void)setChecked:(BOOL)checked
 {
-    UIColor* checkedColor = UIColor.whiteColor;
-    UIColor* unCheckedColor = [UIColor colorWithRed:232/255.0 green:233/255.0 blue:234/255.0 alpha:1];
-    UIColor* titleChckedColor = [UIColor colorWithRed:0.0 green:103/255.0 blue:182/255.0 alpha:1];
-
     if (checked) {
 //        self.backgroundColor = checkedColor;
         [self setImage:self.checkedImage forState:UIControlStateNormal];

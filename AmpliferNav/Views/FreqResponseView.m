@@ -55,7 +55,7 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
 {
     self = [super initWithFrame:frame];
     if (self) {
-        NSUInteger topMargin = SHReadValue(20);
+        NSUInteger topMargin = SHReadValue(30);
         
         self.horizontalMargin = SWReadValue(30);
         self.labelHeight = SHReadValue(20);
