@@ -17,6 +17,8 @@ typedef NS_ENUM(NSInteger, ZJButtonImageStyle){
 };
 
 @interface NavButton : UIButton
+
+@property (nonatomic) NSString* titleName;
 @property (nonatomic, assign) BOOL checked;
 @property (nonatomic) UIImage* checkedImage;
 @property (nonatomic) UIImage* unCheckedImage;

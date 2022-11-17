@@ -205,8 +205,8 @@
     NSUInteger buttonPosY = self.homeButtonTopMargin + self.homeButton.frame.size.height + self.navButtonTopMargin;
     
     NavButton* button = [[NavButton alloc] initWithCheckedImage:CGRectMake(buttonPosX, buttonPosY, self.navButtonWidth, self.navButtonHeight) checkedImage:checkedImage unCheckedImage:unCheckedImage];
-
-    [button setTitle:titleName forState:UIControlStateNormal];
+    
+    button.titleName = titleName;
     [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:12];
     [button addTarget:self action:@selector(navButtonClicked:) forControlEvents:UIControlEventTouchDown];

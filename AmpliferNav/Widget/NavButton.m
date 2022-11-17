@@ -19,12 +19,34 @@
 //        self.backgroundColor = checkedColor;
         [self setImage:self.checkedImage forState:UIControlStateNormal];
         [self setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+        
+        [self setUnderLine:YES];
     } else {
 //        self.backgroundColor = unCheckedColor;
         [self setImage:self.unCheckedImage forState:UIControlStateNormal];
         [self setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+        
+        [self setUnderLine: NO];
     }
     _checked = checked;
+}
+
+- (void) setUnderLine:(BOOL) yes
+{
+    if (!self.titleName) {
+        return;
+    }
+    
+    NSDictionary *attribtDic;
+    if (yes) {
+        attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleThick]};
+    } else {
+        attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleNone]};
+    }
+        
+    NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:self.titleName attributes:attribtDic];
+    [self setAttributedTitle:attribtStr forState:UIControlStateNormal];
+    
 }
 
 - (instancetype)initWithCheckedImage:(CGRect)frame checkedImage:(UIImage*)checkedImage unCheckedImage:(UIImage*)unCheckedImage
@@ -34,9 +56,14 @@
         self.checkedImage = checkedImage;
         self.unCheckedImage = unCheckedImage;
         self.checked = false;
-//        [self addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchDown];
     }
     return self;
+}
+
+- (void)setTitleName:(NSString *)titleName
+{
+    _titleName = titleName;
+    [self setUnderLine:NO];
 }
 
 - (void)setCheckImage:(UIImage*)checkedImage unCheckedImage:(UIImage*)unCheckedImage
