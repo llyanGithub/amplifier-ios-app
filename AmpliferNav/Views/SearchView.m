@@ -98,16 +98,21 @@
             [self.searchTable reloadData];
         } else {
             NSLog(@"Scan Devices: %ld", self.scanDeviceArray.count);
-            [self stopRotate];
-            
-            self.currentDegree = 0.0;
-            CGAffineTransform trans = CGAffineTransformMakeRotation(self.currentDegree);
-            self.searchBorderImage.transform = trans;
-            
-            self.searchCenterImage.hidden = true;
-            [self.searchBorderImage setImage:[UIImage imageNamed:@"搜索完成图标"]];
+            [self searchDone];
         }
     }];
+}
+
+- (void) searchDone
+{
+    [self stopRotate];
+    
+    self.currentDegree = 0.0;
+    CGAffineTransform trans = CGAffineTransformMakeRotation(self.currentDegree);
+    self.searchBorderImage.transform = trans;
+    
+    self.searchCenterImage.hidden = true;
+    [self.searchBorderImage setImage:[UIImage imageNamed:@"搜索完成图标"]];
 }
 
 - (void) startRotate
@@ -184,6 +189,7 @@
 
 - (void) connectDevice:(CBPeripheral*)peripheral
 {
+    [self searchDone];
     [self.bleProfile stopScan];
     [self.bleProfile connectDevice:peripheral callback:^(BOOL isConnected, NSUInteger serviceDiscoverEvent, CBPeripheral *peripheral) {
         if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERING) {
