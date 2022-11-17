@@ -12,6 +12,7 @@
 #import "ConnecteButton.h"
 #import "ViewController.h"
 #include "ConnectedView.h"
+#include "ScreenAdapter.h"
 
 
 #define ROTATE_TMER_INTERVAL (1/15.0)
@@ -25,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *searchTable;
 @property (weak, nonatomic) IBOutlet UIImageView *searchCenterImage;
 @property (weak, nonatomic) IBOutlet UIImageView *searchBorderImage;
+@property (weak, nonatomic) IBOutlet UILabel *searchResultLabel;
+@property (weak, nonatomic) IBOutlet UILabel *searchStateLabel;
 
 @property (nonatomic) CGFloat currentDegree;
 @property (nonatomic) NSTimer* searchIconRotateTimer;
@@ -42,6 +45,30 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    CGRect mainFrame = [UIScreen mainScreen].bounds;
+    NSUInteger labelHeight = SHReadValue(20);
+    NSUInteger labelWidth = SWReadValue(150);
+    NSUInteger topMargin = SHReadValue(120);
+    
+    self.searchStateLabel.frame = CGRectMake(mainFrame.size.width/2-labelWidth/2, topMargin, labelWidth, labelHeight);
+    self.searchStateLabel.textAlignment = NSTextAlignmentCenter;
+    
+    NSUInteger searchBorderSize = SWReadValue(100);
+    NSUInteger imageTopMargin = SHReadValue(80);
+    NSUInteger imagePosY = topMargin + labelHeight + imageTopMargin;
+    
+    self.searchBorderImage.frame = CGRectMake(mainFrame.size.width/2 - searchBorderSize/2, imagePosY, searchBorderSize, searchBorderSize);
+    
+    NSUInteger searchCenterSize = SWReadValue(30);
+    NSUInteger searchCenterPosY = imagePosY + searchBorderSize/2 - searchCenterSize/2;
+    self.searchCenterImage.frame = CGRectMake(mainFrame.size.width/2 - searchCenterSize/2, searchCenterPosY, searchCenterSize, searchCenterSize);
+    
+    NSUInteger searchResultLabelTopMargin = SHReadValue(80);
+    self.searchResultLabel.frame = CGRectMake(SWReadValue(20), imagePosY+searchBorderSize + searchResultLabelTopMargin, labelWidth, labelHeight);
+    
+    NSUInteger tablePosY = self.searchResultLabel.frame.origin.y + labelHeight;
+    self.searchTable.frame = CGRectMake(0, tablePosY, mainFrame.size.width, mainFrame.size.height - tablePosY);
+    
     self.searchTable.dataSource = self;
     self.searchTable.delegate = self;
     
@@ -49,7 +76,6 @@
     self.scanDeviceArray = [[NSMutableArray alloc] init];
     
     self.waitBleReadyTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(searchDevice) userInfo:nil repeats:NO];
-//    [self searchDevice];
 }
 
 - (void) searchDevice

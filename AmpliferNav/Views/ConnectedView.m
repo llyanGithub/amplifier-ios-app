@@ -7,6 +7,7 @@
 
 #import "ConnectedView.h"
 #import "ViewController.h"
+#import "ScreenAdapter.h"
 
 
 @interface ConnectedView ()
@@ -20,6 +21,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    CGRect mainFrame = [UIScreen mainScreen].bounds;
+    NSUInteger topMargin = SHReadValue(200);
+    NSUInteger imageSize = SWReadValue(270);
+    
+    self.twsImageView.frame = CGRectMake(mainFrame.size.width/2 - imageSize/2, topMargin, imageSize, imageSize);
+    
+    NSUInteger labelTopMargin = SHReadValue(20);
+    NSUInteger labelWidth = SWReadValue(150);
+    NSUInteger labelHeight = SHReadValue(20);
+    
+    self.connectedLabel.textAlignment = NSTextAlignmentCenter;
+    self.connectedLabel.frame = CGRectMake(mainFrame.size.width/2 - labelWidth/2, topMargin + imageSize + labelTopMargin, labelWidth, labelHeight);
     
     if (self.deviceType == TWS_DEVICE_TYPE_D) {
         [self.twsImageView setImage:[UIImage imageNamed:@"豆式耳机"]];

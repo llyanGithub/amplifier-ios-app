@@ -9,8 +9,12 @@
 #import "SearchView.h"
 #import "ImageViewGif.h"
 #import "GifViewDelegate.h"
+#import "ScreenAdapter.h"
 
 @interface ReadySearchView ()
+@property (weak, nonatomic) IBOutlet UIImageView *searchFrame;
+@property (weak, nonatomic) IBOutlet UIButton *searchCenter;
+@property (weak, nonatomic) IBOutlet UILabel *searchLabel;
 
 @end
 
@@ -19,15 +23,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    CGRect mainFrame = [UIScreen mainScreen].bounds;
+    NSUInteger searchFrameSize = SWReadValue(200);
+    NSUInteger searchFramePosY = SHReadValue(230);
+    
+    self.searchFrame.frame = CGRectMake(mainFrame.size.width/2-searchFrameSize/2, searchFramePosY, searchFrameSize, searchFrameSize);
+    
+    
+    NSUInteger searchCenterSize = SWReadValue(60);
+    NSUInteger searchCenterPosY = searchFramePosY + searchFrameSize/2 - searchCenterSize/2;
+    self.searchCenter.frame = CGRectMake(mainFrame.size.width/2-searchCenterSize/2, searchCenterPosY, searchCenterSize, searchCenterSize);
+    
+    NSUInteger labelWidth = SWReadValue(150);
+    NSUInteger labelHeight = SWReadValue(20);
+    NSUInteger labelPosY = searchFramePosY + searchFrameSize + SHReadValue(20);
+    
+    self.searchLabel.frame = CGRectMake(mainFrame.size.width/2-labelWidth/2, labelPosY, labelWidth, labelHeight);
+    self.searchLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 - (IBAction)buttonClicked:(UIButton *)sender {
     NSLog(@"Search Button Clicked");
     [self performSegueWithIdentifier:@"segue2" sender:self];
-    
-    CGRect mainFrame = [UIScreen mainScreen].nativeBounds;
-    NSLog(@"22 %ld %ld", self.view.frame.size.width, self.view.frame.size.height);
-    NSLog(@"mainFrame: %ld %ld", mainFrame.size.width, mainFrame.size.height);
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
