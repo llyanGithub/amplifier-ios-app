@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vre-5S-7Vj">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -154,15 +155,18 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-Pm-K7H" customClass="ConnecteButton">
+                                                <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zTe-Pm-K7H" customClass="ConnecteButton">
                                                     <rect key="frame" x="320" y="11" width="74" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                                     <state key="normal" title="连接" image="耳机图标">
                                                         <color key="titleColor" systemColor="systemBlueColor"/>
                                                     </state>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zTe-Pm-K7H" firstAttribute="centerY" secondItem="dxw-q0-v43" secondAttribute="centerY" id="76U-Wr-Wjg"/>
+                                                <constraint firstAttribute="trailing" secondItem="zTe-Pm-K7H" secondAttribute="trailing" constant="20" symbolic="YES" id="jkD-xo-Zrh"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>

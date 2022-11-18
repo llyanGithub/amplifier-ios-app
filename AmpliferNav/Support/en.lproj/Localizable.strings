@@ -44,3 +44,8 @@
 
 "cancel" = "Cancel";
 "reconnect" = "Connect Again";
+
+"dutMode" = "DUT MODE";
+"factorySettings" = "Restore factory settings";
+"otaMode" = "OTA MODE";
+"singleEarMode" = "SINGLE EAR MODE";

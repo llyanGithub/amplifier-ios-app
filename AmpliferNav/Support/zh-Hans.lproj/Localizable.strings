@@ -49,3 +49,8 @@
 
 "cancel" = "取消";
 "reconnect" = "重新连接";
+
+"dutMode" = "DUT 模式";
+"factorySettings" = "恢复出厂设置";
+"otaMode" = "OTA 模式";
+"singleEarMode" = "单耳模式";

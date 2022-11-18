@@ -103,6 +103,7 @@
     
     self.homeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.homeButtonTopMargin, homeButtonWidth, homeButtonHeight)];
     [self.homeButton setImage:[UIImage imageNamed:@"返回主页按钮"] forState:UIControlStateNormal];
+    [self.homeButton addTarget:self action:@selector(homeButtonClicked) forControlEvents:UIControlEventTouchDown];
     
     [self createStack];
     
@@ -217,6 +218,76 @@
     [button layoutButtonWithImageStyle:ZJButtonImageStyleTop imageTitleToSpace:8];
     
     return button;
+}
+
+- (void) homeButtonClicked
+{
+    NSLog(@"homeButtonClicked");
+    UIAlertController *alertViewController = [UIAlertController alertControllerWithTitle:@"请选择命令" message:nil preferredStyle:UIAlertControllerStyleAlert];// style 为 sheet
+    
+    /*
+     进入DUT模式
+     */
+    UIAlertAction *dutAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"dutMode", nil) style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+        NSLog(@"Enter DUT MODE");
+        NSData* data = [self.packetProto packDutModeSet];
+        
+        [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            NSLog(@"写入DUT命令成功");
+        }];
+        
+    }];
+    
+    /*
+     进入恢复工厂模式
+     */
+    UIAlertAction *factorySettingAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"factorySettings", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"Enter Factory MODE");
+        NSData* data = [self.packetProto packFactoryModeSet];
+        
+        [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            NSLog(@"写入工厂模式命令成功");
+        }];
+    }];//handler里可以写需要的函数
+    
+    /*
+     进入OTA模式
+     */
+    UIAlertAction *otaAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"otaMode", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        NSLog(@"Enter OTA MODE");
+        
+        NSData* data = [self.packetProto packOtaModeSet];
+        
+        [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            NSLog(@"写入OTA命令成功");
+        }];
+    }];
+    
+    /*
+     进入单耳模式
+     */
+    UIAlertAction *singleEarAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"singleEarMode", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        NSLog(@"Enter Single Ear MODE");
+        
+        NSData* data = [self.packetProto packSingleEarModeSet];
+        
+        [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+            NSLog(@"写入单耳命令成功");
+        }];
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler: ^(UIAlertAction *action) {
+        NSLog(@"取消");
+    }];
+    
+
+    [alertViewController addAction:dutAction];
+    [alertViewController addAction:factorySettingAction];
+    [alertViewController addAction:otaAction];
+    [alertViewController addAction:singleEarAction];
+    [alertViewController addAction:cancel];
+    
+    [self presentViewController:alertViewController animated:YES completion:nil];
 }
 
 - (void) connectedButtonClicked
