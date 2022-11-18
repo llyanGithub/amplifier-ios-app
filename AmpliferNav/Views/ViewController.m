@@ -27,7 +27,7 @@
 
 @property (nonatomic) UIButton* homeButton;
 @property (nonatomic) UILabel* leftBatLabel;
-@property (nonatomic) UIImageView* connectedImageView;
+@property (nonatomic) UIButton* connectedButton;
 @property (nonatomic) UIImageView* leftBatImageView;
 @property (nonatomic) UIImageView* rightBatImageView;
 @property (nonatomic) UILabel* rightBatLabel;
@@ -89,13 +89,14 @@
     NSUInteger batteryPosX = self.mainFrame.size.width - self.horizontalMargin - batteryViewWidth;
     batteryView.frame = CGRectMake(batteryPosX, self.homeButtonTopMargin, batteryViewWidth, batteryViewHeight);
     
-    self.connectedImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"已连接"]];
-    self.connectedImageView.contentMode = UIViewContentModeScaleAspectFit;
+    NSUInteger connectedButtonWidth = SWReadValue(30);
+    NSUInteger connectedButtonHeight = SHReadValue(20);
+    NSUInteger connectedButtonRightMargin = SWReadValue(10);
     
-    NSUInteger connectedImageWidth = SWReadValue(30);
-    NSUInteger connectedImageHeight = SHReadValue(20);
-    NSUInteger connectedImageRightMargin = SWReadValue(10);
-    self.connectedImageView.frame = CGRectMake(batteryPosX - connectedImageWidth - connectedImageRightMargin, self.homeButtonTopMargin, connectedImageWidth, connectedImageHeight);
+    self.connectedButton = [[UIButton alloc] initWithFrame:CGRectMake(batteryPosX - connectedButtonWidth - connectedButtonRightMargin, self.homeButtonTopMargin, connectedButtonWidth, connectedButtonHeight)];
+    [self.connectedButton addTarget:self action:@selector(connectedButtonClicked) forControlEvents:UIControlEventTouchDown];
+    [self.connectedButton setImage:[UIImage imageNamed:@"已连接"] forState:UIControlStateNormal];
+    self.connectedButton.contentMode = UIViewContentModeScaleAspectFit;
     
     NSUInteger homeButtonWidth = SWReadValue(20);
     NSUInteger homeButtonHeight = SWReadValue(20);
@@ -140,7 +141,7 @@
     [self.view addSubview:self.mainStack];
     [self.view addSubview:self.homeButton];
     [self.view addSubview:batteryView];
-    [self.view addSubview:self.connectedImageView];
+    [self.view addSubview:self.connectedButton];
     
     for (NavButton* button in self.buttonsArray) {
         [self.view addSubview:button];
@@ -216,6 +217,11 @@
     [button layoutButtonWithImageStyle:ZJButtonImageStyleTop imageTitleToSpace:8];
     
     return button;
+}
+
+- (void) connectedButtonClicked
+{
+    NSLog(@"connectedButtonClicked");
 }
 
 - (void)navButtonClicked:(NavButton *)sender

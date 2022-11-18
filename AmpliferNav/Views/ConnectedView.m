@@ -41,7 +41,7 @@
         [self.twsImageView setImage:[UIImage imageNamed:@"杆式耳机"]];
     }
     
-    self.connectedLabel.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"connected", nil), self.deviceName];
+    self.connectedLabel.text = [NSString stringWithFormat:@"%@ %@", self.deviceName, NSLocalizedString(@"connected", nil)];
     
     [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(jump2Main) userInfo:nil repeats:NO];
 }
