@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  AmpliferNav
+
+  Created by 鄢陵龙 on 2022/11/18.
+  
+*/
+
+"name" = "MODE";
+"volume" = "volume";
+"freqResponse" = "Frequency Response";
+"earProtection" = "Ear Protection";
+"other" = "Other";
+
+"left" = "L";
+"right" = "R";
+
+"outDoorMode" = "Outdoor Mode";
+"indoorMode" = "Indoor Mode";
+"normalMode" = "Normal Mode";
+
+
+"leftEar" = "Left Ear";
+"rightEar" = "Right Ear";
+
+"compressDegree" = "Degree of compression";
+
+"connected" = "Connected";
+
+"tapToSearch" = "Click to search for devices";
+
+"searching" = "Searching for nearby devices";
+
+"foundDevices" = "Hearing devices found nearby";

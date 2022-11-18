@@ -41,6 +41,8 @@
     
     self.searchLabel.frame = CGRectMake(mainFrame.size.width/2-labelWidth/2, labelPosY, labelWidth, labelHeight);
     self.searchLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.searchLabel.text = NSLocalizedString(@"tapToSearch", nil);
 }
 
 - (IBAction)buttonClicked:(UIButton *)sender {

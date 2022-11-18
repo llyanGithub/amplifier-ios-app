@@ -51,11 +51,11 @@
         
         UIFont* font = [UIFont systemFontOfSize:14];
         self.leftChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin, labelWidth, labelHeight)];
-        self.leftChannLabel.text = @"左耳";
+        self.leftChannLabel.text = NSLocalizedString(@"leftEar", nil);
         self.leftChannLabel.font = font;
         
         self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin+SHReadValue(280), mainFrame.size.width - self.horizontalMargin*2, labelHeight*2)];
-        self.descriptionLabel.text = @"护耳模式能够压缩响度过大声音的增益。\n例如：汽车鸣笛声、爆竹声等，防止给您带来不适。";
+        self.descriptionLabel.text = NSLocalizedString(@"earProtectionComment", nil);
         self.descriptionLabel.numberOfLines = 3;
         self.descriptionLabel.font = [UIFont systemFontOfSize:14];
         
@@ -77,7 +77,7 @@
         leftEarScaleView.frame = CGRectMake(scalePosX, leftScalePosY, scaleWidth, scaleViewHeight);
         
         self.leftCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), leftScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
-        self.leftCompressLabel.text = @"压缩程度";
+        self.leftCompressLabel.text = NSLocalizedString(@"compressDegree", nil);
         self.leftCompressLabel.font = [UIFont systemFontOfSize:11];
         
         
@@ -90,7 +90,7 @@
         [self.rightSlider addTarget:self action:@selector(sliderReleased) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
         
         self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, rightSliderPosY, labelWidth, labelHeight)];
-        self.rightChannLabel.text = @"右耳";
+        self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
         self.rightChannLabel.font = font;
         
         UIView* rightEarScaleView = [self createScaleView];
@@ -98,7 +98,7 @@
         rightEarScaleView.frame = CGRectMake(scalePosX, rightScalePosY, scaleWidth, scaleViewHeight);
         
         self.rightCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), rightScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
-        self.rightCompressLabel.text = @"压缩程度";
+        self.rightCompressLabel.text = NSLocalizedString(@"compressDegree", nil);
         self.rightCompressLabel.font = [UIFont systemFontOfSize:11];
         
         self.allSelectedButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"护耳链接选中"] unCheckedImage:[UIImage imageNamed:@"护耳链接"]];

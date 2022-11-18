@@ -52,6 +52,7 @@
     
     self.searchStateLabel.frame = CGRectMake(mainFrame.size.width/2-labelWidth/2, topMargin, labelWidth, labelHeight);
     self.searchStateLabel.textAlignment = NSTextAlignmentCenter;
+    self.searchStateLabel.text = NSLocalizedString(@"searching", nil);
     
     NSUInteger searchBorderSize = SWReadValue(100);
     NSUInteger imageTopMargin = SHReadValue(80);
@@ -65,6 +66,7 @@
     
     NSUInteger searchResultLabelTopMargin = SHReadValue(80);
     self.searchResultLabel.frame = CGRectMake(SWReadValue(20), imagePosY+searchBorderSize + searchResultLabelTopMargin, labelWidth, labelHeight);
+    self.searchResultLabel.text = NSLocalizedString(@"foundDevices", nil);
     
     NSUInteger tablePosY = self.searchResultLabel.frame.origin.y + labelHeight;
     self.searchTable.frame = CGRectMake(0, tablePosY, mainFrame.size.width, mainFrame.size.height - tablePosY);

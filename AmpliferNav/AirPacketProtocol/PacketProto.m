@@ -98,6 +98,8 @@
             _rightEarBattery = payloadBuff[index++];
             _leftEarBattery = payloadBuff[index++];
             
+            NSLog(@"leftBattery: %ld rightBattery: %ld", _leftEarBattery, _rightEarBattery);
+            
             break;
             
         case AXON_COMMAND_ANC_SWITCH:

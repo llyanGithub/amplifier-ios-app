@@ -54,9 +54,9 @@
         NSUInteger buttonHeight = SHReadValue(100); //(mainFrame.size.height*2/3)/3 - spacing;
         
         
-        self.outdoorButton = [self allocButton:CGRectMake(horizontalMargin, topMargin, buttonWidth, buttonHeight) checkedImageName:@"户外选中" unCheckedImageName:@"户外" titleText:@"户外模式"];
-        self.indoorButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight+spacing+topMargin, buttonWidth, buttonHeight) checkedImageName:@"室内选中" unCheckedImageName:@"室内" titleText:@"室内模式"];
-        self.normalButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight*2+spacing*2+topMargin, buttonWidth, buttonHeight)  checkedImageName:@"常规选中" unCheckedImageName:@"常规" titleText:@"常规模式"];
+        self.outdoorButton = [self allocButton:CGRectMake(horizontalMargin, topMargin, buttonWidth, buttonHeight) checkedImageName:@"户外选中" unCheckedImageName:@"户外" titleText: NSLocalizedString(@"outDoorMode", nil)];
+        self.indoorButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight+spacing+topMargin, buttonWidth, buttonHeight) checkedImageName:@"室内选中" unCheckedImageName:@"室内" titleText:NSLocalizedString(@"indoorMode", nil) ];
+        self.normalButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight*2+spacing*2+topMargin, buttonWidth, buttonHeight)  checkedImageName:@"常规选中" unCheckedImageName:@"常规" titleText:NSLocalizedString(@"normalMode", nil) ];
         
         self.buttonArray = @[self.outdoorButton, self.indoorButton, self.normalButton];
         
@@ -67,8 +67,8 @@
         self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos, buttonWidth, 40)];
         self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+spacing+10, buttonWidth, 40)];
         
-        self.titleLable.text = @"常规模式：用于地铁或飞机等场景";
-        self.contentLabel.text = @"请在其中选择最合适您的模式进行使用。\n如左右耳都已连接设备，将同步进行模式切换";
+        self.titleLable.text = NSLocalizedString(@"normalModeComments", nil);
+        self.contentLabel.text = NSLocalizedString(@"modeTips", nil);
         self.contentLabel.numberOfLines = 2;
         
         UIFont* font = [UIFont systemFontOfSize:14];

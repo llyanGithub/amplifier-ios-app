@@ -215,8 +215,8 @@
     self.leftChannLabel = [[UILabel alloc] init];
     self.rightChannLabel = [[UILabel alloc] init];
     
-    self.leftChannLabel.text = @"左耳";
-    self.rightChannLabel.text = @"右耳";
+    self.leftChannLabel.text = NSLocalizedString(@"leftEar", nil);
+    self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
     
     [stackView addArrangedSubview:self.leftChannLabel];
     [stackView addArrangedSubview:self.rightChannLabel];

@@ -107,11 +107,11 @@
     
     // 创建5个导航按钮，并将其放入可变数组中
     self.buttonsArray = [[NSMutableArray alloc]init];
-    [self.buttonsArray addObject:[self createNavButton:@"模式" index:0 checkedImageName:[UIImage imageNamed:@"模式选中"] unCheckedImageName:[UIImage imageNamed:@"模式"]]];
-    [self.buttonsArray addObject:[self createNavButton:@"音量" index:1 checkedImageName:[UIImage imageNamed:@"音量选中"] unCheckedImageName:[UIImage imageNamed:@"音量"]]];
-    [self.buttonsArray addObject:[self createNavButton:@"频响" index:2 checkedImageName:[UIImage imageNamed:@"频响选中"] unCheckedImageName:[UIImage imageNamed:@"频响"]]];
-    [self.buttonsArray addObject:[self createNavButton:@"护耳" index:3 checkedImageName:[UIImage imageNamed:@"听力保护选中"] unCheckedImageName:[UIImage imageNamed:@"听力保护"]]];
-    [self.buttonsArray addObject:[self createNavButton:@"其它" index:4 checkedImageName:[UIImage imageNamed:@"其它选中"] unCheckedImageName:[UIImage imageNamed:@"其它"]]];
+    [self.buttonsArray addObject:[self createNavButton:NSLocalizedString(@"mode", nil) index:0 checkedImageName:[UIImage imageNamed:@"模式选中"] unCheckedImageName:[UIImage imageNamed:@"模式"]]];
+    [self.buttonsArray addObject:[self createNavButton:NSLocalizedString(@"volume", nil) index:1 checkedImageName:[UIImage imageNamed:@"音量选中"] unCheckedImageName:[UIImage imageNamed:@"音量"]]];
+    [self.buttonsArray addObject:[self createNavButton:NSLocalizedString(@"freqResponse", nil) index:2 checkedImageName:[UIImage imageNamed:@"频响选中"] unCheckedImageName:[UIImage imageNamed:@"频响"]]];
+    [self.buttonsArray addObject:[self createNavButton:NSLocalizedString(@"earProtection", nil) index:3 checkedImageName:[UIImage imageNamed:@"听力保护选中"] unCheckedImageName:[UIImage imageNamed:@"听力保护"]]];
+    [self.buttonsArray addObject:[self createNavButton:NSLocalizedString(@"other", nil) index:4 checkedImageName:[UIImage imageNamed:@"其它选中"] unCheckedImageName:[UIImage imageNamed:@"其它"]]];
     
     NSUInteger subViewPosY = self.homeButtonTopMargin + self.homeButton.frame.size.height + self.navButtonTopMargin + self.navButtonHeight;
     
@@ -176,8 +176,8 @@
     self.leftBatImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.rightBatImageView.contentMode = UIViewContentModeScaleAspectFit;
     
-    self.leftBatLabel.text = @"左";
-    self.rightBatLabel.text = @"右";
+    self.leftBatLabel.text = NSLocalizedString(@"left", nil);
+    self.rightBatLabel.text = NSLocalizedString(@"right", nil);
     
     UIFont* font = [UIFont systemFontOfSize:12];
     self.leftBatLabel.font = font;
