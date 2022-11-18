@@ -154,6 +154,8 @@
     [self registerBleRxHandler];
     
     NSLog(@"packetProto: %@", self.packetProto);
+    [self registerDisconnectedHandler];
+    
     [self syncDeviceInfo];
 #endif
     
@@ -259,6 +261,32 @@
     [self.protectEarView setEarCompressValue:self.packetProto.leftEarProtection rightEarCompressValue:self.packetProto.rightEarProtection];
 }
 
+- (void) registerDisconnectedHandler
+{
+    [self.bleProfile registerDisconnectedInd:^(CBCentralManager* central, CBPeripheral *peripheral, NSError* error) {
+        NSLog(@"BLE Disconnected");
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"disconnectDialogTitle", nil)
+                                                                       message: NSLocalizedString(@"disconnectDIalgoContent", nil)
+                                       preferredStyle:UIAlertControllerStyleAlert];
+         
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleDefault
+           handler:^(UIAlertAction * action) {
+            NSLog(@"取消");
+        }];
+        
+        UIAlertAction* reconnectAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"reconnect", nil) style:UIAlertActionStyleDefault
+           handler:^(UIAlertAction * action) {
+            NSLog(@"重新连接");
+        }];
+         
+        [alert addAction:cancelAction];
+        [alert addAction:reconnectAction];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
+}
+
 - (void) registerBleRxHandler
 {
     [self.bleProfile registerNotifyInd:^(CBPeripheral *peripheral,CBCharacteristic *characteristic,NSError *error) {
@@ -277,6 +305,22 @@
             /* 设置耳机ANC模式,回复Ack */
             } else if (cmdId == AXON_COMMAND_ANC_SWITCH) {
                 NSLog(@"收到ACK: AXON_COMMAND_ANC_SWITCH，errCode: %ld", self.packetProto.errCode);
+                
+                if (self.packetProto.errCode == 0x06) {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"alert", nil)
+                                                                                   message: NSLocalizedString(@"disableAncSwitch", nil)
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+            
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"confirm", nil) style:UIAlertActionStyleDefault
+                       handler:^(UIAlertAction * action) {
+                        NSLog(@"Confirm");
+                        
+                        [self.otherView restoreCurrentMode];
+                    }];
+            
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }
                 
             /* 查询设备ANC模式 */
             } else if (cmdId == AXON_COMMAND_QUERY_ANC) {

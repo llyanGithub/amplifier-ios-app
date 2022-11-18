@@ -16,6 +16,8 @@ typedef void (^ScanCallback)(CBCentralManager *central,CBPeripheral *peripheral,
 
 typedef void (^ConnectedCallback)(BOOL isConnected);
 
+typedef void (^DisconnectedCallback)(CBCentralManager* central, CBPeripheral *peripheral, NSError* error);
+
 typedef void (^DiscoveryServiceCallback)(CBPeripheral *peripheral, NSError *error);
 
 typedef void (^DiscoveryCharacteristicsCallback)(CBPeripheral *peripheral,CBService *service,NSError *error);
@@ -86,6 +88,11 @@ callback:(ReadCharCallback)callback;
  注册Notify的回调函数
  */
 - (void) registerNotifyRecivedCallback:(NotifyReceived)callback;
+
+/*
+ 注册断开连接的回调函数
+ */
+- (void) registerDisconnectedCallback:(DisconnectedCallback)callback;
 
 @end
 

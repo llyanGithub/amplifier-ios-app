@@ -32,3 +32,15 @@
 "searching" = "Searching for nearby devices";
 
 "foundDevices" = "Hearing devices found nearby";
+
+"disableAncSwitch" = "It is forbidden to switch the auxiliary listening mode during a call";
+
+"confirm" = "confirm";
+
+"alert" = "Alet";
+
+"disconnectDialogTitle" = "Device is disconnected";
+"disconnectDIalgoContent" = "Please check the device and reconnect";
+
+"cancel" = "Cancel";
+"reconnect" = "Connect Again";

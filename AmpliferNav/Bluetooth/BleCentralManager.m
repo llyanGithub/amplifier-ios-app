@@ -18,6 +18,12 @@
  发起连接的回调函数
  */
 @property (nonatomic) ConnectedCallback connectedCallback;
+
+/*
+ 连接断开的回调函数
+ */
+@property (nonatomic) DisconnectedCallback disconnectedCallback;
+
 /*
  搜索服务的回调函数
  */
@@ -133,7 +139,9 @@ didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(nullable NSError *)error
 {
-    NSLog(@"BLE Disconnected");
+    if (self.disconnectedCallback) {
+        self.disconnectedCallback(central, peripheral, error);
+    }
 }
 
 #pragma mark - CBPeripheralDelegate的协议实现
@@ -391,6 +399,14 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
 - (void) registerNotifyRecivedCallback:(NotifyReceived)callback
 {
     self.notifyRecevied = callback;
+}
+
+/*
+ 注册断开连接的回调函数
+ */
+- (void) registerDisconnectedCallback:(DisconnectedCallback)callback
+{
+    self.disconnectedCallback = callback;
 }
 
 /*

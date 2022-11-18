@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) registerNotifyInd:(NotifyReceived)callback;
 
+- (void) registerDisconnectedInd:(nonnull DisconnectedCallback) callback;
+
 - (void) writeDeviceData:(NSData*)data callback:(nonnull WriteDoneCallback)callback;
 
 @end

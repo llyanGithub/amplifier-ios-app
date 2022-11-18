@@ -25,6 +25,8 @@
 @property (nonatomic) UIImage* outerImage;
 @property (nonatomic) UIImage* normalImage;
 
+@property (nonatomic) NSUInteger previousMode;
+
 @end
 
 @implementation OtherView
@@ -104,6 +106,7 @@
         [self addSubview:self.normalButton];
         
         self.currentMode = AXON_ANC_OUTER;
+        self.previousMode = self.currentMode;
     }
     
     self.hidden = true;
@@ -136,10 +139,18 @@
     }];
 }
 
+- (void) restoreCurrentMode
+{
+    [PacketProto getInstance].ancState = _previousMode;
+    self.currentMode = _previousMode;
+}
+
 - (void) outerButtonClicked
 {
     NSLog(@"outerButtonClicked");
     if (_currentMode == AXON_ANC_NORMAL) {
+        
+        self.previousMode = _currentMode;
         self.currentMode = AXON_ANC_OUTER;
         
         [self writeDeviceAncMode:AXON_ANC_OUTER];
@@ -150,6 +161,8 @@
 {
     NSLog(@"normalButtonClicked");
     if (_currentMode == AXON_ANC_OUTER) {
+        
+        self.previousMode = _currentMode;
         self.currentMode = AXON_ANC_NORMAL;
         
         [self writeDeviceAncMode:AXON_ANC_NORMAL];
