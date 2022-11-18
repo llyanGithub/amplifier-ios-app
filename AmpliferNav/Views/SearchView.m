@@ -77,6 +77,8 @@
     self.bleProfile = [BleProfile getInstance];
     self.scanDeviceArray = [[NSMutableArray alloc] init];
     
+    self.searchTable.allowsSelection = NO;
+    
     self.waitBleReadyTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(searchDevice) userInfo:nil repeats:NO];
 }
 
