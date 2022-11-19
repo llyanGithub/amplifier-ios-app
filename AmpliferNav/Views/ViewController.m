@@ -84,19 +84,14 @@
     self.navButtonWidth = (self.mainFrame.size.width - 2*self.horizontalMargin)/5;
     
     self.homeButtonTopMargin = SHReadValue(60);
-
     
-    UIView* batteryView = [self createBatteryView];
-    NSUInteger batteryViewWidth = SHReadValue(54);
-    NSUInteger batteryViewHeight = SHReadValue(20);
-    NSUInteger batteryPosX = self.mainFrame.size.width - self.horizontalMargin - batteryViewWidth;
-    batteryView.frame = CGRectMake(batteryPosX, self.homeButtonTopMargin, batteryViewWidth, batteryViewHeight);
+    [self createBatteryView];
     
     NSUInteger connectedButtonWidth = SWReadValue(30);
     NSUInteger connectedButtonHeight = SHReadValue(20);
     NSUInteger connectedButtonRightMargin = SWReadValue(10);
     
-    self.connectedButton = [[UIButton alloc] initWithFrame:CGRectMake(batteryPosX - connectedButtonWidth - connectedButtonRightMargin, self.homeButtonTopMargin, connectedButtonWidth, connectedButtonHeight)];
+    self.connectedButton = [[UIButton alloc] initWithFrame:CGRectMake(self.leftBatLabel.frame.origin.x - connectedButtonWidth - connectedButtonRightMargin, self.homeButtonTopMargin, connectedButtonWidth, connectedButtonHeight)];
     [self.connectedButton addTarget:self action:@selector(connectedButtonClicked) forControlEvents:UIControlEventTouchDown];
     [self.connectedButton setImage:[UIImage imageNamed:@"已连接"] forState:UIControlStateNormal];
     self.connectedButton.contentMode = UIViewContentModeScaleAspectFit;
@@ -144,7 +139,12 @@
     
     [self.view addSubview:self.mainStack];
     [self.view addSubview:self.homeButton];
-    [self.view addSubview:batteryView];
+
+    [self.view addSubview:self.leftBatLabel];
+    [self.view addSubview:self.leftBatImageView];
+    [self.view addSubview:self.rightBatLabel];
+    [self.view addSubview:self.rightBatImageView];
+    
     [self.view addSubview:self.connectedButton];
     
     for (NavButton* button in self.buttonsArray) {
@@ -167,13 +167,8 @@
     
 }
 
-- (UIView*) createBatteryView
+- (void) createBatteryView
 {
-    UIStackView* stackView = [[UIStackView alloc] init];
-    stackView.axis = UILayoutConstraintAxisHorizontal;
-    stackView.distribution = UIStackViewDistributionFillEqually;
-    stackView.spacing = 3;
-    
     self.leftBatLabel = [[UILabel alloc] init];
     self.rightBatLabel = [[UILabel alloc] init];
     self.leftBatImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"50％"]];
@@ -191,12 +186,15 @@
     self.leftBatLabel.font = font;
     self.rightBatLabel.font = font;
     
-    [stackView addArrangedSubview:self.leftBatLabel];
-    [stackView addArrangedSubview:self.leftBatImageView];
-    [stackView addArrangedSubview:self.rightBatImageView];
-    [stackView addArrangedSubview:self.rightBatLabel];
+    NSUInteger batteryViewItemWidth = SWReadValue(14);
+    NSUInteger batteryViewItemHeight = SHReadValue(20);
+    NSUInteger rightMargin = SWReadValue(20);
+    NSUInteger space = SWReadValue(3);
     
-    return (UIView*)stackView;
+    self.rightBatLabel.frame = CGRectMake(self.mainFrame.size.width - rightMargin - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);
+    self.rightBatImageView.frame = CGRectMake(self.rightBatLabel.frame.origin.x - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);
+    self.leftBatImageView.frame = CGRectMake(self.rightBatImageView.frame.origin.x - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);
+    self.leftBatLabel.frame = CGRectMake(self.leftBatImageView.frame.origin.x - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);
 }
 
 
