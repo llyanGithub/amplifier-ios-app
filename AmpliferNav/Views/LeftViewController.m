@@ -6,8 +6,18 @@
 //
 
 #import "LeftViewController.h"
+#import "SWRevealViewController.h"
+#import "BleProfile.h"
+#import "PacketProto.h"
+
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
 
 @interface LeftViewController ()
+
+@property (nonatomic , strong) UITableView *tableView;
+
+@property (nonatomic , strong) NSArray *menuArray;
 
 @end
 
@@ -24,19 +34,121 @@
     return _sharedWexObject;
 }
 
-- (void)viewDidLoad {
+-(void)viewDidLoad{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self initData];
+    [self initView];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)initData{
+    _menuArray = [NSArray arrayWithObjects: NSLocalizedString(@"dutMode", nil),
+                  NSLocalizedString(@"factorySettings", nil),
+                  NSLocalizedString(@"otaMode", nil),
+                  NSLocalizedString(@"singleEarMode", nil), nil];
 }
-*/
+
+-(void)initView{
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT-20) style:UITableViewStyleGrouped];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    [self.view addSubview:_tableView];
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return _menuArray.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *TABLE_VIEW_ID = @"table_view_id";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TABLE_VIEW_ID];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TABLE_VIEW_ID];
+    }
+    cell.textLabel.text = [_menuArray objectAtIndex:indexPath.row];
+    
+    return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.01;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.01;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    SWRevealViewController *revealViewController = self.revealViewController;
+//    UIViewController *viewController;
+    
+    NSLog(@"LeftViewController indexPath.row: %ld", indexPath.row);
+    
+    switch (indexPath.row) {
+        /*
+         DUT模式
+         */
+        case 0:
+        {
+            NSData* data = [[PacketProto getInstance] packDutModeSet];
+            [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+                NSLog(@"写入DUT命令成功");
+            }];
+        }
+            break;;
+            
+        /*
+         进入恢复工厂模式
+         */
+        case 1:
+        {
+            NSLog(@"Enter Factory MODE");
+            NSData* data = [[PacketProto getInstance] packFactoryModeSet];
+            
+            [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+                NSLog(@"写入工厂模式命令成功");
+            }];
+        }
+            break;
+            
+        /*
+         进入单耳模式
+         */
+        case 2:
+        {
+            NSLog(@"Enter Single Ear MODE");
+            
+            NSData* data = [[PacketProto getInstance] packSingleEarModeSet];
+            
+            [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+                NSLog(@"写入单耳命令成功");
+            }];
+        }
+            break;
+        case 3:
+        {
+            /*
+             进入OTA模式
+             */
+            NSLog(@"Enter OTA MODE");
+            NSData* data = [[PacketProto getInstance] packOtaModeSet];
+            
+            [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+                NSLog(@"写入OTA命令成功");
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+    //调用pushFrontViewController进行页面切换
+    [revealViewController revealToggleAnimated:YES];
+//    [revealViewController pushFrontViewController:viewController animated:YES];
+    
+}
 
 @end
