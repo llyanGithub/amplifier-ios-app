@@ -42,6 +42,8 @@
 "disconnectDialogTitle" = "Device is disconnected";
 "disconnectDIalgoContent" = "Please check the device and reconnect";
 
+"bluetoothDisabled" = "System Bluetooth is off";
+
 "cancel" = "Cancel";
 "reconnect" = "Connect Again";
 

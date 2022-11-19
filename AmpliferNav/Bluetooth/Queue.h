@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (QueueItem*) pop;
 - (BOOL)isEmpty;
 - (QueueItem*) peekItem;
+- (void) removeAll;
 
 @end
 

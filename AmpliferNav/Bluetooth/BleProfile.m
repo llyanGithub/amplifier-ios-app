@@ -112,6 +112,11 @@
 
 - (void) writeDeviceData:(NSData*)data callback:(nonnull WriteDoneCallback)callback
 {
+    if (!self.isConnected) {
+        NSLog(@"Device is disconnected and not allowed sent to device with data");
+        return;
+    }
+    
     QueueItem* item = [[QueueItem alloc] initWithDataBlock:data block:callback];
     
     [self.queue push:item];
@@ -205,6 +210,7 @@
                 }];
             }];
             
+            self.isConnected = YES;
             [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(getDeviceInfo) userInfo:nil repeats:NO];
         }
         if (callback) {
@@ -220,12 +226,29 @@
 
 - (void) registerDisconnectedInd:(nonnull DisconnectedCallback) callback
 {
-    [self.bleCentralManager registerDisconnectedCallback:callback];
+    [self.bleCentralManager registerDisconnectedCallback:^ (CBCentralManager* central, CBPeripheral *peripheral, NSError* error) {
+        
+        self.isConnected = NO;
+        [self.queue removeAll];
+        
+        if (callback) {
+            callback(central, peripheral, error);
+        }
+    }];
 }
 
 - (void) registerStateChangedInd:(BluetoothStateChangedInd) callback
 {
-    [self.bleCentralManager registerStateChangedCallback:callback];
+    [self.bleCentralManager registerStateChangedCallback:^(CBCentralManager* central) {
+        if (callback) {
+            callback(central);
+        }
+        
+        if (self.isConnected && central.state == CBManagerStatePoweredOff) {
+            NSLog(@"用户蓝牙已经关闭");
+            self.isConnected = NO;
+        }
+    }];
 }
 
 - (void)startScan:(nonnull UserScanCallback)scanCallback

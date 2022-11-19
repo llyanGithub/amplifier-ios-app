@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) CBManagerState blePowerState;
 @property (nonatomic) CBPeripheral* peripheral;
+@property (nonatomic) BOOL isConnected;
 
 - (void) startScan:(UserScanCallback)scanCallback;
 

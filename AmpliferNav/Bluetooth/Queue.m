@@ -52,4 +52,9 @@
     return [self.array firstObject];
 }
 
+- (void) removeAll
+{
+    [self.array removeAllObjects];
+}
+
 @end

@@ -160,6 +160,7 @@
     
     NSLog(@"packetProto: %@", self.packetProto);
     [self registerDisconnectedHandler];
+    [self registerBluetoothStateChangedHandler];
     
     [self syncDeviceInfo];
 #endif
@@ -345,10 +346,33 @@
     [self.protectEarView setEarCompressValue:self.packetProto.leftEarProtection rightEarCompressValue:self.packetProto.rightEarProtection];
 }
 
+- (void) registerBluetoothStateChangedHandler
+{
+    [self.bleProfile registerStateChangedInd:^(CBCentralManager* central) {
+        if (self.bleProfile.isConnected && central.state == CBManagerStatePoweredOff) {
+            self.connectedButton.hidden = true;
+            
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"disconnectDialogTitle", nil)
+                                                                           message: NSLocalizedString(@"bluetoothDisabled", nil)
+                                           preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* confirmAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"confirm", nil) style:UIAlertActionStyleDefault
+               handler:^(UIAlertAction * action) {
+//                NSLog(@"确定");
+            }];
+            
+            [alert addAction:confirmAction];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+    }];
+}
+
 - (void) registerDisconnectedHandler
 {
     [self.bleProfile registerDisconnectedInd:^(CBCentralManager* central, CBPeripheral *peripheral, NSError* error) {
         NSLog(@"BLE Disconnected");
+        
+        self.connectedButton.hidden = true;
         
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"disconnectDialogTitle", nil)
                                                                        message: NSLocalizedString(@"disconnectDIalgoContent", nil)
