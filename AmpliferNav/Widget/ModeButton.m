@@ -32,7 +32,7 @@
     if (yes) {
         self.backgroundColor = UIColor.whiteColor;
         self.layer.cornerRadius = 10.0;
-        self.layer.shadowOffset =  CGSizeMake(2, 2);
+        self.layer.shadowOffset =  CGSizeMake(0, 0);
         self.layer.shadowOpacity = 0.2;
         self.layer.shadowColor =  [UIColor blackColor].CGColor;
     } else {
