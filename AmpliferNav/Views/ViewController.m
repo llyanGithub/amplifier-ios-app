@@ -37,7 +37,7 @@
     self.rightViewController = nil;
     
     //浮动层离左边距的宽度
-    self.rearViewRevealWidth = 230;
+    self.rearViewRevealWidth = SWReadValue(240);
     //    revealViewController.rightViewRevealWidth = 230;
     
     //是否让浮动层弹回原位
