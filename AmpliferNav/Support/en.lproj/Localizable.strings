@@ -12,13 +12,19 @@
 "earProtection" = "Ear Protection";
 "other" = "Other";
 
-"left" = "L";
-"right" = "R";
+"left" = "Left Ear";
+"right" = "Right Ear";
 
 "outDoorMode" = "Outdoor Mode";
 "indoorMode" = "Indoor Mode";
 "normalMode" = "Normal Mode";
 
+"normalModeDesc" = "Suitable for noise background";
+"outdoorModeDesc" = "Scene for noise and wind";
+"indoorModeDesc" = "Suitable for relatively quiet places";
+
+"normalModeComments" = "常规模式：用于地铁或飞机等场景";
+"modeTips" = "These modes are set according to the needs of most users in these common scenarios. We recommend that you try each mode and choose the one you feel most suitable for use.";
 
 "leftEar" = "Left Ear";
 "rightEar" = "Right Ear";
@@ -37,6 +43,8 @@
 "reSearch" = "Search again";
 
 "foundDevices" = "Hearing devices found nearby";
+
+"earProtectionComment" = "This setting can compress the gain of loud sound. \n For example, the sound of car horns and firecrackers can prevent discomfort.";
 
 "disableAncSwitch" = "It is forbidden to switch the auxiliary listening mode during a call";
 

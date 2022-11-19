@@ -180,9 +180,11 @@
     self.rightBatImageView.contentMode = UIViewContentModeScaleAspectFit;
     
     self.leftBatLabel.text = NSLocalizedString(@"left", nil);
+    self.leftBatLabel.numberOfLines = 2;
     self.rightBatLabel.text = NSLocalizedString(@"right", nil);
+    self.rightBatLabel.numberOfLines = 2;
     
-    UIFont* font = [UIFont systemFontOfSize:12];
+    UIFont* font = [UIFont systemFontOfSize:7];
     self.leftBatLabel.font = font;
     self.rightBatLabel.font = font;
     
@@ -195,6 +197,9 @@
     self.rightBatImageView.frame = CGRectMake(self.rightBatLabel.frame.origin.x - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);
     self.leftBatImageView.frame = CGRectMake(self.rightBatImageView.frame.origin.x - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);
     self.leftBatLabel.frame = CGRectMake(self.leftBatImageView.frame.origin.x - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);
+    
+    self.leftBatLabel.textAlignment = NSTextAlignmentCenter;
+    self.rightBatLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 

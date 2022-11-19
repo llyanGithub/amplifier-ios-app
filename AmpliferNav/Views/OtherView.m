@@ -53,11 +53,11 @@
         self.normalImage = [UIImage imageNamed:@"normal"];
         
         self.modeButton = [[UIButton alloc] initWithFrame:CGRectMake(imagePosX, imageTopMargin, imageSize, imageSize)];
-//        [self.modeButton setImage:[UIImage imageNamed:@"normal"] forState:UIControlStateNormal];
         self.modeButton.contentMode = UIViewContentModeScaleAspectFit;
         
         self.modeLabel = [[UILabel alloc] initWithFrame:CGRectMake(imagePosX, imageTopMargin, imageSize, imageSize)];
         self.modeLabel.textAlignment = NSTextAlignmentCenter;
+        [self.modeLabel setFont:[UIFont systemFontOfSize:25]];
         
         UIFont* font = [UIFont systemFontOfSize:12];
 
@@ -119,12 +119,12 @@
     if (_currentMode == AXON_ANC_OUTER) {
         self.normalImageView.hidden = true;
         self.outerImageView.hidden = false;
-        self.modeLabel.text = @"OUTER";
+        self.modeLabel.text = @"Outer";
         [self.modeButton setImage:self.normalImage forState:UIControlStateNormal];
     } else if (_currentMode == AXON_ANC_NORMAL) {
         self.outerImageView.hidden = true;
         self.normalImageView.hidden = false;
-        self.modeLabel.text = @"NORMAL";
+        self.modeLabel.text = @"Normal";
         [self.modeButton setImage:self.outerImage forState:UIControlStateNormal];
     }
 }

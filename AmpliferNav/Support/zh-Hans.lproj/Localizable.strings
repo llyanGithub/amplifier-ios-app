@@ -13,8 +13,8 @@
 "earProtection" = "听觉保护";
 "other" = "其它";
 
-"left" = "左";
-"right" = "右";
+"left" = "左\n耳";
+"right" = "右\n耳";
 
 "outDoorMode" = "户外模式";
 "indoorMode" = "室内模式";
@@ -23,12 +23,16 @@
 "normalModeComments" = "常规模式：用于地铁或飞机等场景";
 "modeTips" = "请在其中选择最合适您的模式进行使用。\n如左右耳都已连接设备，将同步进行模式切换";
 
+"normalModeDesc" = "用于嘈杂与人多的场景";
+"outdoorModeDesc" = "用与噪声与风声的场景";
+"indoorModeDesc" = "适用于相对安静的场所";
+
 "leftEar" = "左耳";
 "rightEar" = "右耳";
 
 "compressDegree" = "压缩程度";
 
-"earProtectionComment" = "护耳模式能够压缩响度过大声音的增益。\n例如：汽车鸣笛声、爆竹声等，防止给您带来不适。";
+"earProtectionComment" = "此设置能够压缩响度过大声音的增益。\n例如：汽车鸣笛声音、爆竹声等，防止给您带来不适。";
 
 "connected" = "已连接";
 

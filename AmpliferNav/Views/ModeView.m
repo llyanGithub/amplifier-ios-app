@@ -12,9 +12,9 @@
 #import "ScreenAdapter.h"
 
 #define INVALID_MODE        0xFF
-#define OUTDOOR_MODE        0x00
-#define INDOOR_MODE         0x01
-#define NORMAL_MODE         0x02
+#define OUTDOOR_MODE        0x01
+#define INDOOR_MODE         0x02
+#define NORMAL_MODE         0x00
 
 @interface ModeView()
 
@@ -25,6 +25,7 @@
 @property (nonatomic) NSArray* buttonArray;
 
 @property (nonatomic) UILabel* titleLable;
+@property (nonatomic) UILabel* modeDescLabel;
 @property (nonatomic) UILabel* contentLabel;
 
 @end
@@ -58,27 +59,44 @@
         self.indoorButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight+spacing+topMargin, buttonWidth, buttonHeight) checkedImageName:@"室内选中" unCheckedImageName:@"室内" titleText:NSLocalizedString(@"indoorMode", nil) ];
         self.normalButton = [self allocButton:CGRectMake(horizontalMargin, buttonHeight*2+spacing*2+topMargin, buttonWidth, buttonHeight)  checkedImageName:@"常规选中" unCheckedImageName:@"常规" titleText:NSLocalizedString(@"normalMode", nil) ];
         
-        self.buttonArray = @[self.outdoorButton, self.indoorButton, self.normalButton];
+        self.buttonArray = @[self.normalButton, self.outdoorButton, self.indoorButton];
         
         
         NSUInteger labelTopMargin = SHReadValue(30);
+        NSUInteger labelHeight = SHReadValue(40);
         NSUInteger labelYPos = buttonHeight*3+spacing*2+topMargin + labelTopMargin;
         
-        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos, buttonWidth, 40)];
-        self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+spacing+10, buttonWidth, 40)];
+        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos, SWReadValue(88), labelHeight)];
         
-        self.titleLable.text = NSLocalizedString(@"normalModeComments", nil);
+        NSUInteger modeDescLabelPosX = self.titleLable.frame.origin.x + self.titleLable.frame.size.width;
+        NSUInteger modeDescLabelWidth = mainFrame.size.width - horizontalMargin - self.titleLable.frame.size.width;
+        
+        self.modeDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(modeDescLabelPosX, labelYPos, modeDescLabelWidth, labelHeight)];
+        self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+labelHeight, buttonWidth, labelHeight)];
+        
+        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, labelYPos+labelHeight-SHReadValue(6), horizontalMargin/2, labelHeight)];
+        starLabel.text = @"*";
+        starLabel.textAlignment = NSTextAlignmentCenter;
+        [starLabel setFont:[UIFont systemFontOfSize:14]];
+        
+        self.titleLable.text = @"户外模式:";
         self.contentLabel.text = NSLocalizedString(@"modeTips", nil);
         self.contentLabel.numberOfLines = 2;
+        
+        self.modeDescLabel.text = NSLocalizedString(@"normalModeDesc", nil);
         
         UIFont* font = [UIFont systemFontOfSize:14];
         [self.titleLable setFont:font];
         [self.contentLabel setFont:font];
+        [self.modeDescLabel setFont:font];
+        [self.titleLable setFont:[UIFont boldSystemFontOfSize:16]];
         
         [self addSubview:self.outdoorButton];
         [self addSubview:self.indoorButton];
         [self addSubview:self.normalButton];
+        [self addSubview:starLabel];
         [self addSubview:self.titleLable];
+        [self addSubview:self.modeDescLabel];
         [self addSubview:self.contentLabel];
         
         self.hidden = true;
@@ -113,8 +131,16 @@
 {
     switch (currentMode) {
         case OUTDOOR_MODE:
+            self.titleLable.text = [NSString stringWithFormat:@"%@:", NSLocalizedString(@"outDoorMode", nil)];
+            self.modeDescLabel.text = NSLocalizedString(@"outdoorModeDesc", nil);
+            break;
         case INDOOR_MODE:
+            self.titleLable.text = [NSString stringWithFormat:@"%@:", NSLocalizedString(@"indoorMode", nil)];
+            self.modeDescLabel.text = NSLocalizedString(@"indoorModeDesc", nil);
+            break;
         case NORMAL_MODE:
+            self.titleLable.text = [NSString stringWithFormat:@"%@:", NSLocalizedString(@"normalMode", nil)];
+            self.modeDescLabel.text = NSLocalizedString(@"normalModeDesc", nil);
             break;
             
         default:

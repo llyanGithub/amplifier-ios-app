@@ -59,6 +59,11 @@
         self.descriptionLabel.numberOfLines = 3;
         self.descriptionLabel.font = [UIFont systemFontOfSize:14];
         
+        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, self.topMargin+SHReadValue(294), self.horizontalMargin/2, SWReadValue(20))];
+        starLabel.text = @"*";
+        [starLabel setFont:[UIFont systemFontOfSize:14]];
+        starLabel.textAlignment = NSTextAlignmentCenter;
+        
         NSUInteger sliderLeftMargin = SWReadValue(10);
         NSUInteger sliderHeight = SHReadValue(40);
         NSUInteger slidePosX = self.horizontalMargin+labelWidth+sliderLeftMargin;
@@ -112,6 +117,7 @@
         [self addSubview:self.leftChannLabel];
         [self addSubview:self.rightChannLabel];
         [self addSubview:self.descriptionLabel];
+        [self addSubview:starLabel];
         
         [self addSubview:leftEarScaleView];
         [self addSubview:rightEarScaleView];

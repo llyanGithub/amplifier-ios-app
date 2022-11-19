@@ -47,7 +47,7 @@
     NSUInteger labelWidth = SWReadValue(150);
     NSUInteger topMargin = SHReadValue(120);
     
-    self.searchStateLabel.frame = CGRectMake(mainFrame.size.width/2-labelWidth/2, topMargin, labelWidth, labelHeight);
+    self.searchStateLabel.frame = CGRectMake(mainFrame.origin.x, topMargin, mainFrame.size.width, labelHeight);
     self.searchStateLabel.textAlignment = NSTextAlignmentCenter;
     self.searchStateLabel.text = NSLocalizedString(@"searching", nil);
     
