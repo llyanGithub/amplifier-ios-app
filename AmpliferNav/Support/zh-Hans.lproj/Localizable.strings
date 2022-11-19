@@ -35,6 +35,11 @@
 "tapToSearch" = "点击搜索设备";
 
 "searching" = "正在搜索附近设备...";
+"searchDone" = "搜索成功";
+
+"searchFail" = "暂未发现周围的设备";
+"searchFailContent" = "请确保您要连接的助听设备已经开机\n（可尝试先关机，再开机进行搜索）";
+"reSearch" = "重新搜索";
 
 "foundDevices" = "发现的听力设备";
 

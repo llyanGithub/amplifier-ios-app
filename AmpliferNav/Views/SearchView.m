@@ -89,6 +89,8 @@
     // 扫描之前，清空所有之前已经扫描到的设备
     [self.scanDeviceArray removeAllObjects];
     
+    self.searchStateLabel.text = NSLocalizedString(@"searching", nil);
+    
     self.currentDegree = 0.0;
     [self startRotate];
     
@@ -119,13 +121,30 @@
 - (void) searchDone
 {
     [self stopRotate];
-    
     self.currentDegree = 0.0;
     CGAffineTransform trans = CGAffineTransformMakeRotation(self.currentDegree);
     self.searchBorderImage.transform = trans;
     
-    self.searchCenterImage.hidden = true;
-    [self.searchBorderImage setImage:[UIImage imageNamed:@"搜索完成图标"]];
+    if (self.scanDeviceArray.count) {
+        self.searchCenterImage.hidden = true;
+        [self.searchBorderImage setImage:[UIImage imageNamed:@"搜索完成图标"]];
+        self.searchStateLabel.text = NSLocalizedString(@"searchDone", nil);
+    } else {
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"searchFail", nil)
+                                                                       message: NSLocalizedString(@"searchFailContent", nil)
+                                       preferredStyle:UIAlertControllerStyleAlert];
+
+        UIAlertAction* reSearchAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"reSearch", nil) style:UIAlertActionStyleDefault
+           handler:^(UIAlertAction * action) {
+            NSLog(@"重新搜索");
+            [self restartSearch];
+        }];
+
+        [alert addAction:reSearchAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }
 }
 
 - (void) restartSearch

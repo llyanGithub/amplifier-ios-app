@@ -30,6 +30,11 @@
 "tapToSearch" = "Click to search for devices";
 
 "searching" = "Searching for nearby devices";
+"searchDone" = "Search success";
+
+"searchFail" = "No surrounding devices found";
+"searchFailContent" = "Please make sure the hearing aid you want to connect to is turned on\n(Try shutting down first, then booting to search)";
+"reSearch" = "Search again";
 
 "foundDevices" = "Hearing devices found nearby";
 

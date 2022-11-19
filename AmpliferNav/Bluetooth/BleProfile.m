@@ -69,7 +69,9 @@
 #endif
         
         self.deviceName = @"[HTJ]0..-[GD]";
-        self.scanDuration = 2;
+        
+        // 扫描时间为10秒
+        self.scanDuration = 10;
         
         self.scanDeviceArray = [[NSMutableArray alloc] init];
         self.queue = [[Queue alloc] init];
