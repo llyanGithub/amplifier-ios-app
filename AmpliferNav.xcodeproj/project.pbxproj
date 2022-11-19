@@ -79,7 +79,7 @@
 		5D8A0EC0291DC9D2004203E7 /* ProtectEarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtectEarView.m; sourceTree = "<group>"; };
 		5D8A0EC3291DCB45004203E7 /* ProtectEarSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtectEarSlider.h; sourceTree = "<group>"; };
 		5D8A0EC4291DCB45004203E7 /* ProtectEarSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtectEarSlider.m; sourceTree = "<group>"; };
-		5D8C2EA2291A81A800355218 /* AmpliferNav.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmpliferNav.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D8C2EA2291A81A800355218 /* Amplifer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amplifer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8C2EA5291A81A800355218 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5D8C2EA6291A81A800355218 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5D8C2EA8291A81A800355218 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 		5D8C2EA3291A81A800355218 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5D8C2EA2291A81A800355218 /* AmpliferNav.app */,
+				5D8C2EA2291A81A800355218 /* Amplifer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -239,9 +239,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5D8C2EA1291A81A800355218 /* AmpliferNav */ = {
+		5D8C2EA1291A81A800355218 /* Amplifer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5D8C2EBB291A81A800355218 /* Build configuration list for PBXNativeTarget "AmpliferNav" */;
+			buildConfigurationList = 5D8C2EBB291A81A800355218 /* Build configuration list for PBXNativeTarget "Amplifer" */;
 			buildPhases = (
 				5D8C2E9E291A81A800355218 /* Sources */,
 				5D8C2E9F291A81A800355218 /* Frameworks */,
@@ -251,9 +251,9 @@
 			);
 			dependencies = (
 			);
-			name = AmpliferNav;
+			name = Amplifer;
 			productName = AmpliferNav;
-			productReference = 5D8C2EA2291A81A800355218 /* AmpliferNav.app */;
+			productReference = 5D8C2EA2291A81A800355218 /* Amplifer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -283,7 +283,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5D8C2EA1291A81A800355218 /* AmpliferNav */,
+				5D8C2EA1291A81A800355218 /* Amplifer */,
 			);
 		};
 /* End PBXProject section */
@@ -537,7 +537,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5D8C2EBB291A81A800355218 /* Build configuration list for PBXNativeTarget "AmpliferNav" */ = {
+		5D8C2EBB291A81A800355218 /* Build configuration list for PBXNativeTarget "Amplifer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5D8C2EBC291A81A800355218 /* Debug */,
