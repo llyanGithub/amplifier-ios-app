@@ -63,18 +63,20 @@
         
         
         NSUInteger labelTopMargin = SHReadValue(30);
-        NSUInteger labelHeight = SHReadValue(40);
+        NSUInteger titleLabelHeight = SHReadValue(25);
         NSUInteger labelYPos = buttonHeight*3+spacing*2+topMargin + labelTopMargin;
         
-        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos, SWReadValue(88), labelHeight)];
+        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos, SWReadValue(88), titleLabelHeight)];
         
         NSUInteger modeDescLabelPosX = self.titleLable.frame.origin.x + self.titleLable.frame.size.width;
         NSUInteger modeDescLabelWidth = mainFrame.size.width - horizontalMargin - self.titleLable.frame.size.width;
         
-        self.modeDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(modeDescLabelPosX, labelYPos, modeDescLabelWidth, labelHeight)];
-        self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+labelHeight, buttonWidth, labelHeight)];
+        self.modeDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(modeDescLabelPosX, labelYPos, modeDescLabelWidth, titleLabelHeight)];
         
-        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, labelYPos+labelHeight-SHReadValue(6), horizontalMargin/2, labelHeight)];
+        NSUInteger labelHeight = SHReadValue(40);
+        self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+titleLabelHeight, buttonWidth, labelHeight)];
+        
+        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, labelYPos+labelHeight-SHReadValue(20), horizontalMargin/2, labelHeight)];
         starLabel.text = @"*";
         starLabel.textAlignment = NSTextAlignmentCenter;
         [starLabel setFont:[UIFont systemFontOfSize:14]];
