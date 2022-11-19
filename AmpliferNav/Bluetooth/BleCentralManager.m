@@ -53,6 +53,11 @@
  */
 @property (nonatomic) NotifyReceived notifyRecevied;
 
+/*
+ 蓝牙状态发生变化的回调函数
+ */
+@property (nonatomic) BluetoothStateChangedInd bluetoothStateChangedInd;
+
 @end
 
 @implementation BleCentralManager
@@ -78,6 +83,18 @@
     NSLog(@"Bluetooth State: %ld", central.state);
     
     self.blePowerState = central.state;
+    
+    if (self.bluetoothStateChangedInd) {
+        self.bluetoothStateChangedInd(central);
+    }
+}
+
+/*
+ 注册蓝牙发生变化之后的回调函数
+ */
+- (void) registerStateChangedCallback:(BluetoothStateChangedInd) callback
+{
+    self.bluetoothStateChangedInd = callback;
 }
 
 /*

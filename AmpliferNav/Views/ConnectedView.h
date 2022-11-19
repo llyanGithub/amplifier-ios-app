@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString* deviceName;
 @property (nonatomic, assign) NSUInteger deviceType;
 
+@property (nonatomic) BOOL backFromMainVC;
+@property (nonatomic) BOOL isDismiss;
+
 @end
 
 NS_ASSUME_NONNULL_END

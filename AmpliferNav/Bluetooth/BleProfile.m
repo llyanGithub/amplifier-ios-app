@@ -223,6 +223,11 @@
     [self.bleCentralManager registerDisconnectedCallback:callback];
 }
 
+- (void) registerStateChangedInd:(BluetoothStateChangedInd) callback
+{
+    [self.bleCentralManager registerStateChangedCallback:callback];
+}
+
 - (void)startScan:(nonnull UserScanCallback)scanCallback
 {
     self.scanTimer = [NSTimer scheduledTimerWithTimeInterval:self.scanDuration target:self selector:@selector(scanTimeout) userInfo:nil repeats:NO];

@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) registerDisconnectedInd:(nonnull DisconnectedCallback) callback;
 
+- (void) registerStateChangedInd:(BluetoothStateChangedInd) callback;
+
 - (void) writeDeviceData:(NSData*)data callback:(nonnull WriteDoneCallback)callback;
 
 @end

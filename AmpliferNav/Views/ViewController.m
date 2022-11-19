@@ -11,6 +11,7 @@
 #import "VolumeView.h"
 #import "FreqResponseView.h"
 #import "ProtectEarView.h"
+#import "ConnectedView.h"
 #import "OtherView.h"
 #import "BleCentralManager.h"
 #import "BleProfile.h"
@@ -73,6 +74,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"======== 将要加载视图： viewDidLoad   =======\n");
     
     self.mainFrame = [UIScreen mainScreen].bounds;
     self.horizontalMargin = SHReadValue(20);
@@ -293,6 +296,10 @@
 - (void) connectedButtonClicked
 {
     NSLog(@"connectedButtonClicked");
+
+    ConnectedView* connectedView = (ConnectedView*)self.presentingViewController;
+    connectedView.backFromMainVC = YES;
+    [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)navButtonClicked:(NavButton *)sender
@@ -355,6 +362,10 @@
         UIAlertAction* reconnectAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"reconnect", nil) style:UIAlertActionStyleDefault
            handler:^(UIAlertAction * action) {
             NSLog(@"重新连接");
+            
+            ConnectedView* connectedView = (ConnectedView*)self.presentingViewController;
+            connectedView.isDismiss = YES;
+            [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
         }];
          
         [alert addAction:cancelAction];
@@ -648,5 +659,46 @@
     
     self.waitBleReadyTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(testStart) userInfo:nil repeats:NO];
 }
+
+//#pragma mark- life cycle
+//
+//- (void)viewWillLayoutSubviews {
+//    [super viewWillLayoutSubviews];
+//    NSLog(@"========   将要布局子视图： viewWillLayoutSubviews   =======\n");
+//}
+//
+//- (void)viewDidLayoutSubviews {
+//    [super viewDidLayoutSubviews];
+//    NSLog(@"========   已经布局子视图： viewDidLayoutSubviews   =======\n");
+//}
+//
+//- (void)didReceiveMemoryWarning {
+//    [super didReceiveMemoryWarning];
+//    NSLog(@"========   收到内存警告： didReceiveMemoryWarning   =======\n");
+//}
+//
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    NSLog(@"========   视图将要出现： viewWillAppear:(BOOL)animated   =======\n");
+//}
+//
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    NSLog(@"========   视图已经出现： viewDidAppear:(BOOL)animated   =======\n");
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//    NSLog(@"========   视图将要消失： viewWillDisappear:(BOOL)animated   =======\n");
+//}
+//
+//- (void)viewDidDisappear:(BOOL)animated {
+//    [super viewDidDisappear:animated];
+//    NSLog(@"========   视图已经消失： viewDidDisappear:(BOOL)animated   =======\n");
+//}
+//
+//- (void)dealloc {
+//    NSLog(@"========   释放： dealloc   =======\n");
+//}
 
 @end

@@ -18,6 +18,8 @@ typedef void (^ConnectedCallback)(BOOL isConnected);
 
 typedef void (^DisconnectedCallback)(CBCentralManager* central, CBPeripheral *peripheral, NSError* error);
 
+typedef void (^BluetoothStateChangedInd)(CBCentralManager* central);
+
 typedef void (^DiscoveryServiceCallback)(CBPeripheral *peripheral, NSError *error);
 
 typedef void (^DiscoveryCharacteristicsCallback)(CBPeripheral *peripheral,CBService *service,NSError *error);
@@ -44,6 +46,8 @@ typedef void (^NotifyReceived)(CBPeripheral *peripheral,CBCharacteristic *charac
 - (void)connectPeripheral:(nonnull CBPeripheral *)peripheral
                   options:(nullable NSDictionary<NSString *, id> *)options
         connectedCallback:(ConnectedCallback)connectedCallback;
+
+- (void) registerStateChangedCallback:(BluetoothStateChangedInd) callback;
 
 /*
  发现设备上所有服务

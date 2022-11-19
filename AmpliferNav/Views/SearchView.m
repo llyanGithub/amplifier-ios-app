@@ -32,9 +32,6 @@
 @property (nonatomic) CGFloat currentDegree;
 @property (nonatomic) NSTimer* searchIconRotateTimer;
 
-/* 需要拿到BLE PowerOn的通知之后才能扫描BLE广播，因此需要稍微延时一下 */
-@property (nonatomic) NSTimer* waitBleReadyTimer;
-
 @property (nonatomic)CBPeripheral* peripheral;
 
 @end
@@ -79,10 +76,10 @@
     
     self.searchTable.allowsSelection = NO;
     
-    self.waitBleReadyTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(searchDevice) userInfo:nil repeats:NO];
+    [self searchDevice];
 }
 
-- (void) searchDevice
+- (void) searchNow
 {
     if (self.bleProfile.blePowerState != CBManagerStatePoweredOn) {
         NSLog(@"请打开您的手机蓝牙...");
@@ -107,6 +104,18 @@
     }];
 }
 
+- (void) searchDevice
+{
+    [self.bleProfile registerStateChangedInd:^(CBCentralManager* central) {
+        if (central.state != CBManagerStatePoweredOn) {
+            NSLog(@"请打开您的手机蓝牙...");
+            return;
+        }
+    
+        [self searchNow];
+    }];
+}
+
 - (void) searchDone
 {
     [self stopRotate];
@@ -117,6 +126,18 @@
     
     self.searchCenterImage.hidden = true;
     [self.searchBorderImage setImage:[UIImage imageNamed:@"搜索完成图标"]];
+}
+
+- (void) restartSearch
+{
+    self.currentDegree = 0.0;
+    CGAffineTransform trans = CGAffineTransformMakeRotation(self.currentDegree);
+    self.searchBorderImage.transform = trans;
+    
+    self.searchCenterImage.hidden = false;
+    [self.searchBorderImage setImage:[UIImage imageNamed:@"搜索图标"]];
+    
+    [self searchNow];
 }
 
 - (void) startRotate
@@ -226,6 +247,17 @@
     CBPeripheral* peripheral = [self.scanDeviceArray objectAtIndex:sender.row];
     
     [self connectDevice:peripheral];
+}
+
+#pragma mark- life cycle
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    NSLog(@"========   视图将要出现： viewWillAppear:(BOOL)animated   =======\n");
+    /* 跳转之前清空已扫描到的设备 */
+    [self.scanDeviceArray removeAllObjects];
+    [self.searchTable reloadData];
+    
+    [self restartSearch];
 }
 
 /*
