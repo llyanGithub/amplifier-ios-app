@@ -9,6 +9,7 @@
 #import "SWRevealViewController.h"
 #import "BleProfile.h"
 #import "PacketProto.h"
+#import "ScreenAdapter.h"
 
 #define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 #define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
@@ -18,6 +19,8 @@
 @property (nonatomic , strong) UITableView *tableView;
 
 @property (nonatomic , strong) NSArray *menuArray;
+
+@property (nonatomic, strong) UIImageView* imageView;
 
 @end
 
@@ -50,10 +53,25 @@
 -(void)initView{
     self.view.backgroundColor = [UIColor lightGrayColor];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT-20) style:UITableViewStyleGrouped];
+    NSUInteger logoHeight = SWReadValue(66);
+    NSUInteger logoWidth = SWReadValue(128);
+    
+    NSUInteger tablePosY = logoHeight + SHReadValue(80);
+    NSUInteger tableHeight = SCREEN_HEIGHT - tablePosY;
+    
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, tablePosY, SCREEN_WIDTH, tableHeight) style:UITableViewStyleGrouped];
+    _tableView.backgroundColor = UIColor.whiteColor;
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    
+    self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppIcon"]];
+//    self.imageView.backgroundColor = UIColor.redColor;
+    self.imageView.frame = CGRectMake(SWReadValue(60), SHReadValue(60), logoWidth, logoHeight);
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
     [self.view addSubview:_tableView];
+    [self.view addSubview:self.imageView];
 }
 
 
