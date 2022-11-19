@@ -97,21 +97,21 @@
 
 #pragma mark- life cycle
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    NSLog(@"========   将要布局子视图： viewWillLayoutSubviews   =======\n");
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    NSLog(@"========   已经布局子视图： viewDidLayoutSubviews   =======\n");
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    NSLog(@"========   收到内存警告： didReceiveMemoryWarning   =======\n");
-}
-
+//- (void)viewWillLayoutSubviews {
+//    [super viewWillLayoutSubviews];
+//    NSLog(@"========   将要布局子视图： viewWillLayoutSubviews   =======\n");
+//}
+//
+//- (void)viewDidLayoutSubviews {
+//    [super viewDidLayoutSubviews];
+//    NSLog(@"========   已经布局子视图： viewDidLayoutSubviews   =======\n");
+//}
+//
+//- (void)didReceiveMemoryWarning {
+//    [super didReceiveMemoryWarning];
+//    NSLog(@"========   收到内存警告： didReceiveMemoryWarning   =======\n");
+//}
+//
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSLog(@"========   视图将要出现： viewWillAppear:(BOOL)animated   =======\n");
@@ -123,24 +123,24 @@
         self.jumpMainButton.hidden = false;
     }
 }
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    NSLog(@"========   视图已经出现： viewDidAppear:(BOOL)animated   =======\n");
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    NSLog(@"========   视图将要消失： viewWillDisappear:(BOOL)animated   =======\n");
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    NSLog(@"========   视图已经消失： viewDidDisappear:(BOOL)animated   =======\n");
-}
-
-- (void)dealloc {
-    NSLog(@"========   释放： dealloc   =======\n");
-}
+//
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    NSLog(@"========   视图已经出现： viewDidAppear:(BOOL)animated   =======\n");
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//    NSLog(@"========   视图将要消失： viewWillDisappear:(BOOL)animated   =======\n");
+//}
+//
+//- (void)viewDidDisappear:(BOOL)animated {
+//    [super viewDidDisappear:animated];
+//    NSLog(@"========   视图已经消失： viewDidDisappear:(BOOL)animated   =======\n");
+//}
+//
+//- (void)dealloc {
+//    NSLog(@"========   释放： dealloc   =======\n");
+//}
 
 @end

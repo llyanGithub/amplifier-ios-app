@@ -6,9 +6,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
 
-@interface ViewController : UIViewController
-
+@interface ViewController : SWRevealViewController
 
 @end
 
