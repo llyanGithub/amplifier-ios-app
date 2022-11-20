@@ -326,15 +326,14 @@
     [self.revealViewController.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
-- (void)navButtonClicked:(NavButton *)sender
+- (void)showNavViewWithIndex:(NSUInteger) index
 {
-    NSUInteger index = [self.buttonsArray indexOfObject:sender];
-    NSLog(@"button: %@ index: %ld clicked", sender.titleLabel.text, index);
-    
     for (NavButton* button in self.buttonsArray) {
         button.checked = false;
     }
-    sender.checked = true;
+    
+    NavButton* button = [self.buttonsArray objectAtIndex:index];
+    button.checked = true;
     
     for (UIView* view in self.viewsArray) {
         view.hidden = true;
@@ -342,6 +341,14 @@
     
     UIView* view = [self.viewsArray objectAtIndex: index];
     view.hidden = false;
+}
+
+- (void)navButtonClicked:(NavButton *)sender
+{
+    NSUInteger index = [self.buttonsArray indexOfObject:sender];
+    NSLog(@"button: %@ index: %ld clicked", sender.titleLabel.text, index);
+    
+    [self showNavViewWithIndex:index];
 }
 
 - (void) syncDeviceInfo
@@ -727,6 +734,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     NSLog(@"========   视图将要出现： viewWillAppear:(BOOL)animated   =======\n");
+    
+    [self showNavViewWithIndex:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

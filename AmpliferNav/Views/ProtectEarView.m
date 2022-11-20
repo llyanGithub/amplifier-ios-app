@@ -54,12 +54,12 @@
         self.leftChannLabel.text = NSLocalizedString(@"leftEar", nil);
         self.leftChannLabel.font = font;
         
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin+SHReadValue(280), mainFrame.size.width - self.horizontalMargin*2, SHReadValue(50))];
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin+SHReadValue(280), mainFrame.size.width - self.horizontalMargin*2, SHReadValue(70))];
         self.descriptionLabel.text = NSLocalizedString(@"earProtectionComment", nil);
         self.descriptionLabel.numberOfLines = 3;
         self.descriptionLabel.font = [UIFont systemFontOfSize:14];
         
-        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, self.descriptionLabel.frame.origin.y + SHReadValue(5), self.horizontalMargin/2, SWReadValue(20))];
+        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, self.descriptionLabel.frame.origin.y + SHReadValue(7), self.horizontalMargin/2, SWReadValue(20))];
         starLabel.text = @"*";
         [starLabel setFont:[UIFont systemFontOfSize:14]];
         starLabel.textAlignment = NSTextAlignmentCenter;
