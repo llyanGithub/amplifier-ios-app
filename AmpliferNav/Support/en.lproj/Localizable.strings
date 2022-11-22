@@ -44,7 +44,9 @@
 
 "foundDevices" = "Hearing devices found nearby";
 
-"earProtectionComment" = "This setting can compress the gain of loud sound. \n For example, the sound of car horns and firecrackers can prevent discomfort.";
+"earProtectionComment" = "* This setting can compress the gain of loud sound.";
+
+"earProtectionComment2" = "For example, the sound of car horns and firecrackers can prevent discomfort.";
 
 "disableAncSwitch" = "It is forbidden to switch the auxiliary listening mode during a call";
 

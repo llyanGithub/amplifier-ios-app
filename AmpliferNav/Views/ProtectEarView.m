@@ -54,16 +54,6 @@
         self.leftChannLabel.text = NSLocalizedString(@"leftEar", nil);
         self.leftChannLabel.font = font;
         
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin+SHReadValue(280), mainFrame.size.width - self.horizontalMargin*2, SHReadValue(70))];
-        self.descriptionLabel.text = NSLocalizedString(@"earProtectionComment", nil);
-        self.descriptionLabel.numberOfLines = 3;
-        self.descriptionLabel.font = [UIFont systemFontOfSize:14];
-        
-        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, self.descriptionLabel.frame.origin.y + SHReadValue(7), self.horizontalMargin/2, SWReadValue(20))];
-        starLabel.text = @"*";
-        [starLabel setFont:[UIFont systemFontOfSize:14]];
-        starLabel.textAlignment = NSTextAlignmentCenter;
-        
         NSUInteger sliderLeftMargin = SWReadValue(10);
         NSUInteger sliderHeight = SHReadValue(40);
         NSUInteger slidePosX = self.horizontalMargin+labelWidth+sliderLeftMargin;
@@ -106,6 +96,20 @@
         self.rightCompressLabel.text = NSLocalizedString(@"compressDegree", nil);
         self.rightCompressLabel.font = [UIFont systemFontOfSize:11];
         
+        
+        NSUInteger descriptionLabelTopMargin = SHReadValue(40);
+        NSUInteger descriptionLabelPosY = self.rightCompressLabel.frame.origin.y + self.rightCompressLabel.frame.size.height + descriptionLabelTopMargin;
+        
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, descriptionLabelPosY, mainFrame.size.width - self.horizontalMargin, SHReadValue(20))];
+        self.descriptionLabel.text = NSLocalizedString(@"earProtectionComment", nil);
+        self.descriptionLabel.numberOfLines = 1;
+        self.descriptionLabel.font = [UIFont systemFontOfSize:14];
+        
+        UILabel* descriptionLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin - SWReadValue(10), descriptionLabelPosY + SHReadValue(20), mainFrame.size.width - self.horizontalMargin*2, SWReadValue(40))];
+        descriptionLabel2.text = NSLocalizedString(@"earProtectionComment2", nil);
+        descriptionLabel2.numberOfLines = 2;
+        [descriptionLabel2 setFont:[UIFont systemFontOfSize:14]];
+        
         self.allSelectedButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"护耳链接选中"] unCheckedImage:[UIImage imageNamed:@"护耳链接"]];
         self.allSelectedButton.frame = CGRectMake(self.horizontalMargin, self.topMargin+SHReadValue(60), SWReadValue(30), SHReadValue(54));
         
@@ -117,7 +121,7 @@
         [self addSubview:self.leftChannLabel];
         [self addSubview:self.rightChannLabel];
         [self addSubview:self.descriptionLabel];
-        [self addSubview:starLabel];
+        [self addSubview:descriptionLabel2];
         
         [self addSubview:leftEarScaleView];
         [self addSubview:rightEarScaleView];
