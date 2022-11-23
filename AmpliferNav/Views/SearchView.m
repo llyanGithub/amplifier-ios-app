@@ -13,6 +13,7 @@
 #import "ViewController.h"
 #include "ConnectedView.h"
 #include "ScreenAdapter.h"
+#include "ReadySearchView.h"
 
 
 #define ROTATE_TMER_INTERVAL (1/15.0)
@@ -28,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *searchBorderImage;
 @property (weak, nonatomic) IBOutlet UILabel *searchResultLabel;
 @property (weak, nonatomic) IBOutlet UILabel *searchStateLabel;
+
+@property (nonatomic) UIButton* backButton;
 
 @property (nonatomic) CGFloat currentDegree;
 @property (nonatomic) NSTimer* searchIconRotateTimer;
@@ -46,6 +49,12 @@
     NSUInteger labelHeight = SHReadValue(20);
     NSUInteger labelWidth = SWReadValue(150);
     NSUInteger topMargin = SHReadValue(120);
+    
+//    self.backButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"返回"]];
+    self.backButton = [[UIButton alloc] initWithFrame:CGRectMake(SWReadValue(20), SWReadValue(60), SWReadValue(15), SWReadValue(23))];
+    [self.backButton setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    [self.backButton addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchDown];
+    self.backButton.hidden = YES;
     
     self.searchStateLabel.frame = CGRectMake(mainFrame.origin.x, topMargin, mainFrame.size.width, labelHeight);
     self.searchStateLabel.textAlignment = NSTextAlignmentCenter;
@@ -77,6 +86,13 @@
     self.searchTable.allowsSelection = NO;
     
     [self searchDevice];
+    
+    [self.view addSubview:self.backButton];
+}
+
+- (void)backButtonClicked
+{
+    [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void) searchNow
@@ -127,6 +143,7 @@
     
     if (self.scanDeviceArray.count) {
         self.searchCenterImage.hidden = true;
+        self.backButton.hidden = false;
         [self.searchBorderImage setImage:[UIImage imageNamed:@"搜索完成图标"]];
         self.searchStateLabel.text = NSLocalizedString(@"searchDone", nil);
     } else {
@@ -266,6 +283,11 @@
     CBPeripheral* peripheral = [self.scanDeviceArray objectAtIndex:sender.row];
     
     [self connectDevice:peripheral];
+}
+
+- (void)dealloc
+{
+    NSLog(@"======== SearchView  释放： dealloc   =======\n");
 }
 
 #pragma mark- life cycle
