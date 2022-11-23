@@ -32,6 +32,9 @@
 @property (nonatomic) UILabel* leftCompressLabel;
 @property (nonatomic) UILabel* rightCompressLabel;
 
+@property (nonatomic) UITapGestureRecognizer* leftSliderTapGesture;
+@property (nonatomic) UITapGestureRecognizer* rightSliderTapGesture;
+
 @property (nonatomic) SelectedButton* allSelectedButton;
 
 @end
@@ -60,8 +63,18 @@
         NSUInteger sliderWidth = mainFrame.size.width - 2*self.horizontalMargin - labelWidth - sliderLeftMargin;
         
         self.leftSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(slidePosX, self.topMargin, sliderWidth, sliderHeight)];
+        UIImageView* leftSliderPointView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"级点"]];
+        
+        NSUInteger pointHorizontalMargin = SWReadValue(15);
+        leftSliderPointView.contentMode = UIViewContentModeScaleAspectFit;
+        leftSliderPointView.frame = CGRectMake(slidePosX + pointHorizontalMargin, self.topMargin, sliderWidth - 2*pointHorizontalMargin, sliderHeight);
+        
         [self.leftSlider addTarget:self action:@selector(leftSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         [self.leftSlider addTarget:self action:@selector(sliderReleased) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
+        
+        self.leftSliderTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftSliderTapped:)];
+        self.leftSliderTapGesture.delegate = self;
+        [self.leftSlider addGestureRecognizer:self.leftSliderTapGesture];
         
         UIView* leftEarScaleView = [self createScaleView];
         NSUInteger scalePosX = slidePosX + SWReadValue(9);
@@ -80,9 +93,18 @@
         
         self.rightSlider = [[ProtectEarSlider alloc] initWithFrame:CGRectMake(slidePosX, rightSliderPosY, sliderWidth, sliderHeight)];
         
+//        NSUInteger pointHorizontalMargin = SWReadValue(15);
+        UIImageView* rightSliderPointView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"级点"]];
+        rightSliderPointView.contentMode = UIViewContentModeScaleAspectFit;
+        rightSliderPointView.frame = CGRectMake(slidePosX + pointHorizontalMargin, rightSliderPosY, sliderWidth - 2*pointHorizontalMargin, sliderHeight);
+        
         [self.rightSlider addTarget:self action:@selector(rightSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         
         [self.rightSlider addTarget:self action:@selector(sliderReleased) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
+        
+        self.rightSliderTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rightSliderTapped:)];
+        self.rightSliderTapGesture.delegate = self;
+        [self.rightSlider addGestureRecognizer:self.rightSliderTapGesture];
         
         self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, rightSliderPosY, labelWidth, labelHeight)];
         self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
@@ -121,7 +143,7 @@
         [self addSubview:self.leftChannLabel];
         [self addSubview:self.rightChannLabel];
         [self addSubview:self.descriptionLabel];
-        [self addSubview:descriptionLabel2];
+//        [self addSubview:descriptionLabel2];
         
         [self addSubview:leftEarScaleView];
         [self addSubview:rightEarScaleView];
@@ -130,6 +152,9 @@
         [self addSubview:self.rightCompressLabel];
         
         [self addSubview:self.allSelectedButton];
+        
+        [self addSubview:leftSliderPointView];
+        [self addSubview:rightSliderPointView];
         
         self.leftEarCompressValue = 0;
         self.rightEarCompressValue = 0;
@@ -155,6 +180,32 @@
     if (self.allSelectedButton.checked) {
         self.rightSlider.value = roundedValue;
         _rightEarCompressValue = roundedValue;
+    }
+}
+
+- (void)leftSliderTapped:(UITapGestureRecognizer *)sender
+{
+    CGPoint touchPoint = [sender locationInView:self.leftSlider];
+    CGFloat value = (self.leftSlider.maximumValue - self.leftSlider.minimumValue) * (touchPoint.x / self.leftSlider.frame.size.width );
+    NSUInteger roundedValue = round(value / self.leftSlider.step) * self.leftSlider.step;
+    NSUInteger oldVaue = (int)self.leftSlider.value;
+    [self.leftSlider setValue:roundedValue animated:YES];
+    
+    if (roundedValue != oldVaue) {
+        [self sliderReleased];
+    }
+}
+
+- (void)rightSliderTapped:(UITapGestureRecognizer *)sender
+{
+    CGPoint touchPoint = [sender locationInView:self.leftSlider];
+    CGFloat value = (self.rightSlider.maximumValue - self.rightSlider.minimumValue) * (touchPoint.x / self.rightSlider.frame.size.width );
+    NSUInteger roundedValue = round(value / self.rightSlider.step) * self.rightSlider.step;
+    NSUInteger oldVaue = (int)self.leftSlider.value;
+    
+    [self.rightSlider setValue:roundedValue animated:YES];
+    if (roundedValue != oldVaue) {
+        [self sliderReleased];
     }
 }
 
