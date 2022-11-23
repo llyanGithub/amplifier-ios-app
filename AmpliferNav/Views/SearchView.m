@@ -231,13 +231,21 @@
         ConnectedView* destView = (ConnectedView*)segue.destinationViewController;
         
         destView.deviceName = self.peripheral.name;
-        NSUInteger strLen = self.peripheral.name.length;
-        NSString* lastLetter = [self.peripheral.name substringWithRange:NSMakeRange(strLen-2, 1)];
         
-        if ([lastLetter isEqualToString:@"D"]) {
-            destView.deviceType = TWS_DEVICE_TYPE_D;
-        } else if ([lastLetter isEqualToString:@"G"]) {
+        NSString *patterG = @".*-G";
+        NSString *patterD = @".*-D";
+        
+        NSPredicate *predicateG = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",patterG];
+        NSPredicate *predicateD = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",patterD];
+        
+        BOOL matched = [predicateG evaluateWithObject: self.peripheral.name];
+        if (matched) {
             destView.deviceType = TWS_DEVICE_TYPE_G;
+        }
+        
+        matched = [predicateD evaluateWithObject: self.peripheral.name];
+        if (matched) {
+            destView.deviceType = TWS_DEVICE_TYPE_D;
         }
         
         //为视图控制器设置过渡类型
