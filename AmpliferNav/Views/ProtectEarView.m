@@ -188,12 +188,16 @@
     CGPoint touchPoint = [sender locationInView:self.leftSlider];
     CGFloat value = (self.leftSlider.maximumValue - self.leftSlider.minimumValue) * (touchPoint.x / self.leftSlider.frame.size.width );
     NSUInteger roundedValue = round(value / self.leftSlider.step) * self.leftSlider.step;
-    NSUInteger oldVaue = (int)self.leftSlider.value;
-    [self.leftSlider setValue:roundedValue animated:YES];
     
-    if (roundedValue != oldVaue) {
-        [self sliderReleased];
+    [self.leftSlider setValue:roundedValue animated:YES];
+    _leftEarCompressValue = roundedValue;
+    
+    if (self.allSelectedButton.checked) {
+        
+        [self.rightSlider setValue:roundedValue animated:YES];
+        _rightEarCompressValue = roundedValue;
     }
+    [self sliderReleased];
 }
 
 - (void)rightSliderTapped:(UITapGestureRecognizer *)sender
@@ -201,12 +205,16 @@
     CGPoint touchPoint = [sender locationInView:self.leftSlider];
     CGFloat value = (self.rightSlider.maximumValue - self.rightSlider.minimumValue) * (touchPoint.x / self.rightSlider.frame.size.width );
     NSUInteger roundedValue = round(value / self.rightSlider.step) * self.rightSlider.step;
-    NSUInteger oldVaue = (int)self.leftSlider.value;
-    
+
     [self.rightSlider setValue:roundedValue animated:YES];
-    if (roundedValue != oldVaue) {
-        [self sliderReleased];
+    _rightEarCompressValue = roundedValue;
+    
+    if (self.allSelectedButton.checked) {
+        [self.leftSlider setValue:roundedValue animated:YES];
+        _leftEarCompressValue = roundedValue;
     }
+    
+    [self sliderReleased];
 }
 
 - (void) sliderReleased
