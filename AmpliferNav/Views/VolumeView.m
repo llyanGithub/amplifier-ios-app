@@ -94,25 +94,35 @@
         [self addSubview:self.leftVolumeLabel];
         [self addSubview:self.rightVolumeLabel];
         
-        NSUInteger channHorizontalMargin = SWReadValue(45);
         NSUInteger channTopMargin = SHReadValue(20);
-        NSUInteger channButtonHeight = SHReadValue(50);
+        NSUInteger channButtonWidth = SWReadValue(80);
+        NSUInteger channButtonHeight = SHReadValue(54);
         NSUInteger channButtonPosY = topMargin + sliderTopMargin + sliderHeight + channTopMargin;
+
+        [self createChannButtonView];
+        self.leftChannButton.frame = CGRectMake(self.leftVolumeSlider.frame.origin.x + self.leftVolumeSlider.frame.size.width/2-channButtonWidth/2, channButtonPosY, channButtonWidth, channButtonHeight);
+        self.rightChannButton.frame = CGRectMake(self.rightVolumeSlider.frame.origin.x + self.leftVolumeSlider.frame.size.width/2 - channButtonWidth/2, channButtonPosY, channButtonWidth, channButtonHeight);
         
-        UIView* channButtonView = [self createChannButtonView];
-        channButtonView.frame = CGRectMake(channHorizontalMargin, channButtonPosY, mainFrame.size.width - 2*channHorizontalMargin, channButtonHeight);
+        NSUInteger allChannelButtonWidth = SWReadValue(50);
+        NSUInteger allChannelButtonHeight = SWReadValue(34);
+        NSUInteger allChannButtonPosX = (self.rightChannButton.frame.origin.x - self.leftChannButton.frame.origin.x)/2 + self.leftChannButton.frame.origin.x + channButtonWidth/2 - allChannelButtonWidth/2;
+        NSUInteger allChannButtonPosY = self.leftChannButton.frame.origin.y + self.leftChannButton.frame.size.height/2 - allChannelButtonHeight/2;
+        self.allChanButton.frame = CGRectMake(allChannButtonPosX, allChannButtonPosY, allChannelButtonWidth, allChannelButtonHeight);
         
         NSUInteger labelsViewTopMargin = SHReadValue(2);
         NSUInteger labelsViewHeight = SHReadValue(35);
-        NSUInteger labelsWidth = SWReadValue(40);
-        NSUInteger labelsViewHorizontalMargin = (self.leftVolumeSlider.frame.origin.x + sliderWidth/2) - labelsWidth/2;
+        NSUInteger labelsWidth = SWReadValue(60);
         NSUInteger labelsViewPosY = channButtonPosY + channButtonHeight + labelsViewTopMargin;
         
-        UIView* labelsView = [self createLabelsView];
-        labelsView.frame = CGRectMake(labelsViewHorizontalMargin, labelsViewPosY, mainFrame.size.width - 2*labelsViewHorizontalMargin, labelsViewHeight);
+        [self createLabelsView];
+        self.leftChannLabel.frame = CGRectMake(self.leftVolumeSlider.frame.origin.x + self.leftVolumeSlider.frame.size.width/2 - labelsWidth/2, labelsViewPosY, labelsWidth, labelsViewHeight);
+        self.rightChannLabel.frame = CGRectMake(self.rightVolumeSlider.frame.origin.x + self.rightVolumeSlider.frame.size.width/2 - labelsWidth/2, labelsViewPosY, labelsWidth, labelsViewHeight);
         
-        [self addSubview:channButtonView];
-        [self addSubview:labelsView];
+        [self addSubview:self.leftChannButton];
+        [self addSubview:self.rightChannButton];
+        [self addSubview:self.allChanButton];
+        [self addSubview:self.leftChannLabel];
+        [self addSubview:self.rightChannLabel];
         
         self.hidden = true;
     }
@@ -173,30 +183,19 @@
     }
 }
 
-- (UIView*) createChannButtonView
+- (void) createChannButtonView
 {
-    UIStackView* stackView = [[UIStackView alloc] init];
-    stackView.axis = UILayoutConstraintAxisHorizontal;
-    stackView.distribution = UIStackViewDistributionFillEqually;
-    
     self.leftChannButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"左"] unCheckedImage:[UIImage imageNamed:@"左耳灰"]];
-    
     self.rightChannButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"右"] unCheckedImage:[UIImage imageNamed:@"右耳灰"]];
     
     self.allChanButton = [[SelectedButton alloc] initWithImage:[UIImage imageNamed:@"链接选中"] unCheckedImage:[UIImage imageNamed:@"链接"]];
     self.allChanButton.checked = NO;
-    
-    [stackView addArrangedSubview:self.leftChannButton];
-    [stackView addArrangedSubview:self.allChanButton];
-    [stackView addArrangedSubview:self.rightChannButton];
     
     self.buttonGroup = @[self.leftChannButton, self.rightChannButton, self.allChanButton];
     
     for (SelectedButton* button in self.buttonGroup) {
         [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchDown];
     }
-    
-    return (UIView*)stackView;
 }
 
 - (void) buttonClicked:(SelectedButton*)sender
@@ -207,12 +206,8 @@
     self.rightVolumeSlider.enabled = self.rightChannButton.checked;
 }
 
-- (UIView*) createLabelsView
+- (void) createLabelsView
 {
-    UIStackView* stackView = [[UIStackView alloc] init];
-    stackView.axis = UILayoutConstraintAxisHorizontal;
-    stackView.distribution = UIStackViewDistributionEqualCentering;
-    
     self.leftChannLabel = [[UILabel alloc] init];
     self.rightChannLabel = [[UILabel alloc] init];
     
@@ -220,11 +215,6 @@
     self.leftChannLabel.textAlignment = NSTextAlignmentCenter;
     self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
     self.rightChannLabel.textAlignment = NSTextAlignmentCenter;
-    
-    [stackView addArrangedSubview:self.leftChannLabel];
-    [stackView addArrangedSubview:self.rightChannLabel];
-    
-    return stackView;
 }
 
 @end
