@@ -106,7 +106,7 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
         
         NSUInteger channHorizontalMargin = SWReadValue(65);
         NSUInteger channTopMargin = SHReadValue(20);
-        NSUInteger channButtonHeight = SHReadValue(35);
+        NSUInteger channButtonHeight = SHReadValue(50);
         NSUInteger channButtonPosY = self.label500.frame.origin.y + self.labelHeight + channTopMargin;
         
         UIView* channButtonView = [self createSelectedButtonView];

@@ -94,17 +94,18 @@
         [self addSubview:self.leftVolumeLabel];
         [self addSubview:self.rightVolumeLabel];
         
-        NSUInteger channHorizontalMargin = SWReadValue(65);
+        NSUInteger channHorizontalMargin = SWReadValue(45);
         NSUInteger channTopMargin = SHReadValue(20);
-        NSUInteger channButtonHeight = SHReadValue(35);
+        NSUInteger channButtonHeight = SHReadValue(50);
         NSUInteger channButtonPosY = topMargin + sliderTopMargin + sliderHeight + channTopMargin;
         
         UIView* channButtonView = [self createChannButtonView];
         channButtonView.frame = CGRectMake(channHorizontalMargin, channButtonPosY, mainFrame.size.width - 2*channHorizontalMargin, channButtonHeight);
         
-        NSUInteger labelsViewHorizontalMargin = SWReadValue(100);
         NSUInteger labelsViewTopMargin = SHReadValue(2);
         NSUInteger labelsViewHeight = SHReadValue(35);
+        NSUInteger labelsWidth = SWReadValue(40);
+        NSUInteger labelsViewHorizontalMargin = (self.leftVolumeSlider.frame.origin.x + sliderWidth/2) - labelsWidth/2;
         NSUInteger labelsViewPosY = channButtonPosY + channButtonHeight + labelsViewTopMargin;
         
         UIView* labelsView = [self createLabelsView];
@@ -216,7 +217,9 @@
     self.rightChannLabel = [[UILabel alloc] init];
     
     self.leftChannLabel.text = NSLocalizedString(@"leftEar", nil);
+    self.leftChannLabel.textAlignment = NSTextAlignmentCenter;
     self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
+    self.rightChannLabel.textAlignment = NSTextAlignmentCenter;
     
     [stackView addArrangedSubview:self.leftChannLabel];
     [stackView addArrangedSubview:self.rightChannLabel];
