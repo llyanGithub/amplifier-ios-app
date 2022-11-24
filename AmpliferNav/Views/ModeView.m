@@ -73,17 +73,17 @@
         
         self.modeDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(modeDescLabelPosX, labelYPos, modeDescLabelWidth, titleLabelHeight)];
         
-        NSUInteger labelHeight = SHReadValue(40);
+        NSUInteger labelHeight = SHReadValue(70);
         self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+titleLabelHeight, buttonWidth, labelHeight)];
         
-        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, labelYPos+labelHeight-SHReadValue(20), horizontalMargin/2, labelHeight)];
+        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, self.modeDescLabel.frame.origin.y + SHReadValue(8), horizontalMargin/2, labelHeight)];
         starLabel.text = @"*";
         starLabel.textAlignment = NSTextAlignmentCenter;
         [starLabel setFont:[UIFont systemFontOfSize:14]];
         
         self.titleLable.text = @"户外模式:";
         self.contentLabel.text = NSLocalizedString(@"modeTips", nil);
-        self.contentLabel.numberOfLines = 2;
+        self.contentLabel.numberOfLines = 3;
         
         self.modeDescLabel.text = NSLocalizedString(@"normalModeDesc", nil);
         
