@@ -1,0 +1,70 @@
+/* 
+  Localizable.strings
+  AmpliferNav
+
+  Created by 鄢陵龙 on 2022/11/18.
+  
+*/
+
+"mode" = "モード";
+"volume" = "音量";
+"freqResponse" = "周波数応答";
+"earProtection" = "聴覚保護";
+"other" = "その他";
+
+"left" = "左耳";
+"right" = "右耳";
+
+"outDoorMode" = "屋外モード";
+"indoorMode" = "屋内モード";
+"normalMode" = "通常モード";
+
+"normalModeDesc" = "騒がしいシーンや人混みの多いシーンに使用されます";
+"outdoorModeDesc" = "屋内に比べ、騒音・風当たりが強い環境に適しています";
+"indoorModeDesc" = "比較的静かな環境に適しています";
+
+"normalModeComments" = "通常モード：騒がしいシーンや人混みの多いシーンに使用されます";
+"modeTips" = "使用モードは、これらの一般的なシーンのほとんどのユーザーのニーズに応じて設定されています。各モードを試した後、最も適切なモードを選択しようとすることをお勧めします。";
+
+"leftEar" = "左耳";
+"rightEar" = "右耳";
+
+"compressDegree" = "圧縮率";
+
+"connected" = "接続";
+
+"tapToSearch" = "デバイスを探すボタンをクリック";
+
+"searching" = "周りのデバイスを探している";
+"searchDone" = "探し終わり";
+
+"searchFail" = "デバイスが発見されない";
+"searchFailContent" = "接続したいイヤホンの電源が入っていることを確認してください
+（電源を切ってからもう一度入れてみて、検索してください）";
+"reSearch" = "デバイスを再検索する";
+
+"foundDevices" = "イヤフォンを発見";
+"connect" = "接続";
+
+"earProtectionComment" = "* この設定は、ノイズの大きな音のゲインを圧縮できます。";
+
+"earProtectionComment2" = "For example, the sound of car horns and firecrackers can prevent discomfort.";
+
+"disableAncSwitch" = "通話中に補助リスニングモードを切り替えることは禁止";
+
+"confirm" = "確認";
+
+"alert" = "警告";
+
+"disconnectDialogTitle" = "デバイスが切断された";
+"disconnectDIalgoContent" = "デバイスを確認し、再接続してください";
+
+"bluetoothDisabled" = "System Bluetooth is off";
+
+"cancel" = "接続を解除する";
+"reconnect" = "再接続する";
+
+"dutMode" = "DUTモード";
+"factorySettings" = "リセット";
+"otaMode" = "OTAモード";
+"singleEarMode" = "片耳モード";

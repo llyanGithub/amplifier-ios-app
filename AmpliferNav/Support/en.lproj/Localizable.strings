@@ -23,7 +23,7 @@
 "outdoorModeDesc" = "Scene for noise and wind";
 "indoorModeDesc" = "Suitable for relatively quiet places";
 
-"normalModeComments" = "常规模式：用于地铁或飞机等场景";
+"normalModeComments" = "Normal Mode：Used in subway or airplane scenes";
 "modeTips" = "These modes are set according to the needs of most users in these common scenarios. We recommend that you try each mode and choose the one you feel most suitable for use.";
 
 "leftEar" = "Left Ear";
@@ -43,6 +43,7 @@
 "reSearch" = "Search again";
 
 "foundDevices" = "Hearing devices found nearby";
+"connect" = "connect";
 
 "earProtectionComment" = "* This setting can compress the gain of loud sound.";
 

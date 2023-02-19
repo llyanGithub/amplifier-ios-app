@@ -73,10 +73,10 @@
         
         self.modeDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(modeDescLabelPosX, labelYPos, modeDescLabelWidth, titleLabelHeight)];
         
-        NSUInteger labelHeight = SHReadValue(70);
+        NSUInteger labelHeight = SHReadValue(60);
         self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+titleLabelHeight, buttonWidth, labelHeight)];
         
-        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, self.modeDescLabel.frame.origin.y + SHReadValue(8), horizontalMargin/2, labelHeight)];
+        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, self.contentLabel.frame.origin.y + SHReadValue(5), horizontalMargin/2, self.contentLabel.frame.size.height/3)];
         starLabel.text = @"*";
         starLabel.textAlignment = NSTextAlignmentCenter;
         [starLabel setFont:[UIFont systemFontOfSize:14]];

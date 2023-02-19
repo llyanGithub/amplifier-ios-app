@@ -1,0 +1,69 @@
+/* 
+  Localizable.strings
+  AmpliferNav
+
+  Created by 鄢陵龙 on 2022/11/18.
+  
+*/
+
+"mode" = "모드";
+"volume" = "음량";
+"freqResponse" = "이퀄라이저";
+"earProtection" = "청각보호";
+"other" = "기타";
+
+"left" = "왼쪽";
+"right" = "오른쪽";
+
+"outDoorMode" = "실외모드";
+"indoorMode" = "실내모드";
+"normalMode" = "일반모드";
+
+"normalModeDesc" = "사람이 많고 시끄러운 상황에서 사용";
+"outdoorModeDesc" = "소음과 바람소리가 있는 곳에서 사용";
+"indoorModeDesc" = "비교적 조용한 장소에 적합";
+
+"normalModeComments" = "常规模式：用于地铁或飞机等场景";
+"modeTips" = "실외,실내,일반 모드는 여러 사용자가 비교적 많이 선택하는 모드로서, 각 모드별로 선택하여 사용하여 보시고 자신에게 가장 적합한 모드로 사용하시기를 권장합니다。";
+
+"leftEar" = "왼쪽";
+"rightEar" = "오른쪽";
+
+"compressDegree" = "감폭 정도";
+
+"connected" = "연결하였습니다";
+
+"tapToSearch" = "연결할 설비를 검색합니다";
+
+"searching" = "S가까운 곳의 설비를 찾고 있습니다";
+"searchDone" = "설비를 찾았습니다";
+
+"searchFail" = "기기를 찾을 수 없습니다";
+"searchFailContent" = "연결할 보청 기가 켜져 있는지 확인하십시오. (전원을 껐다가 다시 켜신 후 다시 시도해 주세요 )";
+"reSearch" = "기기를 재검색 합니다";
+
+"foundDevices" = "보청기를 찾았습니다";
+"connect" = "연결합니다";
+
+"earProtectionComment" = "* 이 설정은 너무 큰소리에 대하여 음량 감폭 정도를 설정하는 것 입니다。";
+
+"earProtectionComment2" = "For example, the sound of car horns and firecrackers can prevent discomfort.";
+
+"disableAncSwitch" = "통화중 보청기능은 정지됩니다";
+
+"confirm" = "확인";
+
+"alert" = "경고";
+
+"disconnectDialogTitle" = "기기 연결이 해제되었습니다";
+"disconnectDIalgoContent" = "기기를 점검하고 다시 연결하십시오";
+
+"bluetoothDisabled" = "System Bluetooth is off";
+
+"cancel" = "취소됩니다";
+"reconnect" = "다시 연결합니다";
+
+"dutMode" = "DUT MODE";
+"factorySettings" = "공장출고모";
+"otaMode" = "OTA MODE";
+"singleEarMode" = "Single Mode";

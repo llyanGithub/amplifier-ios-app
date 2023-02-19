@@ -219,6 +219,7 @@
     
     ConnecteButton* button = (ConnecteButton*)[cell viewWithTag:2];
     [button addTarget:self action:@selector(connectButtonClicked:) forControlEvents:UIControlEventTouchDown];
+    [button setTitle:NSLocalizedString(@"connect", nil) forState:UIControlStateNormal];
     button.row = indexPath.row;
     
     return cell;

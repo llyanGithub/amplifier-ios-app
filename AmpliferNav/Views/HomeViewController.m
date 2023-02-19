@@ -170,7 +170,7 @@
         [self.view addSubview:button];
     }
     
-#if 0
+#if 1
     self.packetProto = [PacketProto getInstance];
     self.bleProfile = [BleProfile getInstance];
     
