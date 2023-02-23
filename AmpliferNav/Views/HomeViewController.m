@@ -207,10 +207,20 @@
     self.leftBatLabel.font = font;
     self.rightBatLabel.font = font;
     
+    NSString *localeLanguageCode = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"][0];
+    
+    NSLog(@"language: %@", localeLanguageCode);
+    
     NSUInteger batteryViewItemWidth = SWReadValue(14);
     NSUInteger batteryViewItemHeight = SHReadValue(20);
     NSUInteger rightMargin = SWReadValue(20);
     NSUInteger space = SWReadValue(3);
+    
+    if ([localeLanguageCode isEqualToString:@"ko-CN"]) {
+        batteryViewItemWidth = SWReadValue(10);
+        batteryViewItemHeight = SHReadValue(25);
+        self.rightBatLabel.numberOfLines = 3;
+    }
     
     self.rightBatLabel.frame = CGRectMake(self.mainFrame.size.width - rightMargin - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);
     self.rightBatImageView.frame = CGRectMake(self.rightBatLabel.frame.origin.x - batteryViewItemWidth - space, self.homeButtonTopMargin, batteryViewItemWidth, batteryViewItemHeight);

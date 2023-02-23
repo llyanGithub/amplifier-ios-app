@@ -39,7 +39,8 @@
     NSUInteger labelHeight = SWReadValue(20);
     NSUInteger labelPosY = searchFramePosY + searchFrameSize + SHReadValue(20);
     
-    self.searchLabel.frame = CGRectMake(mainFrame.size.width/2-labelWidth/2, labelPosY, labelWidth, labelHeight);
+    NSUInteger searchLabelWidth = mainFrame.size.width - SWReadValue(50);
+    self.searchLabel.frame = CGRectMake(mainFrame.size.width/2-searchLabelWidth/2, labelPosY, searchLabelWidth, labelHeight);
     self.searchLabel.textAlignment = NSTextAlignmentCenter;
     
     self.searchLabel.text = NSLocalizedString(@"tapToSearch", nil);

@@ -66,24 +66,26 @@
         NSUInteger titleLabelHeight = SHReadValue(25);
         NSUInteger labelYPos = buttonHeight*3+spacing*2+topMargin + labelTopMargin;
         
-        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos, SWReadValue(88), titleLabelHeight)];
+        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos, SWReadValue(88), titleLabelHeight*2)];
+        self.titleLable.numberOfLines = 2;
         
         NSUInteger modeDescLabelPosX = self.titleLable.frame.origin.x + self.titleLable.frame.size.width;
         NSUInteger modeDescLabelWidth = mainFrame.size.width - horizontalMargin - self.titleLable.frame.size.width;
         
-        self.modeDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(modeDescLabelPosX, labelYPos, modeDescLabelWidth, titleLabelHeight)];
+        self.modeDescLabel = [[UILabel alloc] initWithFrame:CGRectMake(modeDescLabelPosX, labelYPos, modeDescLabelWidth, titleLabelHeight*2)];
+        self.modeDescLabel.numberOfLines = 2;
         
         NSUInteger labelHeight = SHReadValue(60);
-        self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+titleLabelHeight, buttonWidth, labelHeight)];
+        self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+titleLabelHeight*2, buttonWidth, labelHeight)];
         
-        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, self.contentLabel.frame.origin.y + SHReadValue(5), horizontalMargin/2, self.contentLabel.frame.size.height/3)];
+        UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, self.contentLabel.frame.origin.y + SHReadValue(2), horizontalMargin/2, self.contentLabel.frame.size.height/3)];
         starLabel.text = @"*";
         starLabel.textAlignment = NSTextAlignmentCenter;
         [starLabel setFont:[UIFont systemFontOfSize:14]];
         
         self.titleLable.text = @"户外模式:";
         self.contentLabel.text = NSLocalizedString(@"modeTips", nil);
-        self.contentLabel.numberOfLines = 3;
+        self.contentLabel.numberOfLines = 4;
         
         self.modeDescLabel.text = NSLocalizedString(@"normalModeDesc", nil);
         

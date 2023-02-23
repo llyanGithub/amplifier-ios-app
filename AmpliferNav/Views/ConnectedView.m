@@ -31,7 +31,7 @@
     self.twsImageView.frame = CGRectMake(mainFrame.size.width/2 - imageSize/2, topMargin, imageSize, imageSize);
     
     NSUInteger labelTopMargin = SHReadValue(20);
-    NSUInteger labelWidth = SWReadValue(150);
+    NSUInteger labelWidth = SWReadValue(200);
     NSUInteger labelHeight = SHReadValue(20);
     
     self.jumpMainButton = [[UIButton alloc] initWithFrame:CGRectMake(SWReadValue(20), SHReadValue(60), SWReadValue(20), SHReadValue(20))];

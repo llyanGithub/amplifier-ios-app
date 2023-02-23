@@ -122,9 +122,9 @@
         NSUInteger descriptionLabelTopMargin = SHReadValue(40);
         NSUInteger descriptionLabelPosY = self.rightCompressLabel.frame.origin.y + self.rightCompressLabel.frame.size.height + descriptionLabelTopMargin;
         
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, descriptionLabelPosY, mainFrame.size.width - self.horizontalMargin, SHReadValue(20))];
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, descriptionLabelPosY, mainFrame.size.width - self.horizontalMargin, SHReadValue(40))];
         self.descriptionLabel.text = NSLocalizedString(@"earProtectionComment", nil);
-        self.descriptionLabel.numberOfLines = 1;
+        self.descriptionLabel.numberOfLines = 2;
         self.descriptionLabel.font = [UIFont systemFontOfSize:14];
         
         UILabel* descriptionLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin - SWReadValue(10), descriptionLabelPosY + SHReadValue(20), mainFrame.size.width - self.horizontalMargin*2, SWReadValue(40))];
