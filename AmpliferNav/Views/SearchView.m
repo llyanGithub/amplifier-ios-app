@@ -71,7 +71,7 @@
     self.searchCenterImage.frame = CGRectMake(mainFrame.size.width/2 - searchCenterSize/2, searchCenterPosY, searchCenterSize, searchCenterSize);
     
     NSUInteger searchResultLabelTopMargin = SHReadValue(80);
-    self.searchResultLabel.frame = CGRectMake(SWReadValue(20), imagePosY+searchBorderSize + searchResultLabelTopMargin, labelWidth, labelHeight);
+    self.searchResultLabel.frame = CGRectMake(SWReadValue(20), imagePosY+searchBorderSize + searchResultLabelTopMargin, labelWidth*2, labelHeight);
     self.searchResultLabel.text = NSLocalizedString(@"foundDevices", nil);
     
     NSUInteger tablePosY = self.searchResultLabel.frame.origin.y + labelHeight;

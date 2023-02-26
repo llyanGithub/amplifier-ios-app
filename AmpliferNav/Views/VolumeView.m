@@ -115,8 +115,8 @@
         NSUInteger labelsViewPosY = channButtonPosY + channButtonHeight + labelsViewTopMargin;
         
         [self createLabelsView];
-        self.leftChannLabel.frame = CGRectMake(self.leftVolumeSlider.frame.origin.x + self.leftVolumeSlider.frame.size.width/2 - labelsWidth/2, labelsViewPosY, labelsWidth, labelsViewHeight);
-        self.rightChannLabel.frame = CGRectMake(self.rightVolumeSlider.frame.origin.x + self.rightVolumeSlider.frame.size.width/2 - labelsWidth/2, labelsViewPosY, labelsWidth, labelsViewHeight);
+        self.leftChannLabel.frame = CGRectMake(self.leftVolumeSlider.frame.origin.x + self.leftVolumeSlider.frame.size.width/2 - labelsWidth/2, labelsViewPosY, labelsWidth*2, labelsViewHeight);
+        self.rightChannLabel.frame = CGRectMake(self.rightVolumeSlider.frame.origin.x + self.rightVolumeSlider.frame.size.width/2 - labelsWidth/2, labelsViewPosY, labelsWidth*2, labelsViewHeight);
         
         [self addSubview:self.leftChannButton];
         [self addSubview:self.rightChannButton];

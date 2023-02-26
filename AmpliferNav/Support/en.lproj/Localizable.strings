@@ -8,12 +8,12 @@
 
 "name" = "MODE";
 "volume" = "volume";
-"freqResponse" = "Frequency Response";
-"earProtection" = "Ear Protection";
+"freqResponse" = "Frequency";
+"earProtection" = "Hearing";
 "other" = "Other";
 
-"left" = "Left Ear";
-"right" = "Right Ear";
+"left" = "L";
+"right" = "R";
 
 "outDoorMode" = "Outdoor Mode";
 "indoorMode" = "Indoor Mode";

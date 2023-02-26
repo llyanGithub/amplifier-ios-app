@@ -44,10 +44,7 @@
 }
 
 -(void)initData{
-    _menuArray = [NSArray arrayWithObjects: NSLocalizedString(@"dutMode", nil),
-                  NSLocalizedString(@"factorySettings", nil),
-                  NSLocalizedString(@"otaMode", nil),
-                  NSLocalizedString(@"singleEarMode", nil), nil];
+    _menuArray = [NSArray arrayWithObjects: NSLocalizedString(@"factorySettings", nil), nil];
 }
 
 -(void)initView{

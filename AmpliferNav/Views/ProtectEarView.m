@@ -52,8 +52,22 @@
         
         CGRect mainFrame = [UIScreen mainScreen].bounds;
         
+//        if ([localeLanguageCode isEqualToString:@"ko-CN"]) {
+//            self.rightBatLabel.numberOfLines = 3;
+//        }
+        
+        NSString *localeLanguageCode = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"][0];
+        
+        NSLog(@"language: %@", localeLanguageCode);
+        
         UIFont* font = [UIFont systemFontOfSize:14];
-        self.leftChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin, labelWidth, labelHeight)];
+        
+        if ([localeLanguageCode isEqualToString:@"en-CN"]) {
+            self.leftChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, self.topMargin, labelWidth*2, labelHeight)];
+        } else {
+            self.leftChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin, labelWidth, labelHeight)];
+        }
+
         self.leftChannLabel.text = NSLocalizedString(@"leftEar", nil);
         self.leftChannLabel.font = font;
         
@@ -84,7 +98,11 @@
         NSUInteger leftScalePosY = self.topMargin + sliderHeight + scaleTopMargin;
         leftEarScaleView.frame = CGRectMake(scalePosX, leftScalePosY, scaleWidth, scaleViewHeight);
         
-        self.leftCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), leftScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
+        if ([localeLanguageCode isEqualToString:@"en-CN"]) {
+            self.leftCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40)*3, leftScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(150), SHReadValue(20))];
+        } else {
+            self.leftCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), leftScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
+        }
         self.leftCompressLabel.text = NSLocalizedString(@"compressDegree", nil);
         self.leftCompressLabel.font = [UIFont systemFontOfSize:11];
         
@@ -106,7 +124,12 @@
         self.rightSliderTapGesture.delegate = self;
         [self.rightSlider addGestureRecognizer:self.rightSliderTapGesture];
         
-        self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, rightSliderPosY, labelWidth, labelHeight)];
+        if ([localeLanguageCode isEqualToString:@"en-CN"]) {
+            self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, rightSliderPosY, labelWidth*2, labelHeight)];
+        } else {
+            self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, rightSliderPosY, labelWidth, labelHeight)];
+        }
+
         self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
         self.rightChannLabel.font = font;
         
@@ -114,7 +137,12 @@
         NSUInteger rightScalePosY = rightSliderPosY + sliderHeight + scaleTopMargin;
         rightEarScaleView.frame = CGRectMake(scalePosX, rightScalePosY, scaleWidth, scaleViewHeight);
         
-        self.rightCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), rightScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
+        if ([localeLanguageCode isEqualToString:@"en-CN"]) {
+            self.rightCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40)*3, rightScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(150), SHReadValue(20))];
+        } else {
+            self.rightCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), rightScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
+        }
+
         self.rightCompressLabel.text = NSLocalizedString(@"compressDegree", nil);
         self.rightCompressLabel.font = [UIFont systemFontOfSize:11];
         
