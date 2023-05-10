@@ -1,0 +1,70 @@
+/*
+  Localizable.strings
+  AmpliferNav
+
+  Created by 鄢陵龙 on 2022/11/18.
+  
+*/
+
+
+"mode" = "Modo";
+"volume" = "volumen";
+"freqResponse" = "Frecuencia";
+"earProtection" = "Protección auditiva";
+"other" = "Otros";
+
+"left" = "L";
+"right" = "R";
+
+"outDoorMode" = "Modo exterior";
+"indoorMode" = "Modo interior";
+"normalMode" = "Modo normal";
+
+"normalModeComments" = "Modo normal: se utiliza en escenas ruidosas y abarrotadas de gente";
+"modeTips" = "Estos modos se establecen de acuerdo con las necesidades de la mayoría de los usuarios en estos escenarios comunes. Le recomendamos que pruebe cada modo y elija el más adecuado para su uso.\n";
+
+"normalModeDesc" = "se utiliza en escenas ruidosas y abarrotadas de gente";
+"outdoorModeDesc" = "modo para ruido y viento";
+"indoorModeDesc" = "Adecuado para lugares relativamente tranquilos";
+
+"leftEar" = "Oído izquierdo";
+"rightEar" = "Oído derecho";
+
+"compressDegree" = "Grado de compresión";
+
+"earProtectionComment" = "* Este ajuste comprime la ganancia de los sonidos fuertes.";
+
+"earProtectionComment2" = "Por ejemplo: silbidos de automóviles, petardos, etc., para evitar molestias.";
+
+"connected" = "Conectado";
+
+"tapToSearch" = "Haga clic para buscar dispositivos";
+
+"searching" = "Buscando dispositivos cercanos...";
+"searchDone" = "La búsqueda se realizó correctamente";
+
+"searchFail" = "No dispositivos circundantes encontrados";
+"searchFailContent" = "Asegúrese de que el audífono que desea conectar esté prendido(Intente apagar primero y luego prender para buscar)";
+"reSearch" = "Buscar de nuevo";
+
+"foundDevices" = "Dispositivos Auditivos Encontrados";
+"connect" = "Conectar";
+
+"disableAncSwitch" = "Prohibido cambiar el modo de escucha asistida durante una llamada";
+
+"confirm" = "confirmar";
+
+"alert" = "Advertencia";
+
+"disconnectDialogTitle" = "El dispositivo está desconectado";
+"disconnectDIalgoContent" = "Compruebe el dispositivo y vuelva a conectarlo";
+
+"bluetoothDisabled" = "El Bluetooth del sistema está apagado";
+
+"cancel" = "Cancelar";
+"reconnect" = "Conectar de nuevo";
+
+"dutMode" = "Modo DUT";
+"factorySettings" = "Reajustar";
+"otaMode" = "Modo OTA";
+"singleEarMode" = "Modo Mono (o Modo Único)";

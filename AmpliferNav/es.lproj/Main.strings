@@ -1,0 +1,18 @@
+
+/* Class = "UILabel"; text = "发现的听力设备"; ObjectID = "0cR-8r-39F"; */
+"0cR-8r-39F.text" = "发现的听力设备";
+
+/* Class = "UILabel"; text = "点击搜索设备"; ObjectID = "4LN-78-0hJ"; */
+"4LN-78-0hJ.text" = "点击搜索设备";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ESD-rH-3og"; */
+"ESD-rH-3og.text" = "Label";
+
+/* Class = "UILabel"; text = "已连接"; ObjectID = "S8p-I6-zcF"; */
+"S8p-I6-zcF.text" = "已连接";
+
+/* Class = "UILabel"; text = "正在搜索附近设备..."; ObjectID = "jbC-up-mZD"; */
+"jbC-up-mZD.text" = "正在搜索附近设备...";
+
+/* Class = "UIButton"; normalTitle = "连接"; ObjectID = "zTe-Pm-K7H"; */
+"zTe-Pm-K7H.normalTitle" = "连接";

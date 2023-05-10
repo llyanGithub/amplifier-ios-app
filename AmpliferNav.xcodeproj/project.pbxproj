@@ -88,6 +88,9 @@
 		5D8A0EC0291DC9D2004203E7 /* ProtectEarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtectEarView.m; sourceTree = "<group>"; };
 		5D8A0EC3291DCB45004203E7 /* ProtectEarSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtectEarSlider.h; sourceTree = "<group>"; };
 		5D8A0EC4291DCB45004203E7 /* ProtectEarSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtectEarSlider.m; sourceTree = "<group>"; };
+		5D8AD4B22A0BEC7200507144 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		5D8AD4B32A0BEC7200507144 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		5D8AD4B42A0BEC7200507144 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5D8C2EA2291A81A800355218 /* Amplifer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amplifer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8C2EA5291A81A800355218 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5D8C2EA6291A81A800355218 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -308,6 +311,7 @@
 				"zh-Hans",
 				ja,
 				ko,
+				es,
 			);
 			mainGroup = 5D8C2E99291A81A800355218;
 			productRefGroup = 5D8C2EA3291A81A800355218 /* Products */;
@@ -380,6 +384,7 @@
 				5D9175F529271729003903E1 /* zh-Hans */,
 				5D60DC06298963000059F70A /* ja */,
 				5D60DC09298963170059F70A /* ko */,
+				5D8AD4B22A0BEC7200507144 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -391,6 +396,7 @@
 				5D9175F629271729003903E1 /* zh-Hans */,
 				5D60DC07298963010059F70A /* ja */,
 				5D60DC0A298963180059F70A /* ko */,
+				5D8AD4B32A0BEC7200507144 /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -402,6 +408,7 @@
 				5D9175F729271729003903E1 /* zh-Hans */,
 				5D60DC08298963010059F70A /* ja */,
 				5D60DC0B298963180059F70A /* ko */,
+				5D8AD4B42A0BEC7200507144 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
