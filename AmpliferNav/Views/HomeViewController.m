@@ -95,6 +95,11 @@
     self.mainFrame = [UIScreen mainScreen].bounds;
     self.horizontalMargin = SHReadValue(20);
     self.navButtonHeight = SHReadValue(45);
+    NSString *localeLanguageCode = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"][0];
+    if ([localeLanguageCode isEqualToString:@"es-CN"]) {
+        self.navButtonHeight = SHReadValue(60);
+    }
+
     self.navButtonTopMargin = SHReadValue(20);
     self.navButtonWidth = (self.mainFrame.size.width - 2*self.horizontalMargin)/5;
     
@@ -247,6 +252,11 @@
     NavButton* button = [[NavButton alloc] initWithCheckedImage:CGRectMake(buttonPosX, buttonPosY, self.navButtonWidth, self.navButtonHeight) checkedImage:checkedImage unCheckedImage:unCheckedImage];
     
     button.titleName = titleName;
+    NSString *localeLanguageCode = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"][0];
+    if ([localeLanguageCode isEqualToString:@"es-CN"]) {
+        button.titleLabel.numberOfLines = 2;
+    }
+    
     [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:12];
     [button addTarget:self action:@selector(navButtonClicked:) forControlEvents:UIControlEventTouchDown];

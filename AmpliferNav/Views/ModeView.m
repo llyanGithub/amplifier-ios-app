@@ -76,6 +76,12 @@
         self.modeDescLabel.numberOfLines = 2;
         
         NSUInteger labelHeight = SHReadValue(60);
+        NSString *localeLanguageCode = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"][0];
+        
+        if ([localeLanguageCode isEqualToString:@"es-CN"]) {
+            labelHeight = SHReadValue(80);
+        }
+        
         self.contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin, labelYPos+titleLabelHeight*2, buttonWidth, labelHeight)];
         
         UILabel* starLabel = [[UILabel alloc] initWithFrame:CGRectMake(horizontalMargin/2, self.contentLabel.frame.origin.y + SHReadValue(2), horizontalMargin/2, self.contentLabel.frame.size.height/3)];
@@ -86,6 +92,9 @@
         self.titleLable.text = @"户外模式:";
         self.contentLabel.text = NSLocalizedString(@"modeTips", nil);
         self.contentLabel.numberOfLines = 4;
+        if ([localeLanguageCode isEqualToString:@"es-CN"]) {
+            self.contentLabel.numberOfLines = 5;
+        }
         
         self.modeDescLabel.text = NSLocalizedString(@"normalModeDesc", nil);
         

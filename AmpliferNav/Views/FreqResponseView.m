@@ -184,6 +184,9 @@ int freqResponseValues[5] = {50, 50, 50, 50, 50};
     self.leftChannLabel.text = NSLocalizedString(@"leftEar", nil);
     self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
     
+    self.leftChannLabel.numberOfLines = 2;
+    self.rightChannLabel.numberOfLines = 2;
+    
     [stackView addArrangedSubview:self.leftChannLabel];
     [stackView addArrangedSubview:self.rightChannLabel];
     

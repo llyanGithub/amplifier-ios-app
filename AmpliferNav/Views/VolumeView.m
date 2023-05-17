@@ -215,6 +215,9 @@
     self.leftChannLabel.textAlignment = NSTextAlignmentCenter;
     self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
     self.rightChannLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.leftChannLabel.numberOfLines = 2;
+    self.rightChannLabel.numberOfLines = 2;
 }
 
 @end

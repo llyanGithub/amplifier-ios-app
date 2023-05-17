@@ -90,7 +90,7 @@
         [self.outerButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
         [self.normalButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
         
-        [self.outerButton setTitle:@"Outer" forState:UIControlStateNormal];
+        [self.outerButton setTitle:NSLocalizedString(@"Outer", nil) forState:UIControlStateNormal];
         [self.normalButton setTitle:@"Normal" forState:UIControlStateNormal];
         
         [self.outerButton addTarget:self action:@selector(outerButtonClicked) forControlEvents:UIControlEventTouchDown];
@@ -119,7 +119,7 @@
     if (_currentMode == AXON_ANC_OUTER) {
         self.normalImageView.hidden = true;
         self.outerImageView.hidden = false;
-        self.modeLabel.text = @"Outer";
+        self.modeLabel.text = NSLocalizedString(@"Outer", nil);
         [self.modeButton setImage:self.normalImage forState:UIControlStateNormal];
     } else if (_currentMode == AXON_ANC_NORMAL) {
         self.outerImageView.hidden = true;

@@ -7,11 +7,11 @@
 */
 
 
-"mode" = "Modo";
-"volume" = "volumen";
-"freqResponse" = "Frecuencia";
-"earProtection" = "Protección auditiva";
-"other" = "Otros";
+"mode" = "Modo\n";
+"volume" = "volumen\n";
+"freqResponse" = "FAQ\n";
+"earProtection" = "Protección\nauditiva";
+"other" = "Otros\n";
 
 "left" = "L";
 "right" = "R";
@@ -68,3 +68,5 @@
 "factorySettings" = "Reajustar";
 "otaMode" = "Modo OTA";
 "singleEarMode" = "Modo Mono (o Modo Único)";
+
+"Outer" = "Exterior";

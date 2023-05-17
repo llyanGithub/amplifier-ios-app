@@ -62,13 +62,14 @@
         
         UIFont* font = [UIFont systemFontOfSize:14];
         
-        if ([localeLanguageCode isEqualToString:@"en-CN"]) {
+        if ([localeLanguageCode isEqualToString:@"en-CN"] || [localeLanguageCode isEqualToString:@"es-CN"]) {
             self.leftChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, self.topMargin, labelWidth*2, labelHeight)];
         } else {
             self.leftChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, self.topMargin, labelWidth, labelHeight)];
         }
 
         self.leftChannLabel.text = NSLocalizedString(@"leftEar", nil);
+        self.leftChannLabel.numberOfLines = 2;
         self.leftChannLabel.font = font;
         
         NSUInteger sliderLeftMargin = SWReadValue(10);
@@ -98,7 +99,7 @@
         NSUInteger leftScalePosY = self.topMargin + sliderHeight + scaleTopMargin;
         leftEarScaleView.frame = CGRectMake(scalePosX, leftScalePosY, scaleWidth, scaleViewHeight);
         
-        if ([localeLanguageCode isEqualToString:@"en-CN"]) {
+        if ([localeLanguageCode isEqualToString:@"en-CN"] || [localeLanguageCode isEqualToString:@"es-CN"]) {
             self.leftCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40)*3, leftScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(150), SHReadValue(20))];
         } else {
             self.leftCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), leftScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
@@ -124,20 +125,21 @@
         self.rightSliderTapGesture.delegate = self;
         [self.rightSlider addGestureRecognizer:self.rightSliderTapGesture];
         
-        if ([localeLanguageCode isEqualToString:@"en-CN"]) {
+        if ([localeLanguageCode isEqualToString:@"en-CN"] || [localeLanguageCode isEqualToString:@"es-CN"]) {
             self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin/2, rightSliderPosY, labelWidth*2, labelHeight)];
         } else {
             self.rightChannLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.horizontalMargin, rightSliderPosY, labelWidth, labelHeight)];
         }
 
         self.rightChannLabel.text = NSLocalizedString(@"rightEar", nil);
+        self.rightChannLabel.numberOfLines = 2;
         self.rightChannLabel.font = font;
         
         UIView* rightEarScaleView = [self createScaleView];
         NSUInteger rightScalePosY = rightSliderPosY + sliderHeight + scaleTopMargin;
         rightEarScaleView.frame = CGRectMake(scalePosX, rightScalePosY, scaleWidth, scaleViewHeight);
         
-        if ([localeLanguageCode isEqualToString:@"en-CN"]) {
+        if ([localeLanguageCode isEqualToString:@"en-CN"] || [localeLanguageCode isEqualToString:@"es-CN"]) {
             self.rightCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40)*3, rightScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(150), SHReadValue(20))];
         } else {
             self.rightCompressLabel = [[UILabel alloc] initWithFrame:CGRectMake(mainFrame.size.width - self.horizontalMargin - SWReadValue(40), rightScalePosY + scaleViewHeight + SHReadValue(5), SWReadValue(100), SHReadValue(20))];
