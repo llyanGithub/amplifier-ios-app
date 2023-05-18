@@ -91,7 +91,7 @@
         [self.normalButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
         
         [self.outerButton setTitle:NSLocalizedString(@"Outer", nil) forState:UIControlStateNormal];
-        [self.normalButton setTitle:@"Normal" forState:UIControlStateNormal];
+        [self.normalButton setTitle:NSLocalizedString(@"Normal", nil) forState:UIControlStateNormal];
         
         [self.outerButton addTarget:self action:@selector(outerButtonClicked) forControlEvents:UIControlEventTouchDown];
         [self.normalButton addTarget:self action:@selector(normalButtonClicked) forControlEvents:UIControlEventTouchDown];
@@ -124,7 +124,7 @@
     } else if (_currentMode == AXON_ANC_NORMAL) {
         self.outerImageView.hidden = true;
         self.normalImageView.hidden = false;
-        self.modeLabel.text = @"Normal";
+        self.modeLabel.text = NSLocalizedString(@"Normal", nil);
         [self.modeButton setImage:self.outerImage forState:UIControlStateNormal];
     }
 }
