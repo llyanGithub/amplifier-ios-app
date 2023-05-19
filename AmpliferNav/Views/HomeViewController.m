@@ -468,7 +468,9 @@
             } else if (cmdId == AXON_COMMAND_ANC_SWITCH) {
                 NSLog(@"收到ACK: AXON_COMMAND_ANC_SWITCH，errCode: %ld", self.packetProto.errCode);
                 
-                if (self.packetProto.errCode == 0x06) {
+                // 忽略这个功能
+                if (0) {
+//                if (self.packetProto.errCode == 0x06) {
                     UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"alert", nil)
                                                                                    message: NSLocalizedString(@"disableAncSwitch", nil)
                                                    preferredStyle:UIAlertControllerStyleAlert];
