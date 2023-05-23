@@ -106,21 +106,9 @@
     
     switch (indexPath.row) {
         /*
-         DUT模式
-         */
-        case 0:
-        {
-            NSData* data = [[PacketProto getInstance] packDutModeSet];
-            [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
-                NSLog(@"写入DUT命令成功");
-            }];
-        }
-            break;;
-            
-        /*
          进入恢复工厂模式
          */
-        case 1:
+        case 0:
         {
             NSLog(@"Enter Factory MODE");
             NSData* data = [[PacketProto getInstance] packFactoryModeSet];
@@ -130,6 +118,18 @@
             }];
         }
             break;
+            
+        /*
+         DUT模式
+         */
+        case 1:
+        {
+            NSData* data = [[PacketProto getInstance] packDutModeSet];
+            [[BleProfile getInstance] writeDeviceData:data callback:^(CBPeripheral *peripheral, CBCharacteristic *charactic, NSError *error) {
+                NSLog(@"写入DUT命令成功");
+            }];
+        }
+            break;;
             
         /*
          进入单耳模式
