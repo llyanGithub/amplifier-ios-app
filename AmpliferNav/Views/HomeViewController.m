@@ -62,6 +62,8 @@
 @property (nonatomic) NSData* leftEarFirmwareVersion;
 @property (nonatomic) NSData* rightEarFirmVersion;
 @property (nonatomic) NSUInteger currentAncMode;
+@property (nonatomic) NSInteger reconnCount;
+@property (nonatomic) NSTimer* reconnTimer;
 
 @property (nonatomic) BOOL isBangsScreen;
 
@@ -189,6 +191,7 @@
     [self syncDeviceInfo];
 #endif
     
+    self.reconnCount = 0;
 }
 
 - (void) createBatteryView
@@ -417,6 +420,75 @@
     }];
 }
 
+- (void) connectDevice:(CBPeripheral*)peripheral
+{
+    [self.bleProfile connectDevice:peripheral callback:^(BOOL isConnected, NSUInteger serviceDiscoverEvent, CBPeripheral *peripheral) {
+        if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERING) {
+            NSLog(@"蓝牙已连接，正在搜索服务...");
+            [self.reconnTimer invalidate];
+            self.reconnCount = 0;
+            self.connectedButton.hidden = FALSE;
+            
+        } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVERED) {
+            NSLog(@"蓝牙已经连接，服务所搜完毕");
+            self.peripheral = peripheral;
+            
+            [self.bleProfile notifyPeripheral:peripheral notifyValue:YES callback:^ (CBPeripheral *peripheral, CBCharacteristic *ctic, NSError *error) {
+                if (error == nil) {
+                    NSLog(@"订阅成功...");
+                }
+            }];
+        } else if (isConnected && serviceDiscoverEvent == SERVICE_DISCOVER_FAIL) {
+            NSLog(@"蓝牙已经连接，搜索服务失败");
+        } else if (!isConnected) {
+            NSLog(@"蓝牙连接失败");
+        } else {
+            NSLog(@"蓝牙连接过程中，出现未定义错误: %d %ld %@", isConnected, serviceDiscoverEvent, peripheral);
+        }
+    }];
+}
+
+- (void) reconntDevice
+{
+    self.reconnCount += 1;
+    NSLog(@"Reconnect Device, count: %ld", self.reconnCount);
+    
+    if (self.reconnCount < 60) {
+        [self connectDevice:self.peripheral];
+    } else {
+        [self.reconnTimer invalidate];
+        self.reconnCount = 0;
+        
+        [self showDisconnectDialog];
+    }
+}
+
+- (void) showDisconnectDialog
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"disconnectDialogTitle", nil)
+                                                                   message: NSLocalizedString(@"disconnectDIalgoContent", nil)
+                                   preferredStyle:UIAlertControllerStyleAlert];
+     
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleDefault
+       handler:^(UIAlertAction * action) {
+        NSLog(@"取消");
+    }];
+    
+    UIAlertAction* reconnectAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"reconnect", nil) style:UIAlertActionStyleDefault
+       handler:^(UIAlertAction * action) {
+        NSLog(@"重新连接");
+        
+        ConnectedView* connectedView = (ConnectedView*)self.presentingViewController;
+        connectedView.isDismiss = YES;
+        [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+    }];
+     
+    [alert addAction:cancelAction];
+    [alert addAction:reconnectAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 - (void) registerDisconnectedHandler
 {
     [self.bleProfile registerDisconnectedInd:^(CBCentralManager* central, CBPeripheral *peripheral, NSError* error) {
@@ -424,28 +496,8 @@
         
         self.connectedButton.hidden = true;
         
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"disconnectDialogTitle", nil)
-                                                                       message: NSLocalizedString(@"disconnectDIalgoContent", nil)
-                                       preferredStyle:UIAlertControllerStyleAlert];
-         
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleDefault
-           handler:^(UIAlertAction * action) {
-            NSLog(@"取消");
-        }];
-        
-        UIAlertAction* reconnectAction = [UIAlertAction actionWithTitle: NSLocalizedString(@"reconnect", nil) style:UIAlertActionStyleDefault
-           handler:^(UIAlertAction * action) {
-            NSLog(@"重新连接");
-            
-            ConnectedView* connectedView = (ConnectedView*)self.presentingViewController;
-            connectedView.isDismiss = YES;
-            [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
-        }];
-         
-        [alert addAction:cancelAction];
-        [alert addAction:reconnectAction];
-        
-        [self presentViewController:alert animated:YES completion:nil];
+        [self connectDevice:self.peripheral];
+        self.reconnTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(reconntDevice) userInfo:nil repeats:YES];
     }];
 }
 
@@ -768,6 +820,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     NSLog(@"========   视图将要消失： viewWillDisappear:(BOOL)animated   =======\n");
+    if (self.reconnTimer != nil) {
+        [self.reconnTimer invalidate];
+        self.reconnCount = 0;
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
