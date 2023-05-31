@@ -14,6 +14,7 @@
 #include "ConnectedView.h"
 #include "ScreenAdapter.h"
 #include "ReadySearchView.h"
+#include "CBPeripheral+fullname.h"
 
 
 #define ROTATE_TMER_INTERVAL (1/15.0)
@@ -215,7 +216,8 @@
     
     UILabel* nameLabel = (UILabel*)[cell viewWithTag:1];
     CBPeripheral *peripheral = [self.scanDeviceArray objectAtIndex:indexPath.row];
-    nameLabel.text = peripheral.name;
+//    nameLabel.text = peripheral.name;
+    nameLabel.text = peripheral.fullname.uppercaseString;
     
     ConnecteButton* button = (ConnecteButton*)[cell viewWithTag:2];
     [button addTarget:self action:@selector(connectButtonClicked:) forControlEvents:UIControlEventTouchDown];

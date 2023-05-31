@@ -459,7 +459,10 @@
         [self.reconnTimer invalidate];
         self.reconnCount = 0;
         
-        [self showDisconnectDialog];
+        ConnectedView* connectedView = (ConnectedView*)self.presentingViewController;
+        connectedView.isDismiss = YES;
+        [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+//        [self showDisconnectDialog];
     }
 }
 

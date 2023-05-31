@@ -19,6 +19,7 @@
 		5D3BCF972924959700454D64 /* Loading.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5D3BCF962924959700454D64 /* Loading.bundle */; };
 		5D3BCF9B2924960F00454D64 /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3BCF9A2924960F00454D64 /* LoadingView.m */; };
 		5D3BCF9F292497A100454D64 /* ImageViewGif.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3BCF9E292497A100454D64 /* ImageViewGif.m */; };
+		5D580CE62A27917400C2E762 /* CBPeripheral+fullname.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D580CE52A27917400C2E762 /* CBPeripheral+fullname.m */; };
 		5D8A0EAD291D215C004203E7 /* ModeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EAC291D215C004203E7 /* ModeButton.m */; };
 		5D8A0EB1291D2297004203E7 /* ModeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EB0291D2297004203E7 /* ModeView.m */; };
 		5D8A0EB5291D3819004203E7 /* VolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A0EB4291D3819004203E7 /* VolumeView.m */; };
@@ -68,6 +69,8 @@
 		5D3BCF9D292497A100454D64 /* ImageViewGif.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageViewGif.h; sourceTree = "<group>"; };
 		5D3BCF9E292497A100454D64 /* ImageViewGif.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageViewGif.m; sourceTree = "<group>"; };
 		5D3BCFA1292497DA00454D64 /* GifViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GifViewDelegate.h; sourceTree = "<group>"; };
+		5D580CE42A27917400C2E762 /* CBPeripheral+fullname.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CBPeripheral+fullname.h"; sourceTree = "<group>"; };
+		5D580CE52A27917400C2E762 /* CBPeripheral+fullname.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CBPeripheral+fullname.m"; sourceTree = "<group>"; };
 		5D60DC06298963000059F70A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		5D60DC07298963010059F70A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5D60DC08298963010059F70A /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 				5D3BCF872923C11D00454D64 /* Queue.m */,
 				5D3BCF8A2923C14100454D64 /* QueueItem.h */,
 				5D3BCF8B2923C14100454D64 /* QueueItem.m */,
+				5D580CE42A27917400C2E762 /* CBPeripheral+fullname.h */,
+				5D580CE52A27917400C2E762 /* CBPeripheral+fullname.m */,
 			);
 			path = Bluetooth;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 				5D8A0EB5291D3819004203E7 /* VolumeView.m in Sources */,
 				5D8A0EBD291D4053004203E7 /* FreqResponseView.m in Sources */,
 				5D8A0EB9291D390E004203E7 /* VolumeSlider.m in Sources */,
+				5D580CE62A27917400C2E762 /* CBPeripheral+fullname.m in Sources */,
 				5D0FC834291E9E610057DF6D /* OtherView.m in Sources */,
 				5D8C2EA7291A81A800355218 /* AppDelegate.m in Sources */,
 				5D3BCF9F292497A100454D64 /* ImageViewGif.m in Sources */,

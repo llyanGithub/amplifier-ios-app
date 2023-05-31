@@ -8,6 +8,7 @@
 #import "BleProfile.h"
 #import "Queue.h"
 #import "PacketProto.h"
+#import "CBPeripheral+fullname.h"
 
 
 #define USE_16BIT_UUID
@@ -264,6 +265,17 @@
         if (![self.scanDeviceArray containsObject:peripheral]) {
             [self.scanDeviceArray addObject:peripheral];
 //            NSLog(@"scan device: %@", peripheral.name);
+            for (NSString *key in advertisementData) {
+                if ([key  isEqual: @"kCBAdvDataManufacturerData"]) {
+//                    NSArray* value = advertisementData[key];
+                    NSData* data = advertisementData[key];
+                    byte* b = (byte*)[data bytes];
+                    peripheral.fullname = [NSString stringWithFormat:@"%@-%02x", peripheral.name, b[0]];
+                    NSLog(@"key = %@, value = %@", key, data);
+                    break;
+                }
+            }
+//            NSLog(@"adv data: %@", advertisementData);
             
             NSString *regex = self.deviceName;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
